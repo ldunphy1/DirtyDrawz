@@ -1,7 +1,7 @@
 const React = require('react-native')
 const {StyleSheet} = React
 const constants = {
-  actionColor: '#24CE84'
+  actionColor: '#FF5522'
 };
 
 var styles = StyleSheet.create({
@@ -31,12 +31,54 @@ var styles = StyleSheet.create({
 	paddingRight: 20,
 	borderRadius: 10
   },
-  
+  actionCenter: {
+	  backgroundColor: constants.actionColor, 
+	  borderColor: 'transparent',
+	  width: 150,
+	  height: 60,
+	  margin: 130,
+	  paddingBottom:40,
+	  paddingTop: 5,
+	  paddingLeft: 20,
+	  paddingRight:20,
+	  borderRadius: 10
+  },
+  actionCenterSmall: {
+	  backgroundColor: constants.actionColor, 
+	  borderColor: 'transparent',
+	  width: 125,
+	  height: 50,
+	  margin: 130,
+	  paddingBottom:40,
+	  paddingTop: 10,
+	  paddingLeft: 20,
+	  paddingRight:20,
+	  borderRadius: 10
+  },
+  actionBottomLeft: {
+	  backgroundColor: constants.actionColor, 
+	  borderColor: 'transparent',
+	  width: 150,
+	  height: 50,
+	  margin: 40,
+	  paddingBottom:40,
+	  paddingTop: 2,
+	  paddingLeft: 20,
+	  paddingRight:20,
+	  borderRadius: 10
+	  
+  },
   actionText: {
     color: '#fff',
 	textAlign: 'center',
 	fontSize: 18, 
 	fontWeight:'bold',
+  },
+  baseText: {
+	  fontFamily: 'Cochin',
+  },
+  instructionText: {
+	  fontSize: 30,
   },
   
   loginInfo: {
@@ -61,8 +103,8 @@ var styles = StyleSheet.create({
   },
   
   logos: {
-	  width:200,
-	  height: 200,  
+	  width:325,
+	  height: 250,  
   },
   
   logoSet: {
