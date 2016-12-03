@@ -39,7 +39,7 @@ renderScene(route,navigator) {
 				<UInput title="Password"/>
 		
 				<View style={styles.buttons}>
-					<StartButton title="Login" onPress={this.gotoDashboard.bind(this)} />
+					<StartButton title="Login" onPress={this.gotoOrder.bind(this)} />
 
 					<StartButton title="Register" onPress={this.gotoSignUp.bind(this)} />
 				</View>
@@ -59,10 +59,11 @@ renderScene(route,navigator) {
 	  });
 	  
   }
-  gotoDashboard() {
+  gotoOrder() {
 	  this.props.navigator.push({
-		  component: Dashboard
-	  })
+		  id: 'order',
+		  name: 'order',
+	  });
   }
   gotoPassRecover() {
 	  this.props.navigator.push({
