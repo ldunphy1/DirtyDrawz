@@ -1,0 +1,3 @@
+rootProject.name = 'dirtydrawz'
+
+include ':app'
