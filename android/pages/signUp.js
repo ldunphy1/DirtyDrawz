@@ -10,23 +10,15 @@ import{
 	Navigator,
 	TouchableHighlight,
 	TouchableOpacity,
-	Image,
-	TextInput
 } from 'react-native'; 
 
-const Button = require('./components/Button'); 
-const styles = require('./styles');
+const StartButton = require('./components/BottomLeftButton'); 
+const UInput = require('./components/UInput');
+const DisplayLogo = require('./components/DisplayLogo');
+const styles = require('../../styles');
 
 
 class SignUp extends Component {
-	constructor(props){
-    super(props);
-    this.state={
-      username:'',
-	  password:'',
-	  repassword:'',
-    }
-  }
 	render() {
 		return (
 			<Navigator
@@ -37,28 +29,18 @@ class SignUp extends Component {
 renderScene(route,navigator) {
 	return(
 		<View style={styles.container}>
-			<Image source={require('./resources/Logo.jpg')} style={styles.logos} />
+			<View style={styles.logoSet}>
+				<DisplayLogo />
+			</View>
+		
 			<View style={styles.loginInfo}>
-				<TextInput 
-					placeholder = "Username"
-					style = {styles.infoText}
-					onChangeText={(text) => this.setState({username:text})}
-					value={this.state.password}
-				/>
-				<TextInput 
-					placeholder = "Password"
-					style = {styles.infoText}
-					onChangeText={(text) => this.setState({password:text})}
-					value={this.state.password}
-				/>
-				<TextInput 
-					placeholder = "Re-enter Password"
-					style = {styles.infoText}
-					onChangeText={(text) => this.setState({repassword:text})}
-					value={this.state.password}
-				/>
+				<UInput title="Username"/>
+				<UInput title="Password"/>
+				<UInput title="Re-enter Password"/>
+		
 				<View style={styles.buttons}>
-					<Button title="Agree & Register" onPress={this.gotoRegister.bind(this)} />
+					<StartButton title="Agree & Register" onPress={this.gotoRegister.bind(this)} />
+
 				</View>
 				
 

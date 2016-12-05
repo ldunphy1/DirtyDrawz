@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import ReactNative from 'react-native';
 
-const styles = require('../styles.js')
+const styles = require('../../../styles.js')
 const constants = styles.constants 
 const {StyleSheet, View, Image} = ReactNative; 
 
@@ -13,7 +13,7 @@ class DisplayLogo extends Component {
       <View>
         <Image
           style={styles.logos}
-          source={require('../resources/Logo.jpg')}
+          source={require('../../../Logo.jpg')}
         />
       </View>
     );

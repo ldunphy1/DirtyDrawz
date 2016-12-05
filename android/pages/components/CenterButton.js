@@ -7,20 +7,19 @@ const styles = require('../../../styles.js')
 const constants = styles.constants 
 const {StyleSheet, Text, View, TouchableHighlight} = ReactNative; 
 
-class ActionButton extends Component { 
+class CenterButton extends Component { 
 	render() {
 		return( 
-		<View style={styles.action}>
+		<View style={styles.actionCenter}>
 			<TouchableHighlight
 			underlayColor={constants.actionColor}
 			onPress={this.props.onPress}>
-			<Text style={styles.actionText}>{this.props.title}</Text>
+			<Text style={styles.actionText}>{this.props.title} </Text>
 			</TouchableHighlight>
-		</View>
+		</View> 
 		);
 	}
 }
 
 
-module.exports = ActionButton;
-
+module.exports = CenterButton;

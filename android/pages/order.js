@@ -18,7 +18,7 @@ import {
   ListView,
   Navigator
 } from 'react-native';
-import DatePicker from 'react-native-datepicker';
+
 import Accordion from 'react-native-collapsible/Accordion';
 
 import RegistrationItem from './components/RegistrationItem';
@@ -26,7 +26,6 @@ import Topbar from './components/react-native-side-menu/Topbar';
 import ListItem from './components/react-native-side-menu/ListItem';
 import Button from './components/Button';
 
-const styles = require('./styles');
 
 const SECTIONS=[
   {
@@ -107,11 +106,6 @@ module.exports = class order extends Component {
       dataSource:ds.cloneWithRows([
         'package 1','package 2','Card 1','Card 2'
       ]),
-      datePickupB:'2016-12-05 20:00',
-      datePickupE:'22:00',
-      dateDropoffB:'2016-12-06 20:00',
-      dateDropoffE:'22:00',
-
       Cold:false,
       Warm:false,
       Hot:false,
@@ -268,7 +262,7 @@ module.exports = class order extends Component {
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
-        <View style={styles.Ordercontainer}>
+        <View style={styles.container}>
           <Topbar caption="Order" onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
           <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!'); }} scrollEventThrottle={200}>
           <View>
@@ -280,48 +274,8 @@ module.exports = class order extends Component {
               />
           </View>
           <View style={{alignItems:'center',margin:5}}>
-            <Text style={styles.regularText}>Pick-up Time</Text>
-            <View style={{flexDirection:'row'}}>
-              <View>
-
-                <Text style={styles.hintText}>From</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='datetime' format='YYYY-MM-DD HH:mm' minDate="2016-12-05 20:00" confirmBtnText='Confirm'
-                  cancelBtnText='Cancel' showIcon={false} customStyles={{dateInput:{marginLeft:0}}}
-                  onDateChange={(date)=>{  this.setState({datePickupB:date})  }}/>
-              </View>
-
-              <View>
-                <Text style={styles.hintText}>To</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='time' format='HH:mm' minDate={this.state.datePickupB} confirmBtnText='Confirm'
-                  cancelBtnText='Cancel' showIcon={false} customStyles={{dateInput:{marginLeft:0}}}
-                  onDateChange={(date)=>{  this.setState({datePickupE:date})  }}/>
-              </View>
-
-            </View>
-
-            <Text style={styles.regularText}>Drop-off Time</Text>
-            <View style={{flexDirection:'row'}}>
-              <View>
-
-                <Text style={styles.hintText}>From</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='datetime' format='YYYY-MM-DD HH:mm' minDate="2016-12-05 20:00" confirmBtnText='Confirm'
-                  cancelBtnText='Cancel' showIcon={false}
-                  onDateChange={(date)=>{  this.setState({dateDropoffB:date})  }}/>
-              </View>
-
-              <View>
-                <Text style={styles.hintText}>To</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='time' format='HH:mm' minDate={this.state.datePickupB} confirmBtnText='Confirm'
-                  cancelBtnText='Cancel' showIcon={false}
-                  onDateChange={(date)=>{  this.setState({dateDropoffE:date})  }}/>
-              </View>
-
-            </View>
-
+          <RegistrationItem ItemType="textinput" content="" caption="Pick-up time: "/>
+          <RegistrationItem ItemType="textinput" content="" caption="Drop-off time: "/>
           <RegistrationItem ItemType="textinput" content={this.state.info_billing_address} caption="Where? "/>
           <RegistrationItem ItemType="textinput" content="" caption="Note: "/>
           <View style={{margin:30}}>
@@ -334,3 +288,21 @@ module.exports = class order extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    flexDirection:'column',
+    backgroundColor:'#FFFFFF'
+  },
+  collapiseItem:{
+    flexDirection:'column',
+    backgroundColor:'#e9f2f7',
+    minHeight:150,
+    padding:10,
+  },
+  DCITEM:{
+    height:70,
+    width:70,
+  }
+});
