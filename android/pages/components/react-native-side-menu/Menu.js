@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     top: 20,
   },
   item: {
-    fontSize: window.height/40,
+    fontSize: window.height/35,
     fontWeight: '300',
     paddingTop: 5,
   },

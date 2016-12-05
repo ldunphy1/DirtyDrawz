@@ -10,16 +10,24 @@ import{
 	Navigator,
 	TouchableHighlight,
 	TouchableOpacity,
+	Image,
+	TextInput,
 } from 'react-native'; 
 
-const StartButton = require('./components/StartButton'); 
+const Button = require('./components/Button'); 
 const UInput = require('./components/UInput');
 const DisplayLogo = require('./components/DisplayLogo');
-const CenterButtonSmall = require('./components/centerButtonSmall');
-const styles = require('../../styles');
+const styles = require('./styles');
 
 
 class ResetPassword extends Component {
+	constructor(props){
+    super(props);
+    this.state={
+	  password:'',
+	  repassword:'',
+    }
+  }
 	render() {
 		return (
 			<Navigator
@@ -30,24 +38,26 @@ class ResetPassword extends Component {
 renderScene(route,navigator) {
 	return(
 		<View style={styles.container}>
-			<View style={styles.logoSet}>
-				<DisplayLogo />
-			</View>
-
-		
-			<View style={styles.loginInfo}>
-						
-				<Text style={styles.baseText}>
-					<Text style={styles.instructionText}>
-						Enter New Password
-					</Text>
+			<Image source={require('./resources/Logo.jpg')} style={styles.logos} />
+			<View style={styles.loginInfo}>		
+				<Text style={styles.regularText}>
+				Enter New Password
 				</Text>
-				
-				<UInput title="Password"/>
-				<UInput title="Re-enter Password"/>
+				<TextInput 
+					placeholder = "Password"
+					style = {styles.infoText}
+					onChangeText={(text) => this.setState({password:text})}
+					value={this.state.password}
+				/>
+				<TextInput 
+					placeholder = "Re-enter Password"
+					style = {styles.infoText}
+					onChangeText={(text) => this.setState({repassword:text})}
+					value={this.state.password}
+				/>
 				
 				<View style={styles.buttons}>
-					<CenterButtonSmall title="Save" onPress={this.gotoLogin.bind(this)} />
+					<Button title="Save" onPress={this.gotoLogin.bind(this)} />
 				</View> 
 
 			</View>

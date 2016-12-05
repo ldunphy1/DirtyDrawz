@@ -10,15 +10,23 @@ import{
 	Navigator,
 	TouchableHighlight,
 	TouchableOpacity,
+	Image,
+	TextInput,
 } from 'react-native'; 
 
-const Button = require('./components/Button'); 
-const UInput = require('./components/UInput');
-const DisplayLogo = require('./components/DisplayLogo');
-const styles = require('../../styles');
+const Button = require('./components/Button');
+const styles = require('./styles');
 
 
 class LoginPage extends Component {
+	constructor(props){
+    super(props);
+    this.state={
+      username:'',
+	  password:'',
+    }
+  }
+
 	render() {
 		return (
 			<Navigator
@@ -29,13 +37,21 @@ class LoginPage extends Component {
 renderScene(route,navigator) {
 	return(
 		<View style={styles.container}>
-			<View style={styles.logoSet}>
-				<DisplayLogo />
-			</View>
-		
+			<Image source={require('./resources/Logo.jpg')} style={styles.logos} />
 			<View style={styles.loginInfo}>
-				<UInput title="Username"/>
-				<UInput title="Password"/>
+				<TextInput 
+					placeholder = "Username"
+					style = {styles.infoText}
+					onChangeText={(text) => this.setState({username:text})}
+					value={this.state.username}
+				/>
+				<TextInput 
+					placeholder = "Password"
+					style = {styles.infoText}
+					onChangeText={(text) => this.setState({password:text})}
+					value={this.state.password}
+				/>
+
 				<View style={styles.buttons}>
 					<Button title="Login" onPress={this.gotoOrder.bind(this)} />
 
