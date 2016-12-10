@@ -17,7 +17,6 @@ import{
 const Button = require('./components/Button');
 const styles = require('./styles');
 
-
 class LoginPage extends Component {
 	constructor(props){
     super(props);

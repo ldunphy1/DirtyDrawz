@@ -27,7 +27,11 @@ import ListItem from './components/react-native-side-menu/ListItem';
 import Button from './components/Button';
 
 const styles = require('./styles');
-
+var currentTime = new Date();
+var day;
+var year;
+var hour;
+var month;
 const SECTIONS=[
   {
     title:'Laundry'
@@ -103,14 +107,38 @@ module.exports = class order extends Component {
   constructor(props){
     super(props); 
     const ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>r1 !==r2});
+    day = currentTime.getDate();
+    year = currentTime.getFullYear();
+    hour = currentTime.getHours() + 1;
+    month = currentTime.getMonth() + 1;
+    var tmp = '' + year;
+    if (month < 10)
+      tmp = tmp + '-0' + month;
+    else
+      tmp = tmp + '-' + month;
+    if (day < 10) 
+      tmp = tmp + '-0' + day;
+    else
+      tmp = tmp + '-' + day;
+    if (hour < 10) 
+      tmp = tmp + ' ' + hour;
+    else
+      tmp = tmp + ' ' + hour;
+    tmp = tmp + ':' + '00';
+    var tmp1 = this.computeTime(tmp, 0);
+    var tmp2 = this.computeTime(tmp1, 24);
+    var tmp3 = this.computeTime(tmp1, 2);
+    var tmp4 = this.computeTime(tmp2, 2);
     this.state={
       dataSource:ds.cloneWithRows([
         'package 1','package 2','Card 1','Card 2'
       ]),
-      datePickupB:'2016-12-05 20:00',
-      datePickupE:'22:00',
-      dateDropoffB:'2016-12-06 20:00',
-      dateDropoffE:'22:00',
+      minPickup:tmp1,
+      minDropoff:tmp2,
+      datePickup:tmp1,
+      datePickupTo:tmp3,
+      dateDropoff:tmp2,
+      dateDropoffTo:tmp4,
 
       Cold:false,
       Warm:false,
@@ -260,9 +288,52 @@ module.exports = class order extends Component {
 		/>
 		);
   }
-  
+  computeTime(date, plusHours){
+    if (date == '')
+      return ''
+    year = 1000 * (date.charCodeAt(0) - '0'.charCodeAt()) + 100 * (date.charCodeAt(1) - '0'.charCodeAt()) + 10 * (date.charCodeAt(2) - '0'.charCodeAt()) + date.charCodeAt(3) - '0'.charCodeAt();
+    month = 10 * (date.charCodeAt(5) - '0'.charCodeAt()) + date.charCodeAt(6) - '0'.charCodeAt();
+    day = 10 * (date.charCodeAt(8) - '0'.charCodeAt()) + date.charCodeAt(9) - '0'.charCodeAt();
+    hour = 10 * (date.charCodeAt(11) - '0'.charCodeAt()) + date.charCodeAt(12) - '0'.charCodeAt();
+    hour = hour + plusHours;
+    if (hour > 24){
+      day = day + ~~(hour / 24);
+      hour = hour % 24
+    }
+    if (hour > 18){
+      day = day + 1;
+      hour = 8;
+    }
+    if (hour <7){
+      hour = 8;
+    }
+    if (day > 30){
+      day = 1;
+      month = month + 1;
+    }
+    if (month > 12){
+      month = 1;
+      year = year + 1;
+    }
+    var tmp = '' + year;
+    if (month < 10)
+      tmp = tmp + '-0' + month;
+    else
+      tmp = tmp + '-' + month;
+    if (day < 10) 
+      tmp = tmp + '-0' + day;
+    else
+      tmp = tmp + '-' + day;
+    if (hour < 10) 
+      tmp = tmp + ' ' + hour;
+    else
+      tmp = tmp + ' ' + hour;
+    tmp = tmp + ':' + '00';
+    return tmp;
+  }
   renderScene(route,navigator)	{
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+
     return (
     <SideMenu 
         menu={menu}
@@ -281,47 +352,38 @@ module.exports = class order extends Component {
           </View>
           <View style={{alignItems:'center',margin:5}}>
             <Text style={styles.regularText}>Pick-up Time</Text>
-            <View style={{flexDirection:'row'}}>
-              <View>
-
-                <Text style={styles.hintText}>From</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='datetime' format='YYYY-MM-DD HH:mm' minDate="2016-12-05 20:00" confirmBtnText='Confirm'
+            <View style={{flexDirection:'row',alignItems:'center',marginTop:10, marginBottom:10}}>
+                <Text style={styles.hintText}>From:   </Text>
+                <DatePicker style={{width:150, backgroundColor:'dodgerblue'}} date={this.state.datePickup} 
+                  mode='datetime' format='YYYY-MM-DD HH:mm' minDate={this.state.minPickup} confirmBtnText='Confirm'
                   cancelBtnText='Cancel' showIcon={false} customStyles={{dateInput:{marginLeft:0}}}
-                  onDateChange={(date)=>{  this.setState({datePickupB:date})  }}/>
-              </View>
-
-              <View>
-                <Text style={styles.hintText}>To</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='time' format='HH:mm' minDate={this.state.datePickupB} confirmBtnText='Confirm'
-                  cancelBtnText='Cancel' showIcon={false} customStyles={{dateInput:{marginLeft:0}}}
-                  onDateChange={(date)=>{  this.setState({datePickupE:date})  }}/>
-              </View>
-
+                  onDateChange={(date)=>{ 
+                    var tmp1 = this.computeTime(date, 0);this.setState({datePickup:tmp1});  
+                    var tmp2 = this.computeTime(date, 2);this.setState({ datePickupTo:tmp2 });
+                    var tmp3 = this.computeTime(date, 24);this.setState({ minDropoff:tmp3 });
+                    this.setState({ dateDropoff:tmp3 });
+                    var tmp4 = this.computeTime(date, 26);this.setState({ dateDropoffTo:tmp4 });
+                  }}/>
+                  <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:150}}>
+                    <Text style={styles.hintText}>To:   </Text>
+                    <Text style={styles.regularText}>{this.state.datePickupTo}</Text>
+                  </View>
             </View>
-
             <Text style={styles.regularText}>Drop-off Time</Text>
-            <View style={{flexDirection:'row'}}>
-              <View>
-
-                <Text style={styles.hintText}>From</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='datetime' format='YYYY-MM-DD HH:mm' minDate="2016-12-05 20:00" confirmBtnText='Confirm'
+            <View style={{flexDirection:'row',alignItems:'center', marginTop:10, marginBottom:10}}>
+                <Text style={styles.hintText}>From:   </Text>
+                <DatePicker style={{width:150,backgroundColor:'dodgerblue'}} date={this.state.dateDropoff} 
+                  mode='datetime' format='YYYY-MM-DD HH:mm' minDate={this.state.minDropoff} confirmBtnText='Confirm'
                   cancelBtnText='Cancel' showIcon={false}
-                  onDateChange={(date)=>{  this.setState({dateDropoffB:date})  }}/>
+                  onDateChange={(date)=>{
+                    var tmp1 = this.computeTime(date, 0);this.setState({ dateDropoff:tmp1 });
+                    var tmp2 = this.computeTime(date, 2);this.setState({ dateDropoffTo:tmp2 });
+                  }}/>
+              <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:150}}>
+                <Text style={styles.hintText}>To:   </Text>
+                <Text style={styles.regularText}>{this.state.dateDropoffTo}</Text>
               </View>
-
-              <View>
-                <Text style={styles.hintText}>To</Text>
-                <DatePicker style={{width:150}} date={this.state.datePickup} 
-                  mode='time' format='HH:mm' minDate={this.state.datePickupB} confirmBtnText='Confirm'
-                  cancelBtnText='Cancel' showIcon={false}
-                  onDateChange={(date)=>{  this.setState({dateDropoffE:date})  }}/>
-              </View>
-
             </View>
-
           <RegistrationItem ItemType="textinput" content={this.state.info_billing_address} caption="Where? "/>
           <RegistrationItem ItemType="textinput" content="" caption="Note: "/>
           <View style={{margin:30}}>
