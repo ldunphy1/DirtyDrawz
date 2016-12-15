@@ -10,6 +10,8 @@
   * make sure device is connected or emulator is running
   * to install application on device, run react-native run-android
   * once application is installed, run react-native start, then open or reload application on device
+  
+
 ### usage on iOS:
 1. Follow the instruction to install react native on your system: https://facebook.github.io/react-native/docs/getting-started.html
 2. Download the zip file of this repo. 
