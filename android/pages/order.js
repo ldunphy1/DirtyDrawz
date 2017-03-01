@@ -353,8 +353,8 @@ module.exports = class order extends Component {
           <View style={{alignItems:'center',margin:5}}>
             <Text style={styles.regularText}>Pick-up Time</Text>
             <View style={{flexDirection:'row',alignItems:'center',marginTop:10, marginBottom:10}}>
-                <Text style={styles.hintText}>From:   </Text>
-                <DatePicker style={{width:150, backgroundColor:'dodgerblue'}} date={this.state.datePickup} 
+                <Text style={styles.hintText}>From: </Text>
+                <DatePicker style={{width:140, backgroundColor:'dodgerblue'}} date={this.state.datePickup} 
                   mode='datetime' format='YYYY-MM-DD HH:mm' minDate={this.state.minPickup} confirmBtnText='Confirm'
                   cancelBtnText='Cancel' showIcon={false} customStyles={{dateInput:{marginLeft:0}}}
                   onDateChange={(date)=>{ 
@@ -365,14 +365,14 @@ module.exports = class order extends Component {
                     var tmp4 = this.computeTime(date, 26);this.setState({ dateDropoffTo:tmp4 });
                   }}/>
                   <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:150}}>
-                    <Text style={styles.hintText}>To:   </Text>
+                    <Text style={styles.hintText}>To: </Text>
                     <Text style={styles.regularText}>{this.state.datePickupTo}</Text>
                   </View>
             </View>
             <Text style={styles.regularText}>Drop-off Time</Text>
             <View style={{flexDirection:'row',alignItems:'center', marginTop:10, marginBottom:10}}>
-                <Text style={styles.hintText}>From:   </Text>
-                <DatePicker style={{width:150,backgroundColor:'dodgerblue'}} date={this.state.dateDropoff} 
+                <Text style={styles.hintText}>From: </Text>
+                <DatePicker style={{width:140,backgroundColor:'dodgerblue'}} date={this.state.dateDropoff} 
                   mode='datetime' format='YYYY-MM-DD HH:mm' minDate={this.state.minDropoff} confirmBtnText='Confirm'
                   cancelBtnText='Cancel' showIcon={false}
                   onDateChange={(date)=>{
@@ -380,7 +380,7 @@ module.exports = class order extends Component {
                     var tmp2 = this.computeTime(date, 2);this.setState({ dateDropoffTo:tmp2 });
                   }}/>
               <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:150}}>
-                <Text style={styles.hintText}>To:   </Text>
+                <Text style={styles.hintText}>To: </Text>
                 <Text style={styles.regularText}>{this.state.dateDropoffTo}</Text>
               </View>
             </View>

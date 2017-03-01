@@ -22,7 +22,8 @@ class Button extends Component {
             borderColor: 'transparent',
             width: 125,
             height: 50,
-            borderRadius: 10
+            borderRadius: 10,
+            margin:5
         }}>
 			<TouchableHighlight
                 underlayColor={'#ff5522'}
