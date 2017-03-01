@@ -1,4 +1,0 @@
-rootProject.name = 'AwesomeProject'
-
-include ':app'
-
