@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, ScrollView, ListView, Navigator } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { List, ListItem, Text, SearchBar } from 'react-native-elements'
 import Topbar from './components/react-native-side-menu/Topbar'
 const SideMenu = require('./components/react-native-side-menu');

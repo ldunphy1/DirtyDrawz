@@ -21,7 +21,7 @@ import RegistrationItem from './components/RegistrationItem';
 import Button from './components/Button';
 import Topbar from './components/react-native-side-menu/Topbar';
 const window = Dimensions.get('window');
-const styles = require('./styles');
+
 class MenuButton extends Component {
   handlePress(e) {
     if (this.props.onPress) {
@@ -80,8 +80,17 @@ module.exports = class registration extends Component {
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
-        <View style={styles.Ordercontainer}>
-          <Topbar caption="Registration" onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
+        <Image source={require('./components/assets/background.png')} style={styles.container}>
+          <MenuButton onPress={()=>this.setState({isOpen:!this.state.isOpen})}
+              style={{
+              flexDirection:'row',
+              alignItems:'center',
+              position:'absolute',
+              left:15,
+              top:19,
+           }}>
+          <Image source={require('./components/assets/menu.png')} style={{width: 32, height: 32}} />
+          </MenuButton>
         
         <View style={{
           flex:1,
@@ -122,7 +131,7 @@ module.exports = class registration extends Component {
                 </View>
             </View>
           </View>
-          </View>
+          </Image>
       </SideMenu>
     );
   }
@@ -134,3 +143,19 @@ module.exports = class registration extends Component {
   }
 
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection:'column',
+    width:null,
+    height:null
+  },
+  topBar:{
+    height: 70,
+    flexDirection:'row',
+    alignItems:'center',
+    backgroundColor: '#ff5522',
+    paddingLeft:15
+  },
+});

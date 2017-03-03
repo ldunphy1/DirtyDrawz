@@ -82,16 +82,15 @@ const styles = StyleSheet.create({
 		  flexDirection:'row',
       alignItems:'center',
       height: 40,
-      backgroundColor: 'rgba(255,255,255,1)',
+      backgroundColor: 'rgba(255,255,255,0.5)',
       margin:3,
-      borderRadius:5,
-      borderWidth:1
+      borderRadius:3,
   },
   caption:{
     flex:1,
     flexDirection:'row',
     justifyContent:'center',
-    width:110
+    width:100
   },
   pickerContainer:{
     flexDirection:'column',

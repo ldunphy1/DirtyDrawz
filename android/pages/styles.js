@@ -35,7 +35,7 @@ var styles = StyleSheet.create({
 	  alignItems:'center',
 	  justifyContent:'space-around',
 	  borderWidth:0,
-	  width: window.width*5/6,
+	  width: window.width*2/3,
 	  height: 60
   },
   regularText:{
@@ -56,16 +56,15 @@ var styles = StyleSheet.create({
   loginInfo: {
 	  flexDirection: 'column',
 	  alignItems: 'center',
-		justifyContent: 'center',
 	  width:window.width/1.2,
   },
   
   infoText: {
-  color: '#000000',
+    color: '#000000',
 	textAlign: 'center',
 	fontSize: 18,
 	height: 40,
-	//width: window.width*3/2,
+	width: window.width/1.5,
 	borderColor: 'black',
 	borderWidth: 1,
 	marginBottom: 10,
