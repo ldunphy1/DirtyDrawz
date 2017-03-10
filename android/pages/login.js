@@ -25,7 +25,14 @@ class LoginPage extends Component {
 	  password:'',
     }
   }
-
+  on_username_change(para){
+	  this.setState({username:para});
+	  this.props.msger_username(para);
+  }
+  on_passwd_change(para){
+	  this.setState({password:para});
+	  this.props.msger_passwd(para);
+  }
 	render() {
 		return (
 			<Navigator
@@ -41,13 +48,13 @@ renderScene(route,navigator) {
 				<TextInput 
 					placeholder = "Username"
 					style = {styles.infoText}
-					onChangeText={(text) => this.setState({username:text})}
+					onChangeText={(para) => this.on_username_change(para)}
 					value={this.state.username}
 				/>
 				<TextInput 
 					placeholder = "Password"
 					style = {styles.infoText}
-					onChangeText={(text) => this.setState({password:text})}
+					onChangeText={(para) => this.on_passwd_change(para)}
 					value={this.state.password}
 				/>
 

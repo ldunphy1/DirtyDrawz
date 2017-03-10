@@ -130,6 +130,16 @@ class dirtydrawz extends Component {
 	constructor(props) {
 		super(props);
 		this._setNavigatorRef = this._setNavigatorRef.bind(this);
+    this.state={
+      first_name:'',
+      last_name:'',
+      username:'',
+      passwd:'',
+      address:'',
+      email:'',
+      phone:'',
+      zipcode:'',
+    }
 	}
   render() {
 		return (
@@ -145,12 +155,21 @@ class dirtydrawz extends Component {
 	  if(routeID === 'login') {
 		  return (
 		  <LoginPage
+      msger_username = {(para)=>this.setState({username:para})}
+      msger_passwd = {(para)=>this.setState({passwd:para})}
+      test = {this.state.first_name}
 			navigator={navigator} />
 			);
 	  }
 	  if(routeID === 'register') {
 		  return (
 		  <RegistrationPage
+        msger_first_name = {(para)=>this.setState({first_name:para})}
+        msger_last_name = {(para)=>this.setState({last_name:para})}
+        msger_address = {(para)=>this.setState({address:para})}
+        msger_email = {(para)=>this.setState({email:para})}
+        msger_phone = {(para)=>this.setState({phone:para})}
+        msger_zipcode = {(para)=>this.setState({zipcode:para})}
 			navigator={navigator} />
 			);
 	  }
@@ -175,6 +194,18 @@ class dirtydrawz extends Component {
 	  if(routeID === 'account') {
 		  return ( 
 		  <AccountPage
+        msger_first_name = {(para)=>this.setState({first_name:para})}
+        msger_last_name = {(para)=>this.setState({last_name:para})}
+        msger_address = {(para)=>this.setState({address:para})}
+        msger_email = {(para)=>this.setState({email:para})}
+        msger_phone = {(para)=>this.setState({phone:para})}
+        msger_zipcode = {(para)=>this.setState({zipcode:para})}
+        first_name = {this.state.first_name}
+        last_name = {this.state.last_name}
+        email = {this.state.email}
+        phone = {this.state.phone}
+        address = {this.state.address}
+        zipcode = {this.state.zipcode}
 			navigator={navigator} />
 			);
 	  }

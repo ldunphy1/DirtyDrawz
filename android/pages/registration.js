@@ -101,13 +101,13 @@ module.exports = class registration extends Component {
                     justifyContent: 'center',
                     alignItems: 'center'
                   }}>
-                    <RegistrationItem style={{width:window.width*4/10}} ItemType="textinput" caption="First Name: "/>
-                    <RegistrationItem style={{width:window.width*4/10}} ItemType="textinput" caption="Last Name:"/>
+                    <RegistrationItem style={{width:window.width*4/10}} msger = {(para) => this.props.msger_first_name(para)} ItemType="textinput" caption="First Name: "/>
+                    <RegistrationItem style={{width:window.width*4/10}} msger = {(para) => this.props.msger_last_name(para)} ItemType="textinput" caption="Last Name:"/>
                 </View>
-                <RegistrationItem ItemType="textinput" caption="Address: "/>
-                <RegistrationItem ItemType="textinput" caption="E-mail: "/>
-                <RegistrationItem ItemType="textinput" caption="Phone Number: "/>
-                <RegistrationItem ItemType="textinput" caption="Zip Code: "/>
+                <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_address(para)} caption="Address: "/>
+                <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_email(para)} caption="E-mail: "/>
+                <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_phone(para)} caption="Phone Number: "/>
+                <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_zipcode(para)} caption="Zip Code: "/>
                 <RegistrationItem ItemType="dropdown" caption="City/Neiborhod: " 
                   servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>

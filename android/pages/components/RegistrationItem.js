@@ -15,7 +15,10 @@ export default class RegistrationItem extends Component {
       title: 'RegistrationItem'
     };
   }
-
+  on_change_content(para){
+    this.setState({text:para});
+    this.props.msger(para);
+  }
   content='';
 
   render() {
@@ -31,7 +34,7 @@ export default class RegistrationItem extends Component {
             <TextInput
                 placeholder={this.props.content}
                 style={{flex: 100}}
-                onChangeText={(text) => this.setState({text})}
+                onChangeText={(para) => this.on_change_content(para)}
                 value={this.state.text}
               />
             </View>
