@@ -1,12 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-const SideMenu = require('./components/react-native-side-menu');
-const Menu=require('./components/react-native-side-menu/Menu');
+import React, { Component } from 'react'
 
-import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,12 +10,16 @@ import {
   ScrollView,
   ListView,
   Navigator
-} from 'react-native';
+} from 'react-native'
 
-import RegistrationItem from './components/RegistrationItem';
-import Topbar from './components/react-native-side-menu/Topbar';
-import ListItem from './components/react-native-side-menu/ListItem';
-import Button from './components/Button';
+import {
+  Topbar,
+  ListItem,
+  Menu
+} from 'react-native-side-menu'
+
+import Button from '../components/Button'
+import RegistrationItem from '../components/RegistrationItem'
 
 class MenuButton extends Component {
   handlePress(e) {
@@ -65,58 +62,66 @@ module.exports = class account extends Component {
 
 
   updateMenuState(isOpen) {
-    this.setState({ isOpen, });
+    this.setState({ isOpen });
   }
-  
-  onMenuItemSelected = (item) => {
+
+  onMenuItemSelected (item) => {
     this.setState({
       isOpen: false,
       selectedItem: item,
     });
 	this.props.navigator.replace({id: item});
   }
+
   render() {
 	  return	(
-	  <Navigator 
+	  <Navigator
 		renderScene={this.renderScene.bind(this)}
 			/>
 		);
   }
+
   on_change_first_name(para){
     this.setState({info_first_name:para});
     this.props.msger_first_name(para);
   }
+
   on_change_last_name(para){
     this.setState({info_last_name:para});
     this.props.msger_last_name(para);
   }
+
   on_change_address(para){
     this.setState({info_billing_address:para});
     this.props.msger_address(para);
   }
+
   on_change_email(para){
     this.setState({info_Email:para});
     this.props.msger_email(para);
   }
+
   on_change_phone(para){
     this.setState({info_phone:para});
     this.props.msger_phone(para);
   }
+
   on_change_zipcode(para){
     this.setState({info_zip:para});
     this.props.msger_zipcode(para);
   }
+  
   renderScene(route,navigator){
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     return (
-    <SideMenu 
+    <SideMenu
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={styles.container}>
           <Topbar caption="Account" onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
           <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!'); }} scrollEventThrottle={200}>
-          <View style={{alignItems:'center',marginTop:15,marginLeft:15,marginRight:15}}> 
+          <View style={{alignItems:'center',marginTop:15,marginLeft:15,marginRight:15}}>
             {(this.state.isEdit=='text')&&<Button title="Edit" onPress={()=>this.setState({isEdit:'textinput'})} width={70} />}
             {(this.state.isEdit=='textinput')&&<Button title="Save" onPress={()=>this.setState({isEdit:'text'})} width={70} />}
           </View>

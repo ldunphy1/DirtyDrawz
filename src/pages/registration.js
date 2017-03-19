@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 const SideMenu = require('./components/react-native-side-menu');
 const Menu=require('./components/react-native-side-menu/Menu');
 
@@ -54,7 +49,7 @@ module.exports = class registration extends Component {
   updateMenuState(isOpen) {
     this.setState({ isOpen, });
   }
-  
+
   onMenuItemSelected = (item) => {
     this.setState({
       isOpen: false,
@@ -70,19 +65,19 @@ module.exports = class registration extends Component {
 		/>
 	);
   }
-  
-  
-  
+
+
+
   renderScene(route,navigator) {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     return (
-    <SideMenu 
+    <SideMenu
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={styles.Ordercontainer}>
           <Topbar caption="Registration" onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
-        
+
         <View style={{
           flex:1,
           flexDirection:'column',
@@ -108,7 +103,7 @@ module.exports = class registration extends Component {
                 <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_email(para)} caption="E-mail: "/>
                 <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_phone(para)} caption="Phone Number: "/>
                 <RegistrationItem ItemType="textinput" msger = {(para) => this.props.msger_zipcode(para)} caption="Zip Code: "/>
-                <RegistrationItem ItemType="dropdown" caption="City/Neiborhod: " 
+                <RegistrationItem ItemType="dropdown" caption="City/Neiborhod: "
                   servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
                 <View style={{

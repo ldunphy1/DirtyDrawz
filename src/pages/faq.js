@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Text, Navigator} from 'react-native'
-import Accordion from 'react-native-collapsible/Accordion';
-const SideMenu = require('./components/react-native-side-menu');
-const Menu=require('./components/react-native-side-menu/Menu');
-import Topbar from './components/react-native-side-menu/Topbar';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Navigator
+} from 'react-native'
+
+import {
+  Topbar,
+  ListItem,
+  Menu
+} from 'react-native-side-menu'
 
 
+const SideMenu = require('./components/react-native-side-menu')
+const Menu=require('./components/react-native-side-menu/Menu')
+import Topbar from './components/react-native-side-menu/Topbar'
+
+import Accordion from 'react-native-collapsible/Accordion'
 
 class MenuButton extends Component {
   handlePress(e) {
@@ -67,7 +79,7 @@ class FAQPage extends Component {
       isOpen:false,
     }
   }
-  
+
   _renderHeader(section) {
     return (
       <View style={styles.header}>
@@ -86,7 +98,7 @@ class FAQPage extends Component {
 	updateMenuState(isOpen) {
     this.setState({ isOpen, });
   }
-  
+
   onMenuItemSelected = (item) => {
     this.setState({
       isOpen: false,
@@ -94,10 +106,10 @@ class FAQPage extends Component {
     });
 	this.props.navigator.replace({id: item});
   }
-  
+
   render() {
 	  return(
-	  <Navigator 
+	  <Navigator
 		renderScene={this.renderScene.bind(this)}
 		/>
 		);
@@ -105,7 +117,7 @@ class FAQPage extends Component {
   renderScene(route,navigator)	{
 	const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     return (
-	 <SideMenu 
+	 <SideMenu
      menu={menu}
      isOpen={this.state.isOpen}
      onChange={(isOpen) => this.updateMenuState(isOpen)}>
