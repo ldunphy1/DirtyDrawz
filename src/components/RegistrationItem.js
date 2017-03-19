@@ -19,15 +19,14 @@ export default class RegistrationItem extends Component {
     this.setState({text:para});
     this.props.msger(para);
   }
-  content='';
 
   render() {
-    if (this.props.ItemType=="textinput") 
+    if (this.props.ItemType=="textinput")
       return (
         <View style={styles.container}>
           <View style={styles.caption}>
-            <Text style={{ color:'rgba(0,0,0,1)'}}> 
-              {this.props.caption} 
+            <Text style={{ color:'rgba(0,0,0,1)'}}>
+              {this.props.caption}
             </Text>
           </View>
           <View style={{flex:100}}>
@@ -44,13 +43,13 @@ export default class RegistrationItem extends Component {
       return (
       <View style={styles.container}>
         <View style={styles.caption}>
-          <Text style={{ color:'rgba(0,0,0,1)'}}> 
-            {this.props.caption} 
+          <Text style={{ color:'rgba(0,0,0,1)'}}>
+            {this.props.caption}
           </Text>
         </View>
         <View style={{flex:100}}>
               <View style={styles.pickerContainer}>
-                <Picker style={{height:30, width:120}} 
+                <Picker style={{height:30, width:120}}
                 selectedValue={this.props.servingArea}
                 onValuechange={(_,itemValue)=>{this.props.onSelectChange(itemValue)}}
                 mode="dropdown">
@@ -65,8 +64,8 @@ export default class RegistrationItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.caption}>
-          <Text style={{ color:'rgba(0,0,0,1)'}}> 
-            {this.props.caption} 
+          <Text style={{ color:'rgba(0,0,0,1)'}}>
+            {this.props.caption}
           </Text>
         </View>
         <View style={{flex:100}}>
