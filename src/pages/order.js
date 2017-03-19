@@ -1,24 +1,20 @@
 import React, { Component } from 'react'
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
-  Picker,
   ScrollView,
   ListView,
   Navigator
 } from 'react-native'
 
 import DatePicker from 'react-native-datepicker'
-import Accordion from 'react-native-collapsible/Accordion'
+import Accordion from 'react-native-collapsible'
 
 import {
   Topbar,
-  ListItem,
-  SideMenu,
-  Menu
+  SideMenu
 } from 'react-native-side-menu'
 
 import RegistrationItem from '../components/RegistrationItem'
@@ -31,23 +27,24 @@ var year
 var hour
 var month
 
-const SECTIONS=[
+const SECTIONS = [
   {
-    title:'Laundry'
+    title: 'Laundry'
   },
   {
-    title:'Dry Cleaning'
+    title: 'Dry Cleaning'
   }
 ]
+
 class CheckBox extends Component {
-  handlePress() {
+  handlePress () {
     if (this.props.onPress) {
       this.props.onPress()
     }
   }
 
-  render() {
-    if (this.props.checked==true)
+  render () {
+    if (this.props.checked === true) {
       return (
         <View style={{flexDirection:'row',alignItems:'center',}}>
         <TouchableOpacity onPress={()=>this.handlePress()}>
@@ -58,7 +55,7 @@ class CheckBox extends Component {
           </View>
         </View>
       )
-    else if (this.props.checked==false)
+    } else if (this.props.checked === false) {
       return (
         <View style={{flexDirection:'row',alignItems:'center',}}>
         <TouchableOpacity onPress={()=>this.handlePress()}>
@@ -69,8 +66,10 @@ class CheckBox extends Component {
           </View>
         </View>
       )
+    }
   }
 }
+
 class DryCleanItem extends Component {
   handlePress() {
     if (this.props.onPress) {
@@ -103,7 +102,7 @@ class DryCleanItem extends Component {
 }
 
 module.exports = class order extends Component {
-  constructor(props){
+  constructor (props) {
     super(props)
     const ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>r1 !==r2})
     day = currentTime.getDate()
@@ -162,8 +161,7 @@ module.exports = class order extends Component {
       Jacket:0,
       Blouse:0,
       Goose:0,
-      info_billing_address:'508 cambridge street',
-
+      info_billing_address:'508 cambridge street'
     }
   }
 
