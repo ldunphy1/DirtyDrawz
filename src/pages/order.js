@@ -10,12 +10,11 @@ import {
 } from 'react-native'
 
 import DatePicker from 'react-native-datepicker'
-import Accordion from 'react-native-collapsible'
+import Accordion from 'react-native-collapsible/Accordion'
 
-import {
-  Topbar,
-  SideMenu
-} from 'react-native-side-menu'
+import SideMenu from 'react-native-side-menu'
+import Menu from '../components/SideMenu/Menu'
+import Topbar from '../components/SideMenu/Topbar'
 
 import RegistrationItem from '../components/RegistrationItem'
 import Button from '../components/Button'
@@ -46,7 +45,7 @@ class CheckBox extends Component {
   render () {
     if (this.props.checked === true) {
       return (
-        <View style={{flexDirection:'row',alignItems:'center',}}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
         <TouchableOpacity onPress={()=>this.handlePress()}>
           <Image source={require('../components/assets/cb_enabled.png')} style={{height:25,width:25}}/>
         </TouchableOpacity>
@@ -163,11 +162,13 @@ module.exports = class order extends Component {
       Goose:0,
       info_billing_address:'508 cambridge street'
     }
+
+    this.updateMenuState = this.updateMenuState.bind(this)
+    this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
 
-
-  updateMenuState(isOpen) {
-    this.setState({ isOpen, })
+  updateMenuState (isOpen) {
+    this.setState({ isOpen })
   }
 
   onMenuItemSelected (item) {
