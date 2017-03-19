@@ -16,5 +16,8 @@
     "react-native-material-kit": "^0.3.3",
     "react-native-toggle": "^1.0.3",
     "react-native-vector-icons": "^2.1.0"
+  },
+  "devDependencies": {
+    "react-native-dotenv": "0.0.3"
   }
 }
