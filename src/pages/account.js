@@ -65,7 +65,7 @@ module.exports = class account extends Component {
     this.setState({ isOpen });
   }
 
-  onMenuItemSelected (item) => {
+  onMenuItemSelected (item) {
     this.setState({
       isOpen: false,
       selectedItem: item,
@@ -110,7 +110,7 @@ module.exports = class account extends Component {
     this.setState({info_zip:para});
     this.props.msger_zipcode(para);
   }
-  
+
   renderScene(route,navigator){
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     return (

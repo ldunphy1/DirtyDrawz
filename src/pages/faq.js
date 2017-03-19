@@ -9,13 +9,9 @@ import {
 import {
   Topbar,
   ListItem,
+  SideMenu,
   Menu
 } from 'react-native-side-menu'
-
-
-const SideMenu = require('./components/react-native-side-menu')
-const Menu=require('./components/react-native-side-menu/Menu')
-import Topbar from './components/react-native-side-menu/Topbar'
 
 import Accordion from 'react-native-collapsible/Accordion'
 
