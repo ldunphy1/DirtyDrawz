@@ -3,22 +3,26 @@
 import React, { Component } from 'react'
 
 import {
+  AppRegistry,
   View,
   Navigator,
   Image,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native'
 
 import Button from '../components/Button'
 import styles from './styles'
 
-class LoginPage extends Component {
+export default class LoginPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
       username: '',
       password: ''
     }
+
+    this.gotoOrder = this.gotoOrder.bind(this)
   }
 
   on_username_change (para) {
@@ -71,17 +75,34 @@ class LoginPage extends Component {
     )
   }
 
+  gotoOrder () {
+    this.setState({
+      loading: true
+    })
+    // Log in and display an alert to tell the user what happened.
+    this.props.firebase.auth().signInWithEmailAndPassword(this.state.email,
+      this.state.password).then((userData) => {
+        this.setState({
+          loading: false
+        })
+        AsyncStorage.setItem('userData', JSON.stringify(userData))
+        this.props.navigator.push({
+          id: 'order',
+          name: 'order'
+        })
+      }
+    ).catch((error) => {
+      this.setState({
+        loading: false
+      })
+      alert('Login Failed. Please try again' + error)
+    })
+  }
+
   gotoSignUp () {
     this.props.navigator.push({
       id: 'signup',
       name: 'signup'
-    })
-  }
-
-  gotoOrder () {
-    this.props.navigator.push({
-      id: 'order',
-      name: 'order'
     })
   }
 
@@ -93,4 +114,4 @@ class LoginPage extends Component {
   }
 }
 
-module.exports = LoginPage
+AppRegistry.registerComponent('Login', () => LoginPage)
