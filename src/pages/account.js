@@ -17,7 +17,7 @@ import ListItem from '../components/SideMenu/ListItem'
 import Button from '../components/Button'
 // import RegistrationItem from '../components/RegistrationItem'
 
-export default class Account extends Component {
+module.exports = class Account extends Component {
   constructor (props) {
     super(props)
     const ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>r1 !==r2})
@@ -37,7 +37,6 @@ export default class Account extends Component {
       info_zip: this.props.zipcode
     }
 
-    this.updateMenuState = this.updateMenuState.bind(this)
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
 

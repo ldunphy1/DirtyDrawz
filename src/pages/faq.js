@@ -46,15 +46,12 @@ const SECTIONS = [
   }
 ]
 
-export default class FAQPage extends Component {
+module.exports = class FAQPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
       isOpen: false
     }
-
-    this.updateMenuState = this.updateMenuState.bind(this)
-    this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
 
   _renderHeader (section) {
@@ -68,10 +65,11 @@ export default class FAQPage extends Component {
   _renderContent (section) {
     return (
       <View style={styles.content}>
-        <Text>{section.title}</Text>
+        <Text>{section.content}</Text>
       </View>
     )
   }
+
   updateMenuState (isOpen) {
     this.setState({ isOpen })
   }
@@ -134,7 +132,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff'
   },
   active: {
     backgroundColor: 'rgba(255,255,255,1)',
