@@ -7,31 +7,23 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-var LoginPage = require('./src/pages/login')
-var RegistrationPage = require('./src/pages/registration')
-var PassRecoveryPage = require('./src/pages/passwordRecovery')
-var ResetPasswordPage = require('./src/pages/resetPassword')
-var SignUpPage = require('./src/pages/signUp')
-var AccountPage = require('./src/pages/account')
-var OrderPage = require('./src/pages/order')
-var PricingPage = require('./src/pages/pricing')
-var FAQPage = require('./src/pages/faq')
+import firebase from './src/firebase/client'
+
+import LoginPage from './src/pages/login'
+import RegistrationPage from './src/pages/registration'
+import PassRecoveryPage from './src/pages/passwordRecovery'
+import ResetPasswordPage from './src/pages/resetPassword'
+import SignUpPage from './src/pages/signUp'
+import AccountPage from './src/pages/account'
+import OrderPage from './src/pages/order'
+import PricingPage from './src/pages/pricing'
+import FAQPage from './src/pages/faq'
 
 class dirtydrawz extends Component {
 
   constructor (props) {
     super(props)
-    this._setNavigatorRef = this._setNavigatorRef.bind(this)
-    this.state = {
-      first_name: '',
-      last_name: '',
-      username: '',
-      passwd: '',
-      address: '',
-      email: '',
-      phone: '',
-      zipcode: ''
-    }
+    // this._setNavigatorRef = this._setNavigatorRef.bind(this)
   }
 
   render () {
@@ -46,20 +38,12 @@ class dirtydrawz extends Component {
     if (route.id === 'login') {
       return (
         <LoginPage
-          msger_username={(para) => this.setState({username: para})}
-          msger_passwd={(para) => this.setState({passwd: para})}
-          test={this.state.first_name}
-          navigator={navigator} />
+          navigator={navigator}
+          firebase={firebase} />
       )
     } else if (route.id === 'register') {
       return (
         <RegistrationPage
-          msger_first_name={(para) => this.setState({first_name: para})}
-          msger_last_name={(para) => this.setState({last_name: para})}
-          msger_address={(para) => this.setState({address: para})}
-          msger_email={(para) => this.setState({email: para})}
-          msger_phone={(para) => this.setState({phone: para})}
-          msger_zipcode={(para) => this.setState({zipcode: para})}
           navigator={navigator} />
       )
     } else if (route.id === 'passrecover') {
@@ -80,18 +64,6 @@ class dirtydrawz extends Component {
     } else if (route.id === 'account') {
       return (
         <AccountPage
-          msger_first_name={(para) => this.setState({first_name: para})}
-          msger_last_name={(para) => this.setState({last_name: para})}
-          msger_address={(para) => this.setState({address: para})}
-          msger_email={(para) => this.setState({email: para})}
-          msger_phone={(para) => this.setState({phone: para})}
-          msger_zipcode={(para) => this.setState({zipcode: para})}
-          first_name={this.state.first_name}
-          last_name={this.state.last_name}
-          email={this.state.email}
-          phone={this.state.phone}
-          address={this.state.address}
-          zipcode={this.state.zipcode}
           navigator={navigator} />
       )
     } else if (route.id === 'order') {
@@ -125,29 +97,29 @@ class dirtydrawz extends Component {
     )
   }
 
-  _setNavigatorRef (navigator) {
-    if (navigator !== this._navigator) {
-      this._navigator = navigator
-
-      if (navigator) {
-        var callback = (event) => {
-          console.log(
-            `NavigatorMenu: event ${event.type}`,
-            {
-              route: JSON.stringify(event.data.route),
-              target: event.target,
-              type: event.type
-            }
-          )
-        }
-        // Observe focus change events from the owner.
-        this._listeners = [
-          navigator.navigationContext.addListener('willfocus', callback),
-          navigator.navigationContext.addListener('didfocus', callback)
-        ]
-      }
-    }
-  }
+  // _setNavigatorRef (navigator) {
+  //   if (navigator !== this._navigator) {
+  //     this._navigator = navigator
+  //
+  //     if (navigator) {
+  //       import callback = (event) => {
+  //         console.log(
+  //           `NavigatorMenu: event ${event.type}`,
+  //           {
+  //             route: JSON.stringify(event.data.route),
+  //             target: event.target,
+  //             type: event.type
+  //           }
+  //         )
+  //       }
+  //       // Observe focus change events from the owner.
+  //       this._listeners = [
+  //         navigator.navigationContext.addListener('willfocus', callback),
+  //         navigator.navigationContext.addListener('didfocus', callback)
+  //       ]
+  //     }
+  //   }
+  // }
 }
 
 AppRegistry.registerComponent('dirtydrawz', () => dirtydrawz)
