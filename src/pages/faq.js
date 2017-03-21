@@ -1,29 +1,15 @@
-import React, { Component } from 'react';
-import {View, StyleSheet, Text, Navigator} from 'react-native'
-import Accordion from 'react-native-collapsible/Accordion';
-const SideMenu = require('./components/react-native-side-menu');
-const Menu=require('./components/react-native-side-menu/Menu');
-import Topbar from './components/react-native-side-menu/Topbar';
+import React, { Component } from 'react'
+import {
+  View,
+  StyleSheet,
+  Text,
+  Navigator
+} from 'react-native'
 
-
-
-class MenuButton extends Component {
-  handlePress(e) {
-    if (this.props.onPress) {
-      this.props.onPress(e);
-    }
-  }
-
-  render() {
-    return (
-      <TouchableOpacity
-        onPress={this.handlePress.bind(this)}
-        style={this.props.style}>
-        <Text>{this.props.children}</Text>
-      </TouchableOpacity>
-    );
-  }
-}
+import SideMenu from 'react-native-side-menu'
+import Menu from '../components/SideMenu/Menu'
+import Topbar from '../components/SideMenu/Topbar'
+import Accordion from 'react-native-collapsible/Accordion'
 
 const SECTIONS = [
   {
@@ -58,66 +44,67 @@ const SECTIONS = [
     title: 'Contact Us',
     content: 'Call us at 1-877-973-7922 or email at hello@dirtydrawz.com'
   }
-];
+]
 
-class FAQPage extends Component {
-	constructor(props){
-    super(props);
-    this.state={
-      isOpen:false,
+module.exports = class FAQPage extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      isOpen: false
     }
   }
-  
-  _renderHeader(section) {
+
+  _renderHeader (section) {
     return (
       <View style={styles.header}>
         <Text style={styles.headerText}>{section.title}</Text>
       </View>
-    );
+    )
   }
 
-  _renderContent(section) {
+  _renderContent (section) {
     return (
       <View style={styles.content}>
         <Text>{section.content}</Text>
       </View>
-    );
+    )
   }
-	updateMenuState(isOpen) {
-    this.setState({ isOpen, });
+
+  updateMenuState (isOpen) {
+    this.setState({ isOpen })
   }
-  
-  onMenuItemSelected = (item) => {
+
+  onMenuItemSelected (item) {
     this.setState({
       isOpen: false,
-      selectedItem: item,
-    });
-	this.props.navigator.replace({id: item});
+      selectedItem: item
+    })
+    this.props.navigator.replace({id: item})
   }
-  
-  render() {
-	  return(
-	  <Navigator 
-		renderScene={this.renderScene.bind(this)}
-		/>
-		);
-  }
-  renderScene(route,navigator)	{
-	const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+
+  render () {
     return (
-	 <SideMenu 
-     menu={menu}
-     isOpen={this.state.isOpen}
-     onChange={(isOpen) => this.updateMenuState(isOpen)}>
-	 <View style={styles.container}>
-     <Topbar caption="Account" onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
-      <Accordion
-        sections={SECTIONS}
-        renderHeader={this._renderHeader}
-        renderContent={this._renderContent}/>
-	</View>
-	</SideMenu>
-    );
+      <Navigator
+        renderScene={this.renderScene.bind(this)}
+      />
+    )
+  }
+  renderScene (route, navigator) {
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} />
+    return (
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}>
+        <View style={styles.container}>
+          <Topbar caption='Account' onPressMenuButton={() => this.setState({isOpen: !this.state.isOpen})} />
+          <Accordion
+            sections={SECTIONS}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent} />
+        </View>
+      </SideMenu>
+    )
   }
 }
 
@@ -145,7 +132,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff'
   },
   active: {
     backgroundColor: 'rgba(255,255,255,1)',
@@ -170,6 +157,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     padding: 10,
   },
-});
-
-module.exports = FAQPage
+})
