@@ -2,11 +2,10 @@
 
 ### usage on Android:
 1. Follow the instructions to install react native on your system: https://facebook.github.io/react-native/docs/getting-started.html
-2. Download the zip file of this repo.
-3. open terminal in the unziped directory.
-4. run npm install
-5. run npm install --save react-native-vector-icons@3.0.0
-6. To run on android device or emulator:
+2. Clone or download this repository
+3. Open terminal in the directory of the project
+4. run 'npm install'
+5. To run on android device or emulator:
   * make sure device is connected or emulator is running
   * to install application on device, run react-native run-android
   * once application is installed, run react-native start, then open or reload application on device
@@ -14,11 +13,10 @@
 
 ### usage on iOS:
 1. Follow the instruction to install react native on your system: https://facebook.github.io/react-native/docs/getting-started.html
-2. Download the zip file of this repo. 
-3. open terminal in the unzipped directory 
-4. run npm install 
-5. run npm install --save react-native-vector-icons@3.0.0
-6. To run on iOS device or emulator:
+2. Clone or download this repository
+3. Open terminal in the directory of the project
+4. run 'npm install'
+5. To run on iOS device or emulator:
  * first update the index.ios.js file in your root project directory to match the index.android.js file
  * make sure all the dependencies listed in the dependencies.json file have been downloaded and their version match
  * to download the desired dependences use the npm install --save command with each dependency name. 
