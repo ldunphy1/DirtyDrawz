@@ -6,7 +6,7 @@
 3. Open terminal in the directory of the project
 4. run 'npm install'
 5. To run on android device or emulator:
-* make sure device is connected or emulator is running
+  * make sure device is connected or emulator is running
   * to install application on device, run react-native run-android
   * once application is installed, run react-native start, then open or reload application on device
   
