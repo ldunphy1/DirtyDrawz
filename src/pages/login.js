@@ -13,26 +13,16 @@ import {
 
 import Button from '../components/Button'
 import styles from './styles'
+import firebaseApp from '../firebase/client'
 
 export default class LoginPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      username: '',
+      loaded: true,
+      email: '',
       password: ''
     }
-
-    this.gotoOrder = this.gotoOrder.bind(this)
-  }
-
-  on_username_change (para) {
-    this.setState({ username: para })
-    this.props.msger_username(para)
-  }
-
-  on_passwd_change (para) {
-    this.setState({ password: para })
-    this.props.msger_passwd(para)
   }
 
   render () {
@@ -49,24 +39,23 @@ export default class LoginPage extends Component {
         <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
         <View style={styles.loginInfo}>
           <TextInput
-            placeholder='Username'
+            placeholder='Email address'
             style={styles.infoText}
-            onChangeText={(para) => this.on_username_change(para)}
-            value={this.state.username}
+            onChangeText={(para) => this.setState({email:para})}
+            value={this.state.email}
           />
           <TextInput
             placeholder='Password'
             style={styles.infoText}
-            onChangeText={(para) => this.on_passwd_change(para)}
+            onChangeText={(para) => this.setState({password:para})}
             value={this.state.password}
+            secureTextEntry={true}
           />
-
           <View style={styles.buttons}>
             <Button title='Login' onPress={this.gotoOrder.bind(this)} />
 
             <Button title='Register' onPress={this.gotoSignUp.bind(this)} />
           </View>
-
           <View style={styles.buttons}>
             <Button title='Forgot Password' onPress={this.gotoPassRecover.bind(this)} />
           </View>
@@ -76,8 +65,8 @@ export default class LoginPage extends Component {
   }
 
   gotoOrder () {
-    this.setState({
-      loading: true
+    this.props.navigator.push({
+      loaded: false
     })
     // Log in and display an alert to tell the user what happened.
     this.props.firebase.auth().signInWithEmailAndPassword(this.state.email,

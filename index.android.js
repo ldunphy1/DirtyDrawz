@@ -23,7 +23,6 @@ class dirtydrawz extends Component {
 
   constructor (props) {
     super(props)
-    // this._setNavigatorRef = this._setNavigatorRef.bind(this)
   }
 
   render () {
@@ -87,7 +86,7 @@ class dirtydrawz extends Component {
 
   noRoute (navigator) {
     return (
-      <View style={{flex: 1, alighItems: 'stretch', justifyContent: 'center'}}>
+      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
         <TouchableOpacity
           style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
           onPress={() => navigator.pop()}>
@@ -96,30 +95,6 @@ class dirtydrawz extends Component {
       </View>
     )
   }
-
-  // _setNavigatorRef (navigator) {
-  //   if (navigator !== this._navigator) {
-  //     this._navigator = navigator
-  //
-  //     if (navigator) {
-  //       import callback = (event) => {
-  //         console.log(
-  //           `NavigatorMenu: event ${event.type}`,
-  //           {
-  //             route: JSON.stringify(event.data.route),
-  //             target: event.target,
-  //             type: event.type
-  //           }
-  //         )
-  //       }
-  //       // Observe focus change events from the owner.
-  //       this._listeners = [
-  //         navigator.navigationContext.addListener('willfocus', callback),
-  //         navigator.navigationContext.addListener('didfocus', callback)
-  //       ]
-  //     }
-  //   }
-  // }
 }
 
 AppRegistry.registerComponent('dirtydrawz', () => dirtydrawz)

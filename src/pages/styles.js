@@ -65,7 +65,7 @@ var styles = StyleSheet.create({
 	textAlign: 'center',
 	fontSize: 18,
 	height: 40,
-	//width: window.width*3/2,
+	width: 200,
 	borderColor: 'black',
 	borderWidth: 1,
 	marginBottom: 10,
