@@ -66,10 +66,10 @@ export default class LoginPage extends Component {
 
   gotoOrder () {
     this.props.navigator.push({
-      loaded: false
+      loading: true
     })
     // Log in and display an alert to tell the user what happened.
-    this.props.firebase.auth().signInWithEmailAndPassword(this.state.email,
+    this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email,
       this.state.password).then((userData) => {
         this.setState({
           loading: false
@@ -85,6 +85,11 @@ export default class LoginPage extends Component {
         loading: false
       })
       alert('Login Failed. Please try again' + error)
+      this.props.navigator.push({
+        id: 'login',
+        name: 'login'
+      })
+      
     })
   }
 
