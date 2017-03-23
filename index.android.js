@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-import firebase from './src/firebase/client'
+import firebaseApp from './src/firebase/client'
 
 import LoginPage from './src/pages/login'
 import RegistrationPage from './src/pages/registration'
@@ -38,7 +38,7 @@ class dirtydrawz extends Component {
       return (
         <LoginPage
           navigator={navigator}
-          firebase={firebase} />
+          firebaseApp={firebaseApp} />
       )
     } else if (route.id === 'register') {
       return (
