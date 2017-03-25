@@ -58,7 +58,8 @@ class dirtydrawz extends Component {
     } else if (route.id === 'signup') {
       return (
         <SignUpPage
-          navigator={navigator} />
+          navigator={navigator} 
+          firebaseApp={firebaseApp}/>
       )
     } else if (route.id === 'account') {
       return (

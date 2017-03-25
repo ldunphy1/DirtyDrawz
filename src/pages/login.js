@@ -1,7 +1,6 @@
 'use strict'
 
 import React, { Component } from 'react'
-
 import {
   AppRegistry,
   View,
@@ -13,13 +12,12 @@ import {
 
 import Button from '../components/Button'
 import styles from './styles'
-import firebaseApp from '../firebase/client'
 
 export default class LoginPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      loaded: true,
+      loaded: false,
       email: '',
       password: ''
     }
@@ -53,7 +51,6 @@ export default class LoginPage extends Component {
           />
           <View style={styles.buttons}>
             <Button title='Login' onPress={this.gotoOrder.bind(this)} />
-
             <Button title='Register' onPress={this.gotoSignUp.bind(this)} />
           </View>
           <View style={styles.buttons}>
@@ -65,11 +62,12 @@ export default class LoginPage extends Component {
   }
 
   gotoOrder () {
-    this.props.navigator.push({
+    this.setState({
       loading: true
     })
     // Log in and display an alert to tell the user what happened.
-    this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email,
+    this.props.firebaseApp.auth().signInWithEmailAndPassword(
+      this.state.email,
       this.state.password).then((userData) => {
         this.setState({
           loading: false
