@@ -6,12 +6,15 @@ import {
   Navigator,
   Image,
   TextInput,
-  AppRegistry
+  AppRegistry,
+  ActivityIndicator
 } from 'react-native'
 
 import Button from '../components/Button'
 import styles from './styles'
+import Login from './login'
 
+//commented out for testing
 /*class PassRecoveryPage extends Component {
   constructor (props) {
     super(props)
@@ -57,6 +60,31 @@ import styles from './styles'
 
 module.exports = PassRecoveryPage*/
 
-export default class PassRecover extends Component{}
+export default class PassRecover extends Component{
+  constructor(props){
+        super(props)
+        this.state = {
+            loading: false
+        }
+    }
+    render(){
+        const content = this.state.loading ? <ActivityIndicator size = "large"/> :
+        <View style = {styles.container}>
+          <View style={styles.buttons}>
+            <Button title='Go to Login' onPress={this.login.bind(this)} />
+          </View>
+        </View>
+        return(
+            <View style = {styles.container}>
+                {content}
+            </View>
+        )
+    }
+    login(){
+      this.props.navigator.push({
+          component: Login
+      })
+    }
+}
 
-AppRegistry.registerComponent('Signup', () => PassRecover)
+AppRegistry.registerComponent('PassRecover', () => PassRecover)

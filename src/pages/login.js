@@ -15,6 +15,7 @@ import styles from './styles'
 import Signup from './signUp'
 import Order from './order'
 import Test from './test'
+import PassRecover from './passwordRecovery'
 
 //commented out for testing
 /*export default class LoginPage extends Component {

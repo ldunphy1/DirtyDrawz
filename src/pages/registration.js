@@ -17,8 +17,8 @@ import Button from '../components/Button'
 import styles from './styles'
 import Signup from './signUp'
 
+//commented out for testing
 /*const window = Dimensions.get('window')
-
 module.exports = class registration extends Component {
   constructor (props) {
     super(props)
