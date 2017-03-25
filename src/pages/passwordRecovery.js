@@ -5,13 +5,14 @@ import {
   View,
   Navigator,
   Image,
-  TextInput
+  TextInput,
+  AppRegistry
 } from 'react-native'
 
 import Button from '../components/Button'
 import styles from './styles'
 
-class PassRecoveryPage extends Component {
+/*class PassRecoveryPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -54,4 +55,8 @@ class PassRecoveryPage extends Component {
   }
 }
 
-module.exports = PassRecoveryPage
+module.exports = PassRecoveryPage*/
+
+export default class PassRecover extends Component{}
+
+AppRegistry.registerComponent('Signup', () => PassRecover)

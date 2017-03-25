@@ -7,13 +7,17 @@ import {
   Navigator,
   Image,
   TextInput,
-  AsyncStorage
+  ActivityIndicator
 } from 'react-native'
 
 import Button from '../components/Button'
 import styles from './styles'
+import Signup from './signUp'
+import Order from './order'
+import Test from './test'
 
-export default class LoginPage extends Component {
+//commented out for testing
+/*export default class LoginPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -104,6 +108,76 @@ export default class LoginPage extends Component {
       name: 'passrecover'
     })
   }
+}*/
+
+export default class LoginPage extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      loading: false,
+      email: '',
+      password: ''
+    }
+  }
+  render(){
+    const content = this.state.loading ? <ActivityIndicator size = "large"/> :
+    <View style={styles.container}>
+        <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
+        <View style={styles.loginInfo}>
+          <TextInput
+            placeholder='Email address'
+            style={styles.infoText}
+            onChangeText={(para) => this.setState({email:para})}
+            value={this.state.email}
+          />
+          <TextInput
+            placeholder='Password'
+            style={styles.infoText}
+            onChangeText={(para) => this.setState({password:para})}
+            value={this.state.password}
+            secureTextEntry={true}
+          />
+          <View style={styles.buttons}>
+            <Button title='Login' onPress={this.login.bind(this)} />
+            <Button title='Register' onPress={this.gotoSignUp.bind(this)} />
+          </View>
+          <View style={styles.buttons}>
+            <Button title='Forgot Password' onPress={this.gotoPassRecover.bind(this)} />
+          </View>
+        </View>
+      </View>
+      return(
+        <View style = {styles.container}>{content}</View>
+      )
+  }
+  login(){
+    this.setState({
+      loading: true
+    })
+    this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((userData) => {
+      this.setState({
+        loading: false
+      })
+      this.props.navigator.push({
+        component: Test
+      })
+    }).catch((error) => {
+      this.setState({
+        loading: false
+      })
+      alert('Login Failed. Please try again' + error.message)
+    })
+  }
+  gotoSignUp(){
+    this.props.navigator.push({
+      component: Signup
+    })
+  }
+  gotoPassRecover(){
+    this.props.navigator.push({
+      component: PassRecover
+    })
+  }
 }
 
-AppRegistry.registerComponent('Login', () => LoginPage)
+AppRegistry.registerComponent('Login', () => Login)

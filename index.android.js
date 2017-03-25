@@ -4,22 +4,20 @@ import {
   Text,
   View,
   Navigator,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet
 } from 'react-native'
 
 import firebaseApp from './src/firebase/client'
 
-import LoginPage from './src/pages/login'
-import RegistrationPage from './src/pages/registration'
-import PassRecoveryPage from './src/pages/passwordRecovery'
-import ResetPasswordPage from './src/pages/resetPassword'
-import SignUpPage from './src/pages/signUp'
-import AccountPage from './src/pages/account'
-import OrderPage from './src/pages/order'
-import PricingPage from './src/pages/pricing'
-import FAQPage from './src/pages/faq'
+import Login from './src/pages/login'
+import Order from './src/pages/order'
+import styles from './src/pages/styles'
+import Test from './src/pages/test'
 
-class dirtydrawz extends Component {
+//commented out for testing
+/*class dirtydrawz extends Component {
 
   constructor (props) {
     super(props)
@@ -95,6 +93,47 @@ class dirtydrawz extends Component {
         </TouchableOpacity>
       </View>
     )
+  }
+}*/
+
+class dirtydrawz extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      page:null
+    }
+  }
+  componentWillMount(){
+    const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
+      if(user != null){
+        this.setState({page: Test})
+        return
+      }
+      this.setState({page: Login})
+      unsubscribe()
+    })
+  }
+  render(){
+    if(this.state.page){
+      return(
+        <Navigator
+          initialRoute = {{component: this.state.page}}
+          configureScene = {() => {
+            return Navigator.SceneConfigs.FloatFromRight
+          }}
+          renderScene = {(route, navigator) => {
+            if(route.component){
+              return React.createElement(route.component, {navigator, firebaseApp})
+            }
+          }} />
+      )
+    } else{
+      return (
+        <View style = {styles.container}>
+          <ActivityIndicator size = "large" />
+        </View>
+    )
+    }
   }
 }
 
