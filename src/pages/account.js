@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   ListView,
-  Navigator
+  Navigator,
+  AppRegistry
 } from 'react-native'
 
 import SideMenu from 'react-native-side-menu'
@@ -15,9 +16,8 @@ import Topbar from '../components/SideMenu/Topbar'
 import ListItem from '../components/SideMenu/ListItem'
 
 import Button from '../components/Button'
-// import RegistrationItem from '../components/RegistrationItem'
 
-module.exports = class Account extends Component {
+export default class Account extends Component {
   constructor (props) {
     super(props)
     const ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>r1 !==r2})
@@ -36,7 +36,6 @@ module.exports = class Account extends Component {
       info_billing_address: this.props.address,
       info_zip: this.props.zipcode
     }
-
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
 

@@ -13,10 +13,9 @@ import {
 
 import Button from '../components/Button'
 import styles from './styles'
-import Registration from './registration'
+import Account from './account'
 import Test from './test'
 
-//commented out for testing
 /*export default class SignUpPage extends Component {
     constructor(props) {
         super(props)
@@ -107,27 +106,35 @@ export default class Signup extends Component{
         this.state = {
             loading: false,
             email: '',
-            password: ''
+            password: '',
+            repassword: ''
         }
     }
     signup(){
         this.setState({
             loading: true
         })
-        this.props.firebaseApp.auth().createUserWithEmailAndPassword(
-            this.state.email,
-            this.state.password
-        ).then(() => {
-            alert('Your account was created!')
+        if(this.state.password != this.state.repassword){
+            alert('Passwords do not match!')
             this.props.navigator.push({
-                component: Test
+                component: Signup
             })
-        }).catch((error) => {
-            this.setState({
-                loading: false
+        }else{
+            this.props.firebaseApp.auth().createUserWithEmailAndPassword(
+                this.state.email,
+                this.state.password
+            ).then(() => {
+                alert('Your account was created!')
+                this.props.navigator.push({
+                    component: Account
+                })
+            }).catch((error) => {
+                this.setState({
+                    loading: false
+                })
+                alert('Account creation failed: ' + error.message)
             })
-            alert('Account creation failed: ' + error.message)
-        })
+        }
     }
     render(){
         const content = this.state.loading ? <ActivityIndicator size = "large" /> :
@@ -146,6 +153,12 @@ export default class Signup extends Component{
                     onChangeText = {(para) => this.setState({ password: para }) }
                     value = { this.state.password }
                 />
+                <TextInput 
+                    placeholder = 'Confirm Password'
+                    style = { styles.infoText }
+                    onChangeText = {(para) => this.setState({ repassword: para }) }
+                    value = { this.state.repassword }
+                />
                 <View style = { styles.buttons } >
                     <Button title = 'Agree & Register' onPress = { this.signup.bind(this) }/>
                 </View> 
@@ -158,5 +171,3 @@ export default class Signup extends Component{
             )
     }
 }
-
-AppRegistry.registerComponent('Signup', () => Signup)

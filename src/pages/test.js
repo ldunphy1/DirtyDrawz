@@ -43,4 +43,3 @@ export default class Test extends Component{
         })
     }
 }
-AppRegistry.registerComponent('Test', () => Test)

@@ -86,5 +86,3 @@ export default class PassRecover extends Component{
       })
     }
 }
-
-AppRegistry.registerComponent('PassRecover', () => PassRecover)
