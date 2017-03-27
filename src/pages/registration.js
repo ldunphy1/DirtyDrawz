@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {
   View,
   Navigator,
-  Dimensions
+  Dimensions,
+  AppRegistry
 } from 'react-native'
 
 import {
@@ -14,9 +15,10 @@ import {
 import RegistrationItem from '../components/RegistrationItem'
 import Button from '../components/Button'
 import styles from './styles'
+import Signup from './signUp'
 
-const window = Dimensions.get('window')
-
+//commented out for testing
+/*const window = Dimensions.get('window')
 module.exports = class registration extends Component {
   constructor (props) {
     super(props)
@@ -134,4 +136,7 @@ module.exports = class registration extends Component {
       name: 'order'
     })
   }
-}
+}*/
+
+export default class Registration extends Component{}
+AppRegistry.registerComponent('Registration', () => Registration)

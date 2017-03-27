@@ -5,13 +5,17 @@ import {
   View,
   Navigator,
   Image,
-  TextInput
+  TextInput,
+  AppRegistry,
+  ActivityIndicator
 } from 'react-native'
 
 import Button from '../components/Button'
 import styles from './styles'
+import Login from './login'
 
-class PassRecoveryPage extends Component {
+//commented out for testing
+/*class PassRecoveryPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -54,4 +58,31 @@ class PassRecoveryPage extends Component {
   }
 }
 
-module.exports = PassRecoveryPage
+module.exports = PassRecoveryPage*/
+
+export default class PassRecover extends Component{
+  constructor(props){
+        super(props)
+        this.state = {
+            loading: false
+        }
+    }
+    render(){
+        const content = this.state.loading ? <ActivityIndicator size = "large"/> :
+        <View style = {styles.container}>
+          <View style={styles.buttons}>
+            <Button title='Go to Login' onPress={this.login.bind(this)} />
+          </View>
+        </View>
+        return(
+            <View style = {styles.container}>
+                {content}
+            </View>
+        )
+    }
+    login(){
+      this.props.navigator.push({
+          component: Login
+      })
+    }
+}

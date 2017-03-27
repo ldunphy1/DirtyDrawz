@@ -8,6 +8,7 @@ import {
   Navigator,
   TouchableOpacity
 } from 'react-native'
+import Login from '../../pages/login'
 
 const window = Dimensions.get('window')
 
@@ -86,7 +87,7 @@ export default class Menu extends Component {
 
         <TouchableOpacity onPress={ () => this.props.onItemSelected('faq')}>
       <Text style={styles.item}>
-      F&Q
+      FAQ
       </Text>
     </TouchableOpacity>
 
@@ -95,10 +96,22 @@ export default class Menu extends Component {
         Log Out
       </Text>
     </TouchableOpacity>
+    {/*<TouchableOpacity onPress={ () => this.logout.bind(this)}>
+      <Text style={styles.item}>
+        Log Out
+      </Text>
+    </TouchableOpacity>*/}
 
       </ScrollView>
     )
   }
+  // logout(){
+  //   this.props.firebaseApp.auth().signOut().then(() => {
+  //     this.props.navigator.push({
+  //       component: Login
+  //     }
+  //   })
+  // }
 }
 
 Menu.propTypes = {
