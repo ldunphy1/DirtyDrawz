@@ -123,7 +123,7 @@ export default class LoginPage extends Component{
   }
   render(){
     const content = this.state.loading ? <ActivityIndicator size = "large"/> :
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView behavior="position" style={styles.container}>
       <View style={styles.container}>
           <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
           <View style={styles.loginInfo}>
