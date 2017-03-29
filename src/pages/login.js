@@ -7,7 +7,8 @@ import {
   Navigator,
   Image,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
+  KeyboardAvoidingView
 } from 'react-native'
 
 import Button from '../components/Button'
@@ -122,31 +123,33 @@ export default class LoginPage extends Component{
   }
   render(){
     const content = this.state.loading ? <ActivityIndicator size = "large"/> :
-    <View style={styles.container}>
-        <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
-        <View style={styles.loginInfo}>
-          <TextInput
-            placeholder='Email address'
-            style={styles.infoText}
-            onChangeText={(para) => this.setState({email:para})}
-            value={this.state.email}
-          />
-          <TextInput
-            placeholder='Password'
-            style={styles.infoText}
-            onChangeText={(para) => this.setState({password:para})}
-            value={this.state.password}
-            secureTextEntry={true}
-          />
-          <View style={styles.buttons}>
-            <Button title='Login' onPress={this.login.bind(this)} />
-            <Button title='Register' onPress={this.gotoSignUp.bind(this)} />
-          </View>
-          <View style={styles.buttons}>
-            <Button title='Forgot Password' onPress={this.gotoPassRecover.bind(this)} />
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <View style={styles.container}>
+          <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
+          <View style={styles.loginInfo}>
+            <TextInput
+              placeholder='Email address'
+              style={styles.infoText}
+              onChangeText={(para) => this.setState({email:para})}
+              value={this.state.email}
+            />
+            <TextInput
+              placeholder='Password'
+              style={styles.infoText}
+              onChangeText={(para) => this.setState({password:para})}
+              value={this.state.password}
+              secureTextEntry={true}
+            />
+            <View style={styles.buttons}>
+              <Button title='Login' onPress={this.login.bind(this)} />
+              <Button title='Signup' onPress={this.gotoSignUp.bind(this)} />
+            </View>
+            <View style={styles.buttons}>
+              <Button title='Forgot Password' onPress={this.gotoPassRecover.bind(this)} />
+            </View>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
       return(
         <View style = {styles.container}>{content}</View>
       )
