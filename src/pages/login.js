@@ -47,7 +47,7 @@ export default class LoginPage extends Component{
               <Button title='Signup' onPress={this.gotoSignUp.bind(this)} />
             </View>
             <View style={styles.buttons}>
-              <Button title='Fogot Password' onPress={this.gotoPassRecover.bind(this)} />
+              <Button title='Forgot Password' onPress={this.gotoPassRecover.bind(this)} />
             </View>
           </View>
         </View>
