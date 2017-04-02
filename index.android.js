@@ -12,128 +12,82 @@ import {
 import firebaseApp from './src/firebase/client'
 
 import Login from './src/pages/login'
+import Signup from './src/pages/signUp'
+import Account from './src/pages/account'
 import Order from './src/pages/order'
 import styles from './src/pages/styles'
 import Test from './src/pages/test'
 
-//commented out for testing
-/*class dirtydrawz extends Component {
-
-  constructor (props) {
-    super(props)
-  }
-
-  render () {
-    return (
-      <Navigator
-        initialRoute={{id: 'login', name: 'login'}}
-        renderScene={this.renderScene.bind(this)}
-      />)
-  }
-
-  renderScene (route, navigator) {
-    if (route.id === 'login') {
-      return (
-        <LoginPage
-          navigator={navigator}
-          firebaseApp={firebaseApp} />
-      )
-    } else if (route.id === 'register') {
-      return (
-        <RegistrationPage
-          navigator={navigator} />
-      )
-    } else if (route.id === 'passrecover') {
-      return (
-        <PassRecoveryPage
-          navigator={navigator} />
-      )
-    } else if (route.id === 'resetpass') {
-      return (
-        <ResetPasswordPage
-          navigator={navigator} />
-      )
-    } else if (route.id === 'signup') {
-      return (
-        <SignUpPage
-          navigator={navigator} 
-          firebaseApp={firebaseApp}/>
-      )
-    } else if (route.id === 'account') {
-      return (
-        <AccountPage
-          navigator={navigator} />
-      )
-    } else if (route.id === 'order') {
-      return (
-        <OrderPage
-          navigator={navigator} />
-      )
-    } else if (route.id === 'pricing') {
-      return (
-        <PricingPage
-          navigator={navigator} />
-      )
-    } else if (route.id === 'faq') {
-      return (
-        <FAQPage
-          navigator={navigator} />
-      )
-    }
-    return this.noRoute(navigator)
-  }
-
-  noRoute (navigator) {
-    return (
-      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-        <TouchableOpacity
-          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-          onPress={() => navigator.pop()}>
-          <Text style={{color: 'red', fontWeight: 'bold'}}> Hello please index.js at renderScene I am confused </Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-}*/
-
 class dirtydrawz extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      page:null
-    }
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
       if(user != null){
-        this.setState({page: Test})
+        this.setState({
+          id: 'order',
+          name: 'order'
+        })
         return
       }
-      this.setState({page: Login})
+      this.setState({
+        id: 'login',
+        name: 'login'
+      })
       unsubscribe()
     })
   }
   render(){
-    if(this.state.page){
       return(
         <Navigator
-          initialRoute = {{component: this.state.page}}
+          initialRoute = {{
+            id: 'login',
+            name: 'login'
+          }}
           configureScene = {() => {
             return Navigator.SceneConfigs.FloatFromRight
           }}
           renderScene = {(route, navigator) => {
-            if(route.component){
-              return React.createElement(route.component, {navigator, firebaseApp})
+            if(route.id === 'login'){
+              return (
+                <Login
+                navigator={navigator}
+                firebaseApp={firebaseApp} />
+              )
+            } else if(route.id === 'signup'){
+              return(
+                <Signup
+                  navigator={navigator}
+                  firebaseApp={firebaseApp} />
+              )
+            } else if(route.id === 'account'){
+              return(
+                <Account
+                  navigator={navigator}
+                  firebaseApp={firebaseApp} />
+              )
+            } else if(route.id === 'order'){
+              return(
+                <Order
+                  navigator={navigator}
+                  firebaseApp={firebaseApp} />
+              )
+            } else if(route.id === 'test'){
+              return(
+                <Test
+                  navigator={navigator}
+                  firebaseApp={firebaseApp} />
+              )
+            }else{
+              return (
+                <View style = {styles.container}>
+                  <ActivityIndicator size = "large" />
+                </View>
+              )
             }
           }} />
       )
-    } else{
-      return (
-        <View style = {styles.container}>
-          <ActivityIndicator size = "large" />
-        </View>
-    )
-    }
   }
 }
 
