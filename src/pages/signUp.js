@@ -42,8 +42,8 @@ export default class Signup extends Component{
             ).then(() => {
                 alert('Your account was created!')
                 this.props.navigator.push({
-                    id: 'account',
-                    name: 'account'
+                    id: 'reg',
+                    name: 'reg'
                 })
             }).catch((error) => {
                 this.setState({

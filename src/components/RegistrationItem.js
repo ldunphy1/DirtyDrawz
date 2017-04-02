@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
       borderWidth:1
   },
   caption:{
-    flex:1,
     flexDirection:'row',
     justifyContent:'center',
     width:110
