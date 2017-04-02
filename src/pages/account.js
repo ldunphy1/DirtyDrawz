@@ -51,14 +51,6 @@ export default class Account extends Component {
     this.props.navigator.replace({id: item})
   }
 
-  render () {
-    return (
-      <Navigator
-        renderScene={this.renderScene.bind(this)}
-      />
-    )
-  }
-
   on_change_first_name (para) {
     this.setState({info_first_name: para})
     this.props.msger_first_name(para)
@@ -89,37 +81,41 @@ export default class Account extends Component {
     this.props.msger_zipcode(para)
   }
 
-  renderScene (route,navigator) {
+  render () {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />
-    return (
-      <SideMenu
-        menu={menu}
-        isOpen={this.state.isOpen}
-        onChange={(isOpen) => this.updateMenuState(isOpen)}>
-        <View style={styles.container}>
-          <Topbar caption='Account' onPressMenuButton={()=>this.setState({isOpen: !this.state.isOpen})}></Topbar>
-          <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!') }} scrollEventThrottle={200}>
-          <View style={{alignItems:'center',marginTop:15,marginLeft:15,marginRight:15}}>
-            {(this.state.isEdit=='text')&&<Button title='Edit' onPress={()=>this.setState({isEdit:'textinput'})} width={70} />}
-            {(this.state.isEdit=='textinput')&&<Button title='Save' onPress={()=>this.setState({isEdit:'text'})} width={70} />}
-          </View>
-            <View style={styles.block}>
-                <View>
-                <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
-                </View>
-            </View>
-            <View style={styles.block}>
-              <View>
-                <Text style={{fontFamily:'Cochin',fontSize:25}}>Payment Information</Text>
-              </View>
-              <ListView style={{flex:1}}
-                dataSource={this.state.dataSource}
-                renderRow={(rowData)=><ListItem caption={rowData}></ListItem>}
-              />
-            </View>
-        </ScrollView>
+    const content = this.state.loading ? <ActivityIndicator size = "large" /> :
+    <SideMenu
+      menu={menu}
+      isOpen={this.state.isOpen}
+      onChange={(isOpen) => this.updateMenuState(isOpen)}>
+      <View style={styles.container}>
+        <Topbar caption='Account' onPressMenuButton={()=>this.setState({isOpen: !this.state.isOpen})}></Topbar>
+        <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!') }} scrollEventThrottle={200}>
+        <View style={{alignItems:'center',marginTop:15,marginLeft:15,marginRight:15}}>
+          {(this.state.isEdit=='text')&&<Button title='Edit' onPress={()=>this.setState({isEdit:'textinput'})} width={70} />}
+          {(this.state.isEdit=='textinput')&&<Button title='Save' onPress={()=>this.setState({isEdit:'text'})} width={70} />}
         </View>
-      </SideMenu>
+          <View style={styles.block}>
+              <View>
+              <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
+              </View>
+          </View>
+          <View style={styles.block}>
+            <View>
+              <Text style={{fontFamily:'Cochin',fontSize:25}}>Payment Information</Text>
+            </View>
+            <ListView style={{flex:1}}
+              dataSource={this.state.dataSource}
+              renderRow={(rowData)=><ListItem caption={rowData}></ListItem>}
+            />
+          </View>
+      </ScrollView>
+      </View>
+    </SideMenu>
+    return(
+      <View style = {styles.container}>
+          {content}
+      </View>
     )
   }
 }

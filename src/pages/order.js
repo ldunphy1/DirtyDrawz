@@ -100,7 +100,7 @@ class DryCleanItem extends Component {
   }
 }
 
-module.exports = class order extends Component {
+export default class Order extends Component {
   constructor (props) {
     super(props)
     const ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>r1 !==r2})

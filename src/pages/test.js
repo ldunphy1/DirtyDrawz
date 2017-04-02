@@ -38,7 +38,8 @@ export default class Test extends Component{
     logout(){
         this.props.firebaseApp.auth().signOut().then(() => {
             this.props.navigator.push({
-                component: Login
+                id: 'login',
+                name: 'login'
             })
         })
     }

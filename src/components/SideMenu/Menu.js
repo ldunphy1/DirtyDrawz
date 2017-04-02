@@ -59,59 +59,47 @@ export default class Menu extends Component {
           <Text style={styles.item}>Your name</Text>
         </View>
 
-    <TouchableOpacity onPress={() => this.props.onItemSelected('order')}>
-      <Text
-        style={styles.item}>
-        Order
-      </Text>
-    </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.onItemSelected('order')}>
+          <Text
+            style={styles.item}>
+            Order
+          </Text>
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => this.props.onItemSelected('account')}>
-      <Text
-        style={styles.item}>
-        Account
-      </Text>
-    </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.onItemSelected('account')}>
+          <Text
+            style={styles.item}>
+            Account
+          </Text>
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={ () => this.props.onItemSelected('orderhistory')}>
-      <Text style={styles.item}>
-      Order history
-      </Text>
-    </TouchableOpacity>
+        <TouchableOpacity onPress={ () => this.props.onItemSelected('orderhistory')}>
+          <Text style={styles.item}>
+          Order history
+          </Text>
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={ () => this.props.onItemSelected('pricing')}>
-      <Text style={styles.item}>
-      Pricing
-      </Text>
-    </TouchableOpacity>
+        <TouchableOpacity onPress={ () => this.props.onItemSelected('pricing')}>
+          <Text style={styles.item}>
+          Pricing
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={ () => this.props.onItemSelected('faq')}>
-      <Text style={styles.item}>
-      FAQ
-      </Text>
-    </TouchableOpacity>
+          <Text style={styles.item}>
+          FAQ
+          </Text>
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={ () => this.props.onItemSelected('login')}>
-      <Text style={styles.item}>
-        Log Out
-      </Text>
-    </TouchableOpacity>
-    {/*<TouchableOpacity onPress={ () => this.logout.bind(this)}>
-      <Text style={styles.item}>
-        Log Out
-      </Text>
-    </TouchableOpacity>*/}
-
+        <TouchableOpacity onPress={ () => 
+          this.props.firebaseApp.auth().signout().then(
+            this.props.onItemSelected('logout'))}>
+          <Text style={styles.item}>
+            Log Out
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
-    )
-  }
-  // logout(){
-  //   this.props.firebaseApp.auth().signOut().then(() => {
-  //     this.props.navigator.push({
-  //       component: Login
-  //     }
-  //   })
-  // }
+    )}
 }
 
 Menu.propTypes = {
