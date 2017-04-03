@@ -19,6 +19,7 @@ import styles from './src/pages/styles'
 import Faq from './src/pages/faq'
 import Pricing from './src/pages/pricing'
 
+
 class dirtydrawz extends Component {
   constructor(props){
     super(props)
