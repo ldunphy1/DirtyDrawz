@@ -22,8 +22,13 @@ class dirtydrawz extends Component {
     super(props)
     this.state={
       id: '',
-      name: ''
+      name: '',
+      user: null
     }
+  }
+  get reference(){
+    const {user} = this.state.user
+    return firebaseApp.database().ref('users').child(user.uid)
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
@@ -43,6 +48,7 @@ class dirtydrawz extends Component {
   }
   
   render(){
+    const {user} = this.state
     if(this.state.id){
       return(
         <Navigator

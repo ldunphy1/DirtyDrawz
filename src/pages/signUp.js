@@ -39,18 +39,18 @@ export default class Signup extends Component{
             this.props.firebaseApp.auth().createUserWithEmailAndPassword(
                 this.state.email,
                 this.state.password
-            ).then(() => {
-                alert('Your account was created!')
-                this.props.navigator.push({
-                    id: 'reg',
-                    name: 'reg'
-                })
-            }).catch((error) => {
+            ).catch((error) => {
                 this.setState({
                     loading: false
                 })
                 alert('Account creation failed: ' + error.message)
-            })
+            }).then(() => {
+                alert('Your account was created!')
+                this.props.navigator.push({
+                    id: 'reg',
+                    name: 'reg'
+                    })
+                })
         }
     }
     render(){
