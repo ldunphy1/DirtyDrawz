@@ -12,6 +12,7 @@ import {
 
 import SideMenu from 'react-native-side-menu'
 import Menu from '../components/SideMenu/Menu'
+import ForbiddenMenu from '../components/SideMenu/ForbiddenMenu'
 import Topbar from '../components/SideMenu/Topbar'
 import ListItem from '../components/SideMenu/ListItem'
 import RegistrationItem from '../components/RegistrationItem'
@@ -86,7 +87,8 @@ export default class Account extends Component {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />
     const content = this.props.page_type=="reg" ? 
     <SideMenu
-      menu={menu}
+      forbidden = {true}
+      menu={ForbiddenMenu}
       isOpen={this.state.isOpen}
       onChange={(isOpen) => this.updateMenuState(isOpen)}>
       <View style={styles.container}>

@@ -17,6 +17,8 @@ import Account from './src/pages/account'
 import Order from './src/pages/order'
 import styles from './src/pages/styles'
 import Test from './src/pages/test'
+import Faq from './src/pages/faq'
+import Pricing from './src/pages/pricing'
 
 class dirtydrawz extends Component {
   constructor(props){
@@ -87,7 +89,15 @@ class dirtydrawz extends Component {
                   navigator={navigator}
                   firebaseApp={firebaseApp} />
               )
-            }else{
+            } else if(route.id === 'faq'){
+                <Faq
+                  navigator={navigator}
+                />
+            } else if(route.id === 'pricing'){
+                <Pricing
+                  navigator={navigator}
+                />
+            } else{
               return (
                 <View style = {styles.container}>
                   <ActivityIndicator size = "large" />
