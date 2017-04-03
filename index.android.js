@@ -16,7 +16,6 @@ import Signup from './src/pages/signUp'
 import Account from './src/pages/account'
 import Order from './src/pages/order'
 import styles from './src/pages/styles'
-import Test from './src/pages/test'
 
 class dirtydrawz extends Component {
   constructor(props){
@@ -42,6 +41,7 @@ class dirtydrawz extends Component {
       unsubscribe()
     })
   }
+  
   render(){
     if(this.state.id){
       return(
@@ -53,6 +53,13 @@ class dirtydrawz extends Component {
             return Navigator.SceneConfigs.FloatFromRight
           }}
           renderScene = {(route, navigator) => {
+            if(route.id === 'logout'){
+              return (
+                <Login
+                navigator={navigator}
+                firebaseApp={firebaseApp} />
+              )
+            }
             if(route.id === 'login'){
               return (
                 <Login

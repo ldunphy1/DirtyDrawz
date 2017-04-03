@@ -91,9 +91,7 @@ export default class Menu extends Component {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ () => 
-          this.props.firebaseApp.auth().signout().then(
-            this.props.onItemSelected('logout'))}>
+        <TouchableOpacity onPress={() => this.props.onItemSelected('logout')}>
           <Text style={styles.item}>
             Log Out
           </Text>
