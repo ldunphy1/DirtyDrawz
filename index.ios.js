@@ -16,11 +16,16 @@ import Signup from './src/pages/signUp'
 import Account from './src/pages/account'
 import Order from './src/pages/order'
 import styles from './src/pages/styles'
-import Test from './src/pages/test'
+import Faq from './src/pages/faq'
+import Pricing from './src/pages/pricing'
 
 class dirtydrawz extends Component {
   constructor(props){
     super(props)
+    this.state={
+      id: '',
+      name: ''
+    }
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
@@ -38,17 +43,25 @@ class dirtydrawz extends Component {
       unsubscribe()
     })
   }
+  
   render(){
+    if(this.state.id){
       return(
         <Navigator
           initialRoute = {{
-            id: 'login',
-            name: 'login'
-          }}
+            id: this.state.id, 
+            name: this.state.name}}
           configureScene = {() => {
             return Navigator.SceneConfigs.FloatFromRight
           }}
           renderScene = {(route, navigator) => {
+            if(route.id === 'logout'){
+              return (
+                <Login
+                navigator={navigator}
+                firebaseApp={firebaseApp} />
+              )
+            }
             if(route.id === 'login'){
               return (
                 <Login
@@ -81,13 +94,15 @@ class dirtydrawz extends Component {
                   navigator={navigator}
                   firebaseApp={firebaseApp} />
               )
-            } else if(route.id === 'test'){
-              return(
-                <Test
+            } else if(route.id === 'faq'){
+                <Faq
                   navigator={navigator}
-                  firebaseApp={firebaseApp} />
-              )
-            }else{
+                />
+            } else if(route.id === 'pricing'){
+                <Pricing
+                  navigator={navigator}
+                />
+            } else{
               return (
                 <View style = {styles.container}>
                   <ActivityIndicator size = "large" />
@@ -95,8 +110,15 @@ class dirtydrawz extends Component {
               )
             }
           }} />
-      )
+      )}else{
+        return (
+          <View style = {styles.container}>
+            <ActivityIndicator size = "large" />
+          </View>
+        )
+      }
   }
+ 
 }
 
 AppRegistry.registerComponent('dirtydrawz', () => dirtydrawz)
