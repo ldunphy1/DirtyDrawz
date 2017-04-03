@@ -54,10 +54,6 @@ export default class Menu extends Component {
   renderScene (route, navigator) {
     return (
       <ScrollView scrollsToTop={true} style={styles.menu}>
-        <View style={styles.avatarContainer}>
-          <Text style={styles.item}>Your name</Text>
-        </View>
-
         <TouchableOpacity onPress={ () => this.props.onItemSelected('pricing')}>
           <Text style={styles.item}>
           Pricing
@@ -70,9 +66,7 @@ export default class Menu extends Component {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ () => 
-          firebaseApp.auth().signout().then(
-            this.props.onItemSelected('login'))}>
+        <TouchableOpacity onPress={() => this.props.onItemSelected('logout')}>
           <Text style={styles.item}>
             Log Out
           </Text>

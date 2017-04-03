@@ -55,10 +55,6 @@ export default class Menu extends Component {
   renderScene (route, navigator) {
     return (
       <ScrollView scrollsToTop={true} style={styles.menu}>
-        <View style={styles.avatarContainer}>
-          <Text style={styles.item}>Your name</Text>
-        </View>
-
         <TouchableOpacity onPress={() => this.props.onItemSelected('order')}>
           <Text
             style={styles.item}>

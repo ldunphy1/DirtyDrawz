@@ -85,10 +85,11 @@ export default class Account extends Component {
 
   render () {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />
+    const forbiddenMenu = <ForbiddenMenu onItemSelected={this.onMenuItemSelected} />
     const content = this.props.page_type=="reg" ? 
     <SideMenu
       forbidden = {true}
-      menu={ForbiddenMenu}
+      menu={forbiddenMenu}
       isOpen={this.state.isOpen}
       onChange={(isOpen) => this.updateMenuState(isOpen)}>
       <View style={styles.container}>
