@@ -44,7 +44,6 @@ export default class Account extends Component {
   updateMenuState (isOpen) {
     this.setState({ isOpen })
   }
-
   onMenuItemSelected (item) {
     this.setState({
       isOpen: false,
@@ -100,11 +99,10 @@ export default class Account extends Component {
               <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
               </View>
                 <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType='textinput' content={this.state.info_first_name} caption="First Name: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType='textinput' content={this.state.info_last_name} caption="Last Name:"/>
-                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType='textinput' content={this.state.info_Email} caption="E-mail: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType='textinput' content={this.state.info_last_name} caption="Last Name:"/>               
                 <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
                 <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
@@ -132,10 +130,10 @@ export default class Account extends Component {
               </View>
                 <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType={this.state.isEdit} content={this.state.info_first_name} caption="First Name: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType={this.state.isEdit} content={this.state.info_last_name} caption="Last Name:"/>
-                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType={this.state.isEdit} content={this.state.info_Email} caption="E-mail: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
                 <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
