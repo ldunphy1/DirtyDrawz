@@ -118,6 +118,7 @@ class dirtydrawz extends Component {
         )
       }
   }
+ 
 }
 
 AppRegistry.registerComponent('dirtydrawz', () => dirtydrawz)

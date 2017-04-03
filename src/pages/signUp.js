@@ -50,7 +50,13 @@ export default class Signup extends Component{
                     loading: false
                 })
                 alert('Account creation failed: ' + error.message)
-            })
+            }).then(() => {
+                alert('Your account was created!')
+                this.props.navigator.push({
+                    id: 'reg',
+                    name: 'reg'
+                    })
+                })
         }
     }
     render(){

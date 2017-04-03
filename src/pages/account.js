@@ -40,6 +40,20 @@ export default class Account extends Component {
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
+  
+  createUser(){
+    var user = this.props.firebaseApp.auth().currentUser
+    this.props.firebaseApp.database().ref('users').push({
+        email: user.email,
+        uid: user.uid,
+        firstName: this.state.info_first_name,
+        lastName: this.state.info_last_name,
+        phone: this.state.info_phone,
+        address: this.state.info_billing_address,
+        zipcode: this.state.info_zip,
+        neighborhood: this.state.servingArea        
+    })
+  }
 
   updateMenuState (isOpen) {
     this.setState({ isOpen })
@@ -107,7 +121,7 @@ export default class Account extends Component {
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
           <View style={{flexDirection:'column',alignItems:'center',padding:20}}>
-          <Button title='Signup!' width={70} />
+          <Button title='Signup!' width={70} onPress={()=>this.createUser()} />
           </View>
       </ScrollView>
       </View>
