@@ -8,7 +8,6 @@ import {
   Navigator,
   TouchableOpacity
 } from 'react-native'
-import Login from '../../pages/login'
 
 const window = Dimensions.get('window')
 
@@ -55,26 +54,6 @@ export default class Menu extends Component {
   renderScene (route, navigator) {
     return (
       <ScrollView scrollsToTop={true} style={styles.menu}>
-        <TouchableOpacity onPress={() => this.props.onItemSelected('order')}>
-          <Text
-            style={styles.item}>
-            Order
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => this.props.onItemSelected('account')}>
-          <Text
-            style={styles.item}>
-            Account
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={ () => this.props.onItemSelected('orderhistory')}>
-          <Text style={styles.item}>
-          Order history
-          </Text>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={ () => this.props.onItemSelected('pricing')}>
           <Text style={styles.item}>
           Pricing
