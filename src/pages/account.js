@@ -39,6 +39,13 @@ export default class Account extends Component {
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
+  
+
+  sendData(){
+    this.props.firebaseApp.database().ref('users/${user.firstName}/${user.key}').push({
+      firstName: this.state.info_first_name
+    })
+  }
 
   updateMenuState (isOpen) {
     this.setState({ isOpen })
