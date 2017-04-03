@@ -21,6 +21,10 @@ import Test from './src/pages/test'
 class dirtydrawz extends Component {
   constructor(props){
     super(props)
+    this.state={
+      id: '',
+      name: ''
+    }
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
@@ -39,12 +43,12 @@ class dirtydrawz extends Component {
     })
   }
   render(){
+    if(this.state.id){
       return(
         <Navigator
           initialRoute = {{
-            id: 'login',
-            name: 'login'
-          }}
+            id: this.state.id, 
+            name: this.state.name}}
           configureScene = {() => {
             return Navigator.SceneConfigs.FloatFromRight
           }}
@@ -87,15 +91,15 @@ class dirtydrawz extends Component {
                   navigator={navigator}
                   firebaseApp={firebaseApp} />
               )
-            }else{
-              return (
-                <View style = {styles.container}>
-                  <ActivityIndicator size = "large" />
-                </View>
-              )
             }
           }} />
-      )
+      )}else{
+        return (
+          <View style = {styles.container}>
+            <ActivityIndicator size = "large" />
+          </View>
+        )
+      }
   }
 }
 
