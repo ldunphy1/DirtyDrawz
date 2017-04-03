@@ -176,7 +176,10 @@ export default class Order extends Component {
       isOpen: false,
       selectedItem: item,
     })
-	this.props.navigator.replace({id:item})
+    if(item === 'logout'){
+      this.props.firebaseApp.auth().signOut()
+    }
+	    this.props.navigator.replace({id:item})
   }
 
   renderHeader(section){
