@@ -14,6 +14,7 @@ import SideMenu from 'react-native-side-menu'
 import Menu from '../components/SideMenu/Menu'
 import Topbar from '../components/SideMenu/Topbar'
 import ListItem from '../components/SideMenu/ListItem'
+import RegistrationItem from '../components/RegistrationItem'
 
 import Button from '../components/Button'
 
@@ -53,37 +54,64 @@ export default class Account extends Component {
 
   on_change_first_name (para) {
     this.setState({info_first_name: para})
-    this.props.msger_first_name(para)
+    //this.props.msger_first_name(para)
   }
 
   on_change_last_name (para) {
     this.setState({info_last_name: para})
-    this.props.msger_last_name(para)
+    //this.props.msger_last_name(para)
   }
 
   on_change_address (para) {
     this.setState({info_billing_address: para})
-    this.props.msger_address(para)
+    //this.props.msger_address(para)
   }
 
   on_change_email (para) {
     this.setState({info_Email: para})
-    this.props.msger_email(para)
+    //this.props.msger_email(para)
   }
 
   on_change_phone (para) {
     this.setState({info_phone: para})
-    this.props.msger_phone(para)
+    //this.props.msger_phone(para)
   }
 
   on_change_zipcode (para) {
     this.setState({info_zip: para})
-    this.props.msger_zipcode(para)
+    //this.props.msger_zipcode(para)
   }
 
   render () {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />
-    const content = this.state.loading ? <ActivityIndicator size = "large" /> :
+    const content = this.props.page_type=="reg" ? 
+    <SideMenu
+      menu={menu}
+      isOpen={this.state.isOpen}
+      onChange={(isOpen) => this.updateMenuState(isOpen)}>
+      <View style={styles.container}>
+        <Topbar caption='Signup' onPressMenuButton={()=>this.setState({isOpen: !this.state.isOpen})}></Topbar>
+        <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!') }} scrollEventThrottle={200}>
+          <View style={styles.block}>
+              <View>
+              <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
+              </View>
+                <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType='textinput' content={this.state.info_first_name} caption="First Name: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType='textinput' content={this.state.info_last_name} caption="Last Name:"/>
+                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType='textinput' content={this.state.info_Email} caption="E-mail: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>
+                <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
+                  onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
+          </View>
+          <View style={{flexDirection:'column',alignItems:'center',padding:20}}>
+          <Button title='Signup!' width={70} />
+          </View>
+      </ScrollView>
+      </View>
+    </SideMenu> 
+    :
     <SideMenu
       menu={menu}
       isOpen={this.state.isOpen}
@@ -99,6 +127,14 @@ export default class Account extends Component {
               <View>
               <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
               </View>
+                <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType={this.state.isEdit} content={this.state.info_first_name} caption="First Name: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType={this.state.isEdit} content={this.state.info_last_name} caption="Last Name:"/>
+                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType={this.state.isEdit} content={this.state.info_Email} caption="E-mail: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
+                <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
+                  onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
           <View style={styles.block}>
             <View>
