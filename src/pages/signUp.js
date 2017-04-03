@@ -22,13 +22,7 @@ export default class Signup extends Component{
             loading: false,
             email: '',
             password: '',
-            repassword: '',
-            firstName: '',
-            lastName: '',
-            phone: '',
-            address: '',
-            zipcode: '',
-            neighborhood: ''
+            repassword: ''
         }
     }
     signup(){
@@ -45,29 +39,17 @@ export default class Signup extends Component{
             this.props.firebaseApp.auth().createUserWithEmailAndPassword(
                 this.state.email,
                 this.state.password
-            ).catch((error) => {
+            ).then(() => {
+                alert('Your account was created!')
+                this.props.navigator.push({
+                    id: 'reg',
+                    name: 'reg'
+                })
+            }).catch((error) => {
                 this.setState({
                     loading: false
                 })
                 alert('Account creation failed: ' + error.message)
-            })
-            .then(()=>{
-                this.props.firebaseApp.database().ref('users').push({
-                    email: this.state.email,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    phone: this.state.phone,
-                    address: this.state.address,
-                    zipcode: this.state.zipcode,
-                    neighborhood: this.state.neighborhood
-                })
-            })
-            .then(() => {
-            alert('Your account was created!')
-            this.props.navigator.push({
-                id: 'reg',
-                name: 'reg'
-                })
             })
         }
     }
