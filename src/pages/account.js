@@ -53,6 +53,10 @@ export default class Account extends Component {
         zipcode: this.state.info_zip,
         neighborhood: this.state.servingArea        
     })
+    this.props.navigator.push({
+        id: 'order',
+        name: 'order'
+    })
   }
 
   updateMenuState (isOpen) {
