@@ -36,7 +36,8 @@ export default class Account extends Component {
       info_Email: this.props.email,
       info_phone: this.props.phone,
       info_billing_address: this.props.address,
-      info_zip: this.props.zipcode
+      info_zip: this.props.zipcode,
+      info_pre_email: this.props.email
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
@@ -57,6 +58,10 @@ export default class Account extends Component {
         id: 'order',
         name: 'order'
     })
+    if (this.state.info_pre_email != this.state.info_Email){
+      user.sendEmailVerification()
+      this.setState({info_pre_email:this.state.info_Email})
+    }
   }
 
   updateMenuState (isOpen) {

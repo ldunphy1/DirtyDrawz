@@ -40,7 +40,10 @@ export default class Signup extends Component{
                 this.state.email,
                 this.state.password
             ).then(() => {
-                alert('Your account was created!')
+                //alert('Your account was created!')
+                alert('Please check confirmation letter in your Email!');
+                var user = this.props.firebaseApp.auth().currentUser;
+                user.sendEmailVerification();
                 this.props.navigator.push({
                     id: 'reg',
                     name: 'reg'
