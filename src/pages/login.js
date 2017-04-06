@@ -61,18 +61,21 @@ export default class LoginPage extends Component{
       loading: true
     })
     this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((userData) => {
-      this.setState({
-        loading: false
-      })
-      this.props.navigator.push({
-        id: 'order',
-        name: 'order'
-      })
+      var user = this.props.firebaseApp.auth().currentUser
+      if(user.emailVerified === true){
+        this.props.navigator.push({
+          id: 'account',
+          name: 'account'
+        })
+      } else{
+        alert('Please verify email address')
+        this.props.navigator.push({
+          id: 'login',
+          name: 'login'
+        })
+      }
     }).catch((error) => {
-      this.setState({
-        loading: false
-      })
-      alert('Login Failed. Please try again' + error.message)
+      alert('Login Failed. Please try again. ' + error.message)
     })
   }
   gotoSignUp(){

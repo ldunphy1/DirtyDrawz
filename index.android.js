@@ -30,7 +30,7 @@ class dirtydrawz extends Component {
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
-      if(user != null){
+      if( (user != null) && (user.emailVerified === true) ){
         this.setState({
           id: 'order',
           name: 'order'
