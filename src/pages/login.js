@@ -8,7 +8,8 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  AsyncStorage
 } from 'react-native'
 
 import Button from '../components/Button'
@@ -20,9 +21,17 @@ export default class LoginPage extends Component{
     this.state = {
       loading: false,
       email: '',
-      password: ''
+      password: '',
+      registered: ''
     }
   }
+
+  componentWillMount(){
+      AsyncStorage.getItem("registered").then((value) => {
+          this.setState({"registered": value});
+      }).done();
+  }
+  
   render(){
     const content = this.state.loading ? <ActivityIndicator size = "large"/> :
     <KeyboardAvoidingView behavior="position" style={styles.container}>
@@ -63,10 +72,17 @@ export default class LoginPage extends Component{
     this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((userData) => {
       var user = this.props.firebaseApp.auth().currentUser
       if(user.emailVerified === true){
-        this.props.navigator.push({
-          id: 'account',
-          name: 'account'
-        })
+        if(this.state.registered === 'true'){
+          this.props.navigator.push({
+            id: 'account',
+            name: 'account'
+          })
+        } else{
+          this.props.navigator.push({
+            id: 'reg',
+            name: 'reg'
+          })
+        }
       } else{
         alert('Please verify email address')
         this.props.navigator.push({

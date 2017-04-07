@@ -6,7 +6,8 @@ import {
   Navigator,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native'
 
 import firebaseApp from './src/firebase/client'
@@ -30,7 +31,7 @@ class dirtydrawz extends Component {
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
-      if( (user != null) && (user.emailVerified === true) ){
+      if(user != null){
         this.setState({
           id: 'order',
           name: 'order'

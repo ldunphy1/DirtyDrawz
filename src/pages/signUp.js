@@ -9,7 +9,8 @@ import {
     TextInput,
     ActivityIndicator,
     TouchableHighlight,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    AsyncStorage
 } from 'react-native'
 
 import Button from '../components/Button'
@@ -43,6 +44,7 @@ export default class Signup extends Component{
                 alert('Please check confirmation letter in your Email!');
                 var user = this.props.firebaseApp.auth().currentUser;
                 user.sendEmailVerification();
+                AsyncStorage.setItem("registered", 'false');
                 this.props.navigator.push({
                     id: 'login',
                     name: 'login'
