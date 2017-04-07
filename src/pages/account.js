@@ -37,14 +37,15 @@ export default class Account extends Component {
       info_Email: '',
       info_phone: '',
       info_billing_address: '',
-      info_zip: '',
-      info_pre_email: this.props.email
+      info_zip: ''
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
+    this.createUser = this.createUser.bind(this)
+    this.updateUser = this.updateUser.bind(this)
+    this.getUserInfo = this.getUserInfo.bind(this)
   }
 
   componentDidMount(){
-    var userRef = this.props.firebaseApp.auth().currentUser
     this.getUserInfo()
   }
   
@@ -65,10 +66,18 @@ export default class Account extends Component {
         id: 'order',
         name: 'order'
     })
-    if (this.state.info_pre_email != this.state.info_Email){
-      user.sendEmailVerification()
-      this.setState({info_pre_email:this.state.info_Email})
-    }
+    // if ((this.state.info_Email != user.email) && (this.state.info_Email != '')){
+    //   user.updateEmail(this.state.info_Email).then(() =>{
+    //     user.sendEmailVerification()
+    //   }).catch((error) =>{
+    //     alert(error.message)
+    //   })
+    // }
+  }
+
+  updateUser(){
+    this.getUserInfo()
+    this.setState({isEdit:'text'})
   }
 
   getUserInfo(){
@@ -85,6 +94,18 @@ export default class Account extends Component {
       alert(this.state.info_first_name)    
     })
   }
+
+  // deleteUser(){
+  //   var user = this.props.firebaseApp.auth().currentUser
+  //   var credential = this.props.firebaseApp.auth().EmailAuthProvider.credential(user.email, userProvidedPassword)
+  //   user.delete().then(()=>{
+  //     user.reauthenticate(credential).then(()=>{
+  //       alert('success')
+  //     })
+  //     }).catch((error)=>{
+  //     alert(error.message)
+  //   })
+  // }
 
   updateMenuState (isOpen) {
     this.setState({ isOpen })
@@ -161,15 +182,15 @@ export default class Account extends Component {
         <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!') }} scrollEventThrottle={200}>
         <View style={{alignItems:'center',marginTop:15,marginLeft:15,marginRight:15}}>
           {(this.state.isEdit=='text')&&<Button title='Edit' onPress={()=>this.setState({isEdit:'textinput'})} width={70} />}
-          {(this.state.isEdit=='textinput')&&<Button title='Save' onPress={()=>this.setState({isEdit:'text'})} width={70} />}
+          {(this.state.isEdit=='textinput')&&<Button title='Save' onPress={()=>this.updateUser()} width={70} />}
         </View>
           <View style={styles.block}>
               <View>
-              <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
+                <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
               </View>
                 <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType={this.state.isEdit} content={this.state.info_first_name} caption="First Name: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType={this.state.isEdit} content={this.state.info_last_name} caption="Last Name:"/>
-                <RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType={this.state.isEdit} content={this.state.info_Email} caption="E-mail: "/>
+                {/*<RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType={this.state.isEdit} content={this.state.info_Email} caption="E-mail: "/>*/}
                 <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
@@ -184,6 +205,9 @@ export default class Account extends Component {
               dataSource={this.state.dataSource}
               renderRow={(rowData)=><ListItem caption={rowData}></ListItem>}
             />
+          </View>
+          <View style={{alignItems: 'center'}}>
+            <Button title='Delete Account'  width={100} />
           </View>
       </ScrollView>
       </View>
