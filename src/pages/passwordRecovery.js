@@ -7,82 +7,41 @@ import {
   Image,
   TextInput,
   AppRegistry,
-  ActivityIndicator
+  ActivityIndicator,
+  KeyboardAvoidingView
 } from 'react-native'
 
 import Button from '../components/Button'
 import styles from './styles'
 import Login from './login'
 
-//commented out for testing
-/*class PassRecoveryPage extends Component {
+export default class PassRecover extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      ID: ''
+      email: ''
     }
   }
 
   render () {
     return (
-      <Navigator
-        renderScene={this.renderScene.bind(this)}
-        />
-    )
-  }
-
-  renderScene (route, navigator) {
-    return (
-      <View style={styles.container}>
-        <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
-        <View style={styles.loginInfo}>
-          <TextInput
-            placeholder='Enter Username or Email'
-            style={styles.infoText}
-            onChangeText={(text) => this.setState({ID: text})}
-            value={this.state.ID}
-          />
-          <View style={styles.buttons}>
-            <Button title='Reset Password' onPress={this.gotoResetPass.bind(this)} />
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  gotoResetPass () {
-    this.props.navigator.push({
-      id: 'resetpass',
-      name: 'resetpass'
-    })
-  }
-}
-
-module.exports = PassRecoveryPage*/
-
-export default class PassRecover extends Component{
-  constructor(props){
-        super(props)
-        this.state = {
-            loading: false
-        }
-    }
-    render(){
-        const content = this.state.loading ? <ActivityIndicator size = "large"/> :
-        <View style = {styles.container}>
-          <View style={styles.buttons}>
-            <Button title='Go to Login' onPress={this.login.bind(this)} />
-          </View>
-        </View>
-        return(
-            <View style = {styles.container}>
-                {content}
+      <KeyboardAvoidingView behavior="position" style={styles.container}>
+        <View style={styles.container}>
+          <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
+          <View style={styles.loginInfo}>
+            <TextInput
+              placeholder='Enter Email Address'
+              style={styles.infoText}
+              onChangeText={(text) => this.setState({email: text})}
+              value={this.state.email}
+            />
+            <View style={styles.buttons}>
+              <Button title='Reset Password' onPress={this.gotoResetPass.bind(this)} />
             </View>
-        )
-    }
-    login(){
-      this.props.navigator.push({
-          component: Login
-      })
-    }
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    )
+  }
+
 }

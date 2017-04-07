@@ -91,7 +91,11 @@ export default class LoginPage extends Component{
         })
       }
     }).catch((error) => {
-      alert('Login Failed. Please try again. ' + error.message)
+      alert(error.message)
+      this.props.navigator.push({
+          id: 'login',
+          name: 'login'
+        })
     })
   }
   gotoSignUp(){
@@ -102,7 +106,8 @@ export default class LoginPage extends Component{
   }
   gotoPassRecover(){
     this.props.navigator.push({
-      component: PassRecover
+      id: 'passrecover',
+      name: 'passrecover'
     })
   }
 }
