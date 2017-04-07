@@ -32,20 +32,25 @@ export default class Account extends Component {
       selectedItem: 'About',
       servingArea: 'Allston',
       isEdit: 'text',
-      info_first_name: this.props.first_name,
-      info_last_name: this.props.last_name,
-      info_Email: this.props.email,
-      info_phone: this.props.phone,
-      info_billing_address: this.props.address,
-      info_zip: this.props.zipcode,
+      info_first_name: '',
+      info_last_name: '',
+      info_Email: '',
+      info_phone: '',
+      info_billing_address: '',
+      info_zip: '',
       info_pre_email: this.props.email
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
+
+  componentDidMount(){
+    var userRef = this.props.firebaseApp.auth().currentUser
+    this.getUserInfo()
+  }
   
   createUser(){
     var user = this.props.firebaseApp.auth().currentUser
-    this.props.firebaseApp.database().ref('users').push({
+    this.props.firebaseApp.database().ref('users/'+user.uid).set({
         email: user.email,
         uid: user.uid,
         firstName: this.state.info_first_name,
@@ -66,6 +71,21 @@ export default class Account extends Component {
     }
   }
 
+  getUserInfo(){
+    var userId = this.props.firebaseApp.auth().currentUser.uid
+    var userRef = this.props.firebaseApp.database().ref('/users/'+userId)
+    userRef.once('value', function(snap){
+      this.state=({info_first_name: snap.child('firstName').val()})
+      // this.state.info_last_name = snap.child('lastName').val()
+      // this.state.info_Email = snap.child('email').val()
+      // this.state.info_phone = snap.child('phone').val()
+      // this.state.info_billing_address = snap.child('phone').val()
+      // this.state.info_zip = snap.child('zipcode').val()
+      // this.state.servingArea = snap.child('neighborhood').val()  
+      alert(this.state.info_first_name)    
+    })
+  }
+
   updateMenuState (isOpen) {
     this.setState({ isOpen })
   }
@@ -79,32 +99,26 @@ export default class Account extends Component {
 
   on_change_first_name (para) {
     this.setState({info_first_name: para})
-    //this.props.msger_first_name(para)
   }
 
   on_change_last_name (para) {
     this.setState({info_last_name: para})
-    //this.props.msger_last_name(para)
   }
 
   on_change_address (para) {
     this.setState({info_billing_address: para})
-    //this.props.msger_address(para)
   }
 
   on_change_email (para) {
     this.setState({info_Email: para})
-    //this.props.msger_email(para)
   }
 
   on_change_phone (para) {
     this.setState({info_phone: para})
-    //this.props.msger_phone(para)
   }
 
   on_change_zipcode (para) {
     this.setState({info_zip: para})
-    //this.props.msger_zipcode(para)
   }
 
   render () {

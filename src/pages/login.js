@@ -74,8 +74,8 @@ export default class LoginPage extends Component{
       if(user.emailVerified === true){
         if(this.state.registered === 'true'){
           this.props.navigator.push({
-            id: 'account',
-            name: 'account'
+            id: 'order',
+            name: 'order'
           })
         } else{
           this.props.navigator.push({
