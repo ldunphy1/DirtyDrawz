@@ -44,16 +44,4 @@ export default class PassRecover extends Component {
     )
   }
 
-  gotoResetPass(){
-    this.props.firebaseApp.auth().sendPasswordResetEmail(this.state.email).then(() =>{
-      alert('Please check your email to reset your password')
-      this.props.navigator.push({
-        id: 'login',
-        name: 'login'
-      })
-    }).catch((error) =>{
-      alert(error.message)
-    })
-  }
-
 }
