@@ -7,7 +7,8 @@ import {
   ScrollView,
   ListView,
   Navigator,
-  AppRegistry
+  AppRegistry,
+  AsyncStorage
 } from 'react-native'
 
 import SideMenu from 'react-native-side-menu'
@@ -54,6 +55,7 @@ export default class Account extends Component {
         zipcode: this.state.info_zip,
         neighborhood: this.state.servingArea        
     })
+    AsyncStorage.setItem("registered", 'true');
     this.props.navigator.push({
         id: 'order',
         name: 'order'
@@ -115,7 +117,7 @@ export default class Account extends Component {
       isOpen={this.state.isOpen}
       onChange={(isOpen) => this.updateMenuState(isOpen)}>
       <View style={styles.container}>
-        <Topbar caption='Signup' onPressMenuButton={()=>this.setState({isOpen: !this.state.isOpen})}></Topbar>
+        <Topbar caption='Create Account' onPressMenuButton={()=>this.setState({isOpen: !this.state.isOpen})}></Topbar>
         <ScrollView automaticallyAdjustContentInsets={false} onScroll={() => { console.log('onScroll!') }} scrollEventThrottle={200}>
           <View style={styles.block}>
               <View>
@@ -124,13 +126,13 @@ export default class Account extends Component {
                 <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType='textinput' content={this.state.info_first_name} caption="First Name: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType='textinput' content={this.state.info_last_name} caption="Last Name:"/>               
                 <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>
                 <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
+                <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>  
                 <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
           <View style={{flexDirection:'column',alignItems:'center',padding:20}}>
-          <Button title='Signup!' width={70} onPress={()=>this.createUser()} />
+          <Button title='Create Account' width={70} onPress={()=>this.createUser()} />
           </View>
       </ScrollView>
       </View>

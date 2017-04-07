@@ -6,7 +6,8 @@ import {
   Navigator,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native'
 
 import firebaseApp from './src/firebase/client'
