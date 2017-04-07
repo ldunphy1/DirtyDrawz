@@ -53,7 +53,7 @@ export default class Signup extends Component{
                 this.setState({
                     loading: false
                 })
-                alert('Account creation failed: ' + error.message)
+                alert(error.message)
             })
         }
     }

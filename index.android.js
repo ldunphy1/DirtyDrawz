@@ -19,6 +19,7 @@ import Order from './src/pages/order'
 import styles from './src/pages/styles'
 import Faq from './src/pages/faq'
 import Pricing from './src/pages/pricing'
+import PassRecover from './src/pages/passwordRecovery'
 
 
 class dirtydrawz extends Component {
@@ -57,6 +58,13 @@ class dirtydrawz extends Component {
             return Navigator.SceneConfigs.FloatFromRight
           }}
           renderScene = {(route, navigator) => {
+            if(route.id === 'passrecover'){
+              return(
+                <PassRecover
+                  navigator={navigator}
+                  firebaseApp={firebaseApp} />
+              )
+            }
             if(route.id === 'logout'){
               return (
                 <Login
