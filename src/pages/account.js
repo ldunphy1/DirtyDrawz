@@ -10,7 +10,7 @@ import {
   AppRegistry,
   AsyncStorage
 } from 'react-native'
-
+import Prompt from 'react-native-prompt'
 import SideMenu from 'react-native-side-menu'
 import Menu from '../components/SideMenu/Menu'
 import ForbiddenMenu from '../components/SideMenu/ForbiddenMenu'
@@ -37,12 +37,15 @@ export default class Account extends Component {
       info_Email: '',
       info_phone: '',
       info_billing_address: '',
-      info_zip: ''
+      info_zip: '',
+      promptVisible:false,
+      password: ''
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
     this.createUser = this.createUser.bind(this)
     this.updateUser = this.updateUser.bind(this)
     this.getUserInfo = this.getUserInfo.bind(this)
+    this.deleteUser = this.deleteUser.bind(this)
   }
 
   componentDidMount(){
@@ -99,24 +102,25 @@ export default class Account extends Component {
         info_first_name: snap.child('firstName').val(),
         info_last_name: snap.child('lastName').val(),
         info_phone: snap.child('phone').val(),
-        info_billing_address: snap.child('phone').val(),
+        info_billing_address: snap.child('address').val(),
         info_zip: snap.child('zipcode').val(),
         servingArea: snap.child('neighborhood').val()  
       })
     })
   }
 
-  // deleteUser(){
-  //   var user = this.props.firebaseApp.auth().currentUser
-  //   var credential = this.props.firebaseApp.auth().EmailAuthProvider.credential(user.email, userProvidedPassword)
-  //   user.delete().then(()=>{
-  //     user.reauthenticate(credential).then(()=>{
-  //       alert('success')
-  //     })
-  //     }).catch((error)=>{
-  //     alert(error.message)
-  //   })
-  // }
+  deleteUser(value){
+    this.setState({promptVisible:false, password:JSON.stringify(value)})
+    var user = this.props.firebaseApp.auth().currentUser
+    var credentials = this.props.firebaseApp.auth.EmailAuthProvider.credential(user.email, this.state.password)
+    user.reauthenticate(credentials).then(()=>{
+      user.delete().then(()=>{
+        alert('success')
+      })
+      }).catch((error)=>{
+      alert(error.message)
+    })
+  }
 
   updateMenuState (isOpen) {
     this.setState({ isOpen })
@@ -218,7 +222,13 @@ export default class Account extends Component {
             />
           </View>
           <View style={{alignItems: 'center'}}>
-            <Button title='Delete Account'  width={100} />
+            <Prompt
+              title="Are you sure?"
+              placeholder="Confirm password"
+              visible={this.state.promptVisible}
+              onCancel={()=>this.setState({promptVisible:false})}
+              onSubmit={(value)=>this.deleteUser(value)} />
+            <Button title='Delete Account' onPress={()=>this.setState({promptVisible:true})} width={100} />
           </View>
       </ScrollView>
       </View>

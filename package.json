@@ -15,6 +15,7 @@
     "react-native-datepicker": "^1.4.2",
     "react-native-elements": "^0.6.4",
     "react-native-material-kit": "^0.3.3",
+    "react-native-prompt": "^1.0.0",
     "react-native-side-menu": "^0.20.1",
     "react-native-toggle": "^1.0.3",
     "react-native-vector-icons": "^3.0.0"
