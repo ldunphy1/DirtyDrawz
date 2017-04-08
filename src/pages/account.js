@@ -51,7 +51,7 @@ export default class Account extends Component {
   
   createUser(){
     var user = this.props.firebaseApp.auth().currentUser
-    this.props.firebaseApp.database().ref('users/'+user.uid).set({
+    this.props.firebaseApp.database().ref('/users/'+user.uid).set({
         email: user.email,
         uid: user.uid,
         firstName: this.state.info_first_name,
@@ -76,22 +76,33 @@ export default class Account extends Component {
   }
 
   updateUser(){
-    this.getUserInfo()
+    var user = this.props.firebaseApp.auth().currentUser
+    var userRef = this.props.firebaseApp.database().ref('/users/'+user.uid).remove()
+    this.props.firebaseApp.database().ref('users/'+user.uid).set({
+        email: user.email,
+        uid: user.uid,
+        firstName: this.state.info_first_name,
+        lastName: this.state.info_last_name,
+        phone: this.state.info_phone,
+        address: this.state.info_billing_address,
+        zipcode: this.state.info_zip,
+        neighborhood: this.state.servingArea        
+    })
     this.setState({isEdit:'text'})
   }
 
   getUserInfo(){
     var userId = this.props.firebaseApp.auth().currentUser.uid
     var userRef = this.props.firebaseApp.database().ref('/users/'+userId)
-    userRef.once('value', function(snap){
-      this.state=({info_first_name: snap.child('firstName').val()})
-      // this.state.info_last_name = snap.child('lastName').val()
-      // this.state.info_Email = snap.child('email').val()
-      // this.state.info_phone = snap.child('phone').val()
-      // this.state.info_billing_address = snap.child('phone').val()
-      // this.state.info_zip = snap.child('zipcode').val()
-      // this.state.servingArea = snap.child('neighborhood').val()  
-      alert(this.state.info_first_name)    
+    userRef.once('value', (snap)=>{
+      this.setState({
+        info_first_name: snap.child('firstName').val(),
+        info_last_name: snap.child('lastName').val(),
+        info_phone: snap.child('phone').val(),
+        info_billing_address: snap.child('phone').val(),
+        info_zip: snap.child('zipcode').val(),
+        servingArea: snap.child('neighborhood').val()  
+      })
     })
   }
 
