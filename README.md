@@ -24,7 +24,9 @@
    * This should open up an iOS emulator with the application
    * (Note: When we ran this app on a MacBook Pro we ran into the issue that our styling was off and some of the dependencies we    (downloaded failed to work. This may not be a general issue.) 
 
-### after you get into there...
-1. Signup with your valid Email, otherwise you won't be able to get into the other pages.
-2. DO NOT type into your valid personal information while register, because the function are still in test. We're not responsible for any private leaks at this time.
-3. As we haven't achieved the account delete, please do not register again and again. This may mess the database storage.
+### after you get in there...
+As this App using Firebase, you should have your own Firebase project before build the App. Instructions are:
+  * Create Firebase project in this link: https://firebase.google.com/?utm_source=google&utm_medium=cpc&utm_campaign=1001467%20%7C%20Firebase*%20Brand%20GENERIC%20%7C%20US%20%7C%20en%20%7C%20Desk%2BTab%2BMobile%20%7C%20Text%20%7C%20BKWS%20%5B2017%5D&utm_term=%7Bkeyword%7D&gclid=Cj0KEQjwicfHBRCh6KaMp4-asKgBEiQA8GH2x7kT3eJecI6sxaO75QMNsIcM5xO3QBSLp_V4u6RI3NoaAgYh8P8HAQ
+  * Find your Firebase variable in your project and use them to update the .env-SAMPLE file in the main folder.
+  * Change the name ".env-SAMPLE" into ".env".
+  * Play around!
