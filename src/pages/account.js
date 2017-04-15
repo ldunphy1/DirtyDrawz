@@ -8,9 +8,10 @@ import {
   ListView,
   Navigator,
   AppRegistry,
-  AsyncStorage
+  AsyncStorage,
+  Picker,
 } from 'react-native'
-
+const Item = Picker.Item
 import SideMenu from 'react-native-side-menu'
 import Menu from '../components/SideMenu/Menu'
 import ForbiddenMenu from '../components/SideMenu/ForbiddenMenu'
@@ -30,7 +31,7 @@ export default class Account extends Component {
       ]),
       isOpen: false,
       selectedItem: 'About',
-      servingArea: 'Allston',
+      servingArea: '',
       isEdit: 'text',
       info_first_name: '',
       info_last_name: '',
@@ -162,8 +163,15 @@ export default class Account extends Component {
                 <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
-                <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
+                <RegistrationItem ItemType={this.state.isEdit} pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.selectedItem} content={this.state.servingArea}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
+                {/*<Picker style={{height:30, width:120}}
+                  selectedValue={this.state.servingArea}
+                  onValueChange={this.onValueChange.bind(this, 'servingArea')}
+                  mode="dropdown">
+                  <Item label="Allston" value="Al" />
+                  <Item label="Cambridge" value="Ca" />
+                </Picker>*/}
           </View>
           <View style={styles.block}>
             <View>
@@ -185,6 +193,11 @@ export default class Account extends Component {
           {content}
       </View>
     )
+  }
+  onValueChange = (key: string, value: string) => {
+    const newState = {};
+    newState[key] = value;
+    this.setState(newState);
   }
 }
 

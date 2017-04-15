@@ -6,7 +6,8 @@ export default class RegistrationItem extends Component {
     super(props);
     this.state={
       text: "",
-      color: 'red'
+      color: 'red',
+      servingArea: 'Al',
     }
   }
 
@@ -21,8 +22,44 @@ export default class RegistrationItem extends Component {
   }
 
   render() {
-    if (this.props.ItemType=="textinput")
+    if (this.props.ItemType=="text")
       return (
+      <View style={styles.container}>
+        <View style={styles.caption}>
+          <Text style={{ color:'rgba(0,0,0,1)'}}>
+            {this.props.caption}
+          </Text>
+        </View>
+        <View style={{flex:100}}>
+                <Text style={{ color:'rgba(0,0,0,1)'}}>
+                  {this.props.content}
+                </Text>
+          </View>
+        </View>
+      )
+    else if (this.props.pickerFlag=="T")
+      return (
+      <View style={styles.container}>
+        <View style={styles.caption}>
+          <Text style={{ color:'rgba(0,0,0,1)'}}>
+            {this.props.caption}
+          </Text>
+        </View>
+        <View style={{flex:100}}>
+              <View style={styles.pickerContainer}>
+                <Picker style={{height:30, width:120}}
+                selectedValue={this.state.servingArea}
+                onValueChange={this.onValueChange.bind(this, 'servingArea')}
+                mode="dropdown">
+                <Item label="Allston" value="Allston" />
+                <Item label="Cambridge" value="Cambridge" />
+                </Picker>
+              </View>
+          </View>
+      </View>
+      )
+    else
+    return (
         <View style={styles.container}>
           <View style={styles.caption}>
             <Text style={{ color:'rgba(0,0,0,1)'}}>
@@ -39,42 +76,12 @@ export default class RegistrationItem extends Component {
             </View>
         </View>
       )
-    else if (this.props.ItemType=="dropdown")
-      return (
-      <View style={styles.container}>
-        <View style={styles.caption}>
-          <Text style={{ color:'rgba(0,0,0,1)'}}>
-            {this.props.caption}
-          </Text>
-        </View>
-        <View style={{flex:100}}>
-              <View style={styles.pickerContainer}>
-                <Picker style={{height:30, width:120}}
-                selectedValue={this.props.servingArea}
-                onValuechange={(_,itemValue)=>{this.props.onSelectChange(itemValue)}}
-                mode="dropdown">
-                <Item label="Allston" value="Ca" />
-                <Item label="Cambridge" value="As" />
-                </Picker>
-              </View>
-          </View>
-      </View>
-      )
-    else
-    return (
-      <View style={styles.container}>
-        <View style={styles.caption}>
-          <Text style={{ color:'rgba(0,0,0,1)'}}>
-            {this.props.caption}
-          </Text>
-        </View>
-        <View style={{flex:100}}>
-                <Text style={{ color:'rgba(0,0,0,1)'}}>
-                  {this.props.content}
-                </Text>
-          </View>
-        </View>
-      )
+  }
+  onValueChange = (key: string, value: string) => {
+    const newState = {}
+    newState[key] = value
+    this.setState(newState)
+    this.props.onSelectChange(value)
   }
 }
 
