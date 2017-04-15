@@ -207,13 +207,6 @@ export default class Account extends Component {
                 <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
                 <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
-                  <Picker style={{height:30, width:120}}
-                selectedValue={this.props.servingArea}
-                onValuechange={(_,itemValue)=>{this.props.onSelectChange(itemValue)}}
-                mode="dropdown">
-                <Item label="Allston" value="Ca" />
-                <Item label="Cambridge" value="As" />
-                </Picker>
           </View>
           <View style={styles.block}>
             <View>
