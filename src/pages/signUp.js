@@ -63,6 +63,7 @@ export default class Signup extends Component{
             <View style = { styles.container } >
                 <Image source = { require('./resources/Logo.jpg') } style = { styles.logos }/> 
                 <View style = { styles.loginInfo } >
+                    <View>
                     <TextInput 
                     placeholder = 'Email address'
                     style = { styles.infoText }
@@ -81,6 +82,7 @@ export default class Signup extends Component{
                         onChangeText = {(para) => this.setState({ repassword: para }) }
                         value = { this.state.repassword }
                     />
+                    </View>
                     <View style = { styles.buttons } >
                         <Button title = 'Agree & Register' onPress = { this.signup.bind(this) }/>
                     </View> 
