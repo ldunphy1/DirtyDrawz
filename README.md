@@ -23,3 +23,8 @@
    * Run the code in xCode by opening up the project within XCode and then hitting the CMD+R keys.
    * This should open up an iOS emulator with the application
    * (Note: When we ran this app on a MacBook Pro we ran into the issue that our styling was off and some of the dependencies we    (downloaded failed to work. This may not be a general issue.) 
+
+### after you get into there...
+1. Signup with your valid Email, otherwise you won't be able to get into the other pages.
+2. DO NOT type into your valid personal information while register, because the function are still in test. We're not responsible for any private leaks at this time.
+3. As we haven't achieved the account delete, please do not register again and again. This may mess the database storage.
