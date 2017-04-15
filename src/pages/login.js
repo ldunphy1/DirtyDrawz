@@ -38,7 +38,8 @@ export default class LoginPage extends Component{
       <View style={styles.container}>
           <Image source={require('./resources/Logo.jpg')} style={styles.logos} />
           <View style={styles.loginInfo}>
-            <TextInput
+            <View>
+              <TextInput
               placeholder='Email address'
               style={styles.infoText}
               onChangeText={(para) => this.setState({email:para})}
@@ -51,6 +52,7 @@ export default class LoginPage extends Component{
               value={this.state.password}
               secureTextEntry={true}
             />
+            </View>
             <View style={styles.buttons}>
               <Button title='Login' onPress={this.login.bind(this)} />
               <Button title='Signup' onPress={this.gotoSignUp.bind(this)} />

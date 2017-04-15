@@ -55,9 +55,9 @@ var styles = StyleSheet.create({
   
   loginInfo: {
 	  flexDirection: 'column',
-	  alignItems: 'center',
+		alignItems: 'center',
 		justifyContent: 'center',
-	  width:window.width/1.2,
+	  width: window.width/1.2,
   },
   
   infoText: {
