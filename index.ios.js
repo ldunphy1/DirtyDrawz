@@ -6,8 +6,7 @@ import {
   Navigator,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet,
-  AsyncStorage
+  StyleSheet
 } from 'react-native'
 
 import firebaseApp from './src/firebase/client'
@@ -19,8 +18,6 @@ import Order from './src/pages/order'
 import styles from './src/pages/styles'
 import Faq from './src/pages/faq'
 import Pricing from './src/pages/pricing'
-import PassRecover from './src/pages/passwordRecovery'
-
 
 class dirtydrawz extends Component {
   constructor(props){
@@ -58,13 +55,6 @@ class dirtydrawz extends Component {
             return Navigator.SceneConfigs.FloatFromRight
           }}
           renderScene = {(route, navigator) => {
-            if(route.id === 'passrecover'){
-              return(
-                <PassRecover
-                  navigator={navigator}
-                  firebaseApp={firebaseApp} />
-              )
-            }
             if(route.id === 'logout'){
               return (
                 <Login
@@ -128,6 +118,7 @@ class dirtydrawz extends Component {
         )
       }
   }
+ 
 }
 
 AppRegistry.registerComponent('dirtydrawz', () => dirtydrawz)
