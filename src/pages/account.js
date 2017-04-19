@@ -8,17 +8,18 @@ import {
   ListView,
   Navigator,
   AppRegistry,
-  AsyncStorage
+  AsyncStorage,
+  Picker,
 } from 'react-native'
-import Prompt from 'react-native-prompt'
 import SideMenu from 'react-native-side-menu'
 import Menu from '../components/SideMenu/Menu'
 import ForbiddenMenu from '../components/SideMenu/ForbiddenMenu'
 import Topbar from '../components/SideMenu/Topbar'
 import ListItem from '../components/SideMenu/ListItem'
 import RegistrationItem from '../components/RegistrationItem'
-
 import Button from '../components/Button'
+
+const Item = Picker.Item
 
 export default class Account extends Component {
   constructor (props) {
@@ -30,7 +31,7 @@ export default class Account extends Component {
       ]),
       isOpen: false,
       selectedItem: 'About',
-      servingArea: 'Allston',
+      servingArea: '',
       isEdit: 'text',
       info_first_name: '',
       info_last_name: '',
@@ -69,13 +70,6 @@ export default class Account extends Component {
         id: 'order',
         name: 'order'
     })
-    // if ((this.state.info_Email != user.email) && (this.state.info_Email != '')){
-    //   user.updateEmail(this.state.info_Email).then(() =>{
-    //     user.sendEmailVerification()
-    //   }).catch((error) =>{
-    //     alert(error.message)
-    //   })
-    // }
   }
 
   updateUser(){
@@ -108,20 +102,6 @@ export default class Account extends Component {
       })
     })
   }
-
-  deleteUser(value){
-    this.setState({promptVisible:false, password:JSON.stringify(value)})
-    var user = this.props.firebaseApp.auth().currentUser
-    var credentials = this.props.firebaseApp.auth.EmailAuthProvider.credential(user.email, this.state.password)
-    user.reauthenticate(credentials).then(()=>{
-      user.delete().then(()=>{
-        alert('success')
-      })
-      }).catch((error)=>{
-      alert(error.message)
-    })
-  }
-
   updateMenuState (isOpen) {
     this.setState({ isOpen })
   }
@@ -131,30 +111,6 @@ export default class Account extends Component {
       selectedItem: item
     })
     this.props.navigator.replace({id: item})
-  }
-
-  on_change_first_name (para) {
-    this.setState({info_first_name: para})
-  }
-
-  on_change_last_name (para) {
-    this.setState({info_last_name: para})
-  }
-
-  on_change_address (para) {
-    this.setState({info_billing_address: para})
-  }
-
-  on_change_email (para) {
-    this.setState({info_Email: para})
-  }
-
-  on_change_phone (para) {
-    this.setState({info_phone: para})
-  }
-
-  on_change_zipcode (para) {
-    this.setState({info_zip: para})
   }
 
   render () {
@@ -173,11 +129,11 @@ export default class Account extends Component {
               <View>
               <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
               </View>
-                <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType='textinput' content={this.state.info_first_name} caption="First Name: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType='textinput' content={this.state.info_last_name} caption="Last Name:"/>               
-                <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>  
+                <RegistrationItem msger = {(para)=>this.setState({info_first_name: para})} ItemType='textinput' content={this.state.info_first_name} caption="First Name: "/>
+                <RegistrationItem msger = {(para)=>this.setState({info_last_name: para})} ItemType='textinput' content={this.state.info_last_name} caption="Last Name:"/>               
+                <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
+                <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
+                <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>  
                 <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
@@ -203,14 +159,21 @@ export default class Account extends Component {
               <View>
                 <Text style={{fontFamily:'Cochin',fontSize:25}}>Basic Infomation</Text>
               </View>
-                <RegistrationItem msger = {(para)=>this.on_change_first_name(para)} ItemType={this.state.isEdit} content={this.state.info_first_name} caption="First Name: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_last_name(para)} ItemType={this.state.isEdit} content={this.state.info_last_name} caption="Last Name:"/>
+                <RegistrationItem msger = {(para)=>this.setState({info_first_name: para})} ItemType={this.state.isEdit} content={this.state.info_first_name} caption="First Name: "/>
+                <RegistrationItem msger = {(para)=>this.setState({info_last_name: para})} ItemType={this.state.isEdit} content={this.state.info_last_name} caption="Last Name:"/>
                 {/*<RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType={this.state.isEdit} content={this.state.info_Email} caption="E-mail: "/>*/}
-                <RegistrationItem msger = {(para)=>this.on_change_phone(para)} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_zipcode(para)} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
-                <RegistrationItem msger = {(para)=>this.on_change_address(para)} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
-                <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
+                <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
+                <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
+                <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
+                <RegistrationItem ItemType={this.state.isEdit} pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.selectedItem} content={this.state.servingArea}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
+                {/*<Picker style={{height:30, width:120}}
+                  selectedValue={this.state.servingArea}
+                  onValueChange={this.onValueChange.bind(this, 'servingArea')}
+                  mode="dropdown">
+                  <Item label="Allston" value="Al" />
+                  <Item label="Cambridge" value="Ca" />
+                </Picker>*/}
           </View>
           <View style={styles.block}>
             <View>
@@ -238,6 +201,11 @@ export default class Account extends Component {
           {content}
       </View>
     )
+  }
+  onValueChange = (key: string, value: string) => {
+    const newState = {};
+    newState[key] = value;
+    this.setState(newState);
   }
 }
 

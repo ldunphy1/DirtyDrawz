@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native'
-
 import styles from './styles'
 
 class MenuButton extends Component {
@@ -42,7 +41,7 @@ export default class Topbar extends Component {
             width: 32,
             height: 32
           }}>
-          <Image source={require('../assets/menu.png')} style={{width: 32, height: 32}} />
+          <Image source={require('../assets/menu.png')} style={{width: 40, height: 40}}/>
         </MenuButton>
         <Text style={{
           color: '#fff',
