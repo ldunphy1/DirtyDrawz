@@ -62,6 +62,9 @@ export default class Account extends Component {
         zipcode: this.state.info_zip,
         neighborhood: this.state.servingArea        
     })
+    this.props.firebaseApp.database().ref('/order/'+user.uid).set({
+        total_order_number: 0     
+    })
     AsyncStorage.setItem("registered", 'true');
     this.props.navigator.push({
         id: 'order',
@@ -72,7 +75,7 @@ export default class Account extends Component {
   updateUser(){
     var user = this.props.firebaseApp.auth().currentUser
     var userRef = this.props.firebaseApp.database().ref('/users/'+user.uid).remove()
-    this.props.firebaseApp.database().ref('users/'+user.uid).set({
+    this.props.firebaseApp.database().ref('/users/'+user.uid).set({
         email: user.email,
         uid: user.uid,
         firstName: this.state.info_first_name,
@@ -86,14 +89,14 @@ export default class Account extends Component {
   }
 
   getUserInfo(){
-    var userId = this.props.firebaseApp.auth().currentUser.uid
+    var userId = this.props.firebaseApp.auth().currentUser.uid;
     var userRef = this.props.firebaseApp.database().ref('/users/'+userId)
     userRef.once('value', (snap)=>{
       this.setState({
         info_first_name: snap.child('firstName').val(),
         info_last_name: snap.child('lastName').val(),
         info_phone: snap.child('phone').val(),
-        info_billing_address: snap.child('phone').val(),
+        info_billing_address: snap.child('address').val(),
         info_zip: snap.child('zipcode').val(),
         servingArea: snap.child('neighborhood').val()  
       })
@@ -132,7 +135,7 @@ export default class Account extends Component {
                 <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>  
-                <RegistrationItem ItemType="dropdown" caption="City/Neighborhod: " servingArea={this.state.selectedItem}
+                <RegistrationItem ItemType='dropdown' pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
           <View style={{flexDirection:'column',alignItems:'center',padding:20}}>
@@ -163,15 +166,8 @@ export default class Account extends Component {
                 <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
-                <RegistrationItem ItemType={this.state.isEdit} pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.selectedItem} content={this.state.servingArea}
+                <RegistrationItem ItemType={this.state.isEdit} pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
-                {/*<Picker style={{height:30, width:120}}
-                  selectedValue={this.state.servingArea}
-                  onValueChange={this.onValueChange.bind(this, 'servingArea')}
-                  mode="dropdown">
-                  <Item label="Allston" value="Al" />
-                  <Item label="Cambridge" value="Ca" />
-                </Picker>*/}
           </View>
           <View style={styles.block}>
             <View>

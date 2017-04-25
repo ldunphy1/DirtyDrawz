@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ListView,
+  AsyncStorage,
   Navigator
 } from 'react-native'
 
@@ -90,7 +91,7 @@ class DryCleanItem extends Component {
         style={styles.DCITEM}>
         <Image source={this.props.imageSrc} style={styles.DCITEM}/>
       </TouchableOpacity>
-        {(this.props.times!=0)&&<View style={{flexDirection:'row', alignItems:'center',justifyContent:'center', position:'absolute',height:20,width:20,borderRadius:10,backgroundColor:'#ff5522',top:0,right:0}}>
+        {(this.props.times!=0)&&<View style={{flexDirection:'row', alignItems:'center',justifyContent:'center', position:'absolute',height:30,width:30,borderRadius:15,backgroundColor:'#ff5522',top:0,right:0}}>
           <Text onPress={()=>this.handlePress2()} style={{color: '#fff',fontSize: 15,fontWeight:'bold'}}>{this.props.times}</Text>
         </View>}
         <Text style={{fontSize:15}}>{this.props.name}</Text>
@@ -130,6 +131,7 @@ export default class Order extends Component {
       dataSource:ds.cloneWithRows([
         'package 1','package 2','Card 1','Card 2'
       ]),
+      servingArea:'',
       minPickup:tmp1,
       minDropoff:tmp2,
       datePickup:tmp1,
@@ -140,19 +142,24 @@ export default class Order extends Component {
       Cold:false,
       Warm:false,
       Hot:false,
+      wash_temperature:'',
 
       Low:false,
       Medium:false,
       High:false,
+      dry_setting:'',
 
       FNo:false,
       FYes:false,
+      fragrance_free:'',
 
       ANo:false,
       AYes:false,
+      add_bleach:'',
 
       SNo:false,
       SYes:false,
+      sort_colors:'',
 
       Suit:0,
       Pants:0,
@@ -160,13 +167,22 @@ export default class Order extends Component {
       Jacket:0,
       Blouse:0,
       Goose:0,
-      info_billing_address:'508 cambridge street'
+      info_billing_address:'',
+      note:''
     }
-
     this.updateMenuState = this.updateMenuState.bind(this)
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this)
   }
-
+  componentWillMount(){
+    var userId = this.props.firebaseApp.auth().currentUser.uid;
+    var userRef = this.props.firebaseApp.database().ref('/users/'+userId)
+    userRef.once('value', (snap)=>{
+      this.setState({
+        info_billing_address: snap.child('address').val(),
+        servingArea: snap.child('neighborhood').val()  
+      })
+    })
+  }
   updateMenuState (isOpen) {
     this.setState({ isOpen })
   }
@@ -181,7 +197,16 @@ export default class Order extends Component {
     }
 	    this.props.navigator.replace({id:item})
   }
-
+  onClear(){
+    this.setState({ 
+      Suit:0,
+      Pants:0,
+      Shirt:0,
+      Jacket:0,
+      Blouse:0,
+      Goose:0
+       })
+  }
   renderHeader(section){
     if ((this.state.Cold||this.state.Warm||this.state.Hot
       ||this.state.Low||this.state.Medium||this.state.High
@@ -279,6 +304,7 @@ export default class Order extends Component {
           <DryCleanItem imageSrc={require('../components/assets/Blouse.png')} times={this.state.Blouse} onPress={()=>this.setState({Blouse:this.state.Blouse+1})} onPress2={()=>this.setState({Blouse:this.state.Blouse-1})} name='Blouse' price='15.99'/>
           <DryCleanItem imageSrc={require('../components/assets/Goose.png')} times={this.state.Goose} onPress={()=>this.setState({Goose:this.state.Goose+1})} onPress2={()=>this.setState({Goose:this.state.Goose-1})} name='Goose' price='13.99'/>
         </View>
+        <Button title='All Clear' onPress={ this.onClear.bind(this)} />
       </View>
       )
   }
@@ -289,6 +315,82 @@ export default class Order extends Component {
 		/>
 		)
   }
+
+  onPlaceOrder(){
+    if (this.state.Cold)
+      this.setState({wash_temperature:'cold'});
+    else if (this.state.Warm)
+      this.setState({wash_temperature:'warm'});
+    else if (this.state.Hot)
+      this.setState({wash_temperature:'hot'});
+    if (this.state.Low)
+      this.setState({dry_setting:'low'});
+    else if (this.state.Medium)
+      this.setState({dry_setting:'medium'});
+    else if (this.state.High)
+      this.setState({dry_setting:'high'});
+    if (this.state.FYes)
+      this.setState({fragrance_free:'yes'});
+    else if (this.state.FNo)
+      this.setState({fragrance_free:'no'});
+    if (this.state.AYes)
+      this.setState({add_bleach:'yes'});
+    else if (this.state.ANo)
+      this.setState({add_bleach:'no'});
+    if (this.state.SYes)
+      this.setState({sort_colors:'yes'});
+    else if (this.state.SNo)
+      this.setState({sort_colors:'no'});
+
+    AsyncStorage.setItem("info_billing_address", this.state.info_billing_address);
+    AsyncStorage.setItem("datePickup", this.state.datePickup);
+    AsyncStorage.setItem("wash_temperature", this.state.wash_temperature);
+    AsyncStorage.setItem("dry_setting", this.state.dry_setting);
+    AsyncStorage.setItem("fragrance_free", this.state.fragrance_free);
+    AsyncStorage.setItem("add_bleach", this.state.add_bleach);
+    AsyncStorage.setItem("sort_colors", this.state.sort_colors);
+    var tmp = this.state.Suit;
+    AsyncStorage.setItem("Suit", this.state.Suit.toString());
+    /*var order_info = {
+      info_billing_address:this.state.info_billing_address,
+      datePickup:this.state.datePickup,
+      dateDropoff:this.state.dateDropoff,
+      wash_temperature:this.state.wash_temperature,
+      dry_setting:this.state.dry_setting,
+      fragrance_free:this.state.fragrance_free,
+      add_bleach:this.state.add_bleach,
+      sort_colors:this.state.sort_colors,
+      Suit:this.state.Suit,
+      Pants:this.state.Pants,
+      Shirt:this.state.Shirt,
+      Jacket:this.state.Jacket,
+      Blouse:this.state.Blouse,
+      Goose:this.state.Goose,
+      note:this.state.note
+    }
+    const order_info = {};
+    order_info[info_billing_address] = this.state.info_billing_address;
+    order_info[datePickup] = this.state.datePickup;
+    order_info[dateDropoff] = this.state.dateDropoff;
+    order_info[wash_temperature] = this.state.wash_temperature;
+    order_info[dry_setting] = this.state.dry_setting;
+    order_info[fragrance_free] = this.state.fragrance_free;
+    order_info[add_bleach] = this.state.add_bleach;
+    order_info[sort_colors] = this.state.sort_colors;
+    order_info[Suit] = this.state.Suit;
+    order_info[Pants] = this.state.Pants;
+    order_info[Shirt] = this.state.Shirt;
+    order_info[Jacket] = this.state.Jacket;
+    order_info[Blouse] = this.state.Blouse;
+    order_info[Goose] = this.state.Goose;
+    order_info[note] = this.state.note;*/
+
+    this.props.navigator.push({
+        id: 'orderconfirm',
+        name: 'orderconfirm'
+    });
+  }
+
   computeTime(date, plusHours){
     if (date == '')
       return ''
@@ -334,7 +436,6 @@ export default class Order extends Component {
   }
   renderScene(route,navigator)	{
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />
-
     return (
     <SideMenu
         menu={menu}
@@ -391,10 +492,12 @@ export default class Order extends Component {
                 <Text style={styles.regularText}>{this.state.dateDropoffTo}</Text>
               </View>
             </View>
-          <RegistrationItem ItemType='textinput' content={this.state.info_billing_address} caption='Where? '/>
-          <RegistrationItem ItemType='textinput' content='' caption='Note: '/>
-          <View style={{margin:30}}>
-          <Button width={150} title='Place Order' onpress={'()' ==''> {}}/>
+          <RegistrationItem ItemType='dropdown' pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
+                  onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
+          <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType='textinput' content={this.state.info_billing_address} caption='Where? '/>
+          <RegistrationItem msger = {(para)=>this.setState({note: para})} ItemType='textinput' content='' caption='Note: '/>
+          <View style = { styles.buttons }>
+            <Button title='Continue' onPress={ this.onPlaceOrder.bind(this)} />
           </View>
           </View>
         </ScrollView>

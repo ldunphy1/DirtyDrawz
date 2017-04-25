@@ -68,10 +68,9 @@ export default class RegistrationItem extends Component {
           </View>
           <View style={{flex:100}}>
             <TextInput
-                placeholder={this.props.content}
                 style={{flex: 100}}
                 onChangeText={(para) => this.on_change_content(para)}
-                value={this.state.text}
+                value={this.props.content}
               />
             </View>
         </View>

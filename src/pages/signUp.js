@@ -32,9 +32,8 @@ export default class Signup extends Component{
         })
         if(this.state.password != this.state.repassword){
             alert('Passwords do not match!')
-            this.props.navigator.push({
-                id: 'signup',
-                name: 'signup'
+            this.props.navigator.replace({
+                id: 'signup'
             })
         }else{
             this.props.firebaseApp.auth().createUserWithEmailAndPassword(
@@ -45,10 +44,7 @@ export default class Signup extends Component{
                 var user = this.props.firebaseApp.auth().currentUser;
                 user.sendEmailVerification();
                 AsyncStorage.setItem("registered", 'false');
-                this.props.navigator.push({
-                    id: 'login',
-                    name: 'login'
-                })
+                this.props.navigator.pop();
             }).catch((error) => {
                 this.setState({
                     loading: false

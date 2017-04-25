@@ -48,6 +48,7 @@ export default class OrderConfirm extends Component{
                 Blouse:state.Blouse,
                 Goose:state.Goose,
                 note:state.note */
+                
   componentWillMount(){
     AsyncStorage.getItem("info_billing_address").then((value) => {this.setState({info_billing_address:value});}).done();
     AsyncStorage.getItem("datePickup").then((value) => {this.setState({datePickup:value});}).done();

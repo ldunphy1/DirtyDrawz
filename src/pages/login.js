@@ -24,6 +24,8 @@ export default class LoginPage extends Component{
       password: '',
       registered: ''
     }
+    
+    //AsyncStorage.setItem('address', 'you yong!');
   }
 
   componentWillMount(){
@@ -72,42 +74,37 @@ export default class LoginPage extends Component{
       loading: true
     })
     this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((userData) => {
-      var user = this.props.firebaseApp.auth().currentUser
+      var user = this.props.firebaseApp.auth().currentUser;
       if(user.emailVerified === true){
         if(this.state.registered === 'true'){
           this.props.navigator.push({
-            id: 'order',
-            name: 'order'
+            id: 'order'
           })
         } else{
-          this.props.navigator.push({
-            id: 'reg',
-            name: 'reg'
+          this.props.navigator.replace({
+            id: 'reg'
           })
         }
       } else{
         alert('Please verify email address')
-        this.props.navigator.push({
-          id: 'login',
-          name: 'login'
+        this.props.navigator.replace({
+          id: 'login'
         })
       }
     }).catch((error) => {
       alert(error.message)
-      this.props.navigator.push({
-          id: 'login',
-          name: 'login'
+      this.props.navigator.replace({
+          id: 'login'
         })
     })
   }
   gotoSignUp(){
     this.props.navigator.push({
-      id: 'signup',
-      name: 'signup'
+      id: 'signup'
     })
   }
   gotoPassRecover(){
-    this.props.navigator.push({
+    this.props.navigator.replace({
       id: 'passrecover',
       name: 'passrecover'
     })
