@@ -160,7 +160,6 @@ export default class OrderConfirm extends Component{
     this.props.navigator.pop()
   }
   placeOrder(){
-    console.log("hello")
     var user = this.props.firebaseApp.auth().currentUser
     var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid)
     userRef.set({
@@ -188,6 +187,6 @@ export default class OrderConfirm extends Component{
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
     })
-    //this.props.navigator.pop();
+    this.props.navigator.pop();
   }
 }
