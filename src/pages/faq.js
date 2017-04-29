@@ -46,7 +46,7 @@ const SECTIONS = [
   }
 ]
 
-module.exports = class FAQPage extends Component {
+module.exports = class FAQ extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -97,7 +97,7 @@ module.exports = class FAQPage extends Component {
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={styles.container}>
-          <Topbar caption='Account' onPressMenuButton={() => this.setState({isOpen: !this.state.isOpen})} />
+          <Topbar caption='FAQ' onPressMenuButton={() => this.setState({isOpen: !this.state.isOpen})} />
           <Accordion
             sections={SECTIONS}
             renderHeader={this._renderHeader}
