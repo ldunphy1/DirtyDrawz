@@ -165,7 +165,6 @@ export default class OrderConfirm extends Component{
     var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid)
     userRef.set({
         total_order_number:(this.state.total_order_number + 1)
-
     })
     var order = this.state.total_order_number
     userRef.child(order.toString()).set({
