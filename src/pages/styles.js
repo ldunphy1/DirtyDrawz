@@ -23,7 +23,7 @@ var styles = StyleSheet.create({
 	collapiseItem:{
     flexDirection:'column',
     backgroundColor:'#e9f2f7',
-    minHeight:150,
+    minHeight:330,
     padding:10,
   },
   DCITEM:{
@@ -78,7 +78,14 @@ var styles = StyleSheet.create({
 	  width:window.width/2,
 	  height: window.width/2.5,  
   },
-  
+  block:{
+    flexDirection:'column',
+    margin:15,
+    padding:10,
+    alignItems:'center',
+    backgroundColor:'lightskyblue',
+    borderRadius:3,
+  }
 })
 
 module.exports = styles
