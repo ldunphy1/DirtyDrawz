@@ -2706,7 +2706,7 @@ declare namespace  __React {
          * taps and the keyboard will not dismiss automatically. The default value
          * is false.
          */
-        keyboardShouldPersistTaps?: boolean
+        keyboardShouldPersistTaps?: string
 
         /**
          * Fires at most once per frame during scrolling.

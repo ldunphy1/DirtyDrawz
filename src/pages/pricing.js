@@ -79,7 +79,7 @@ module.exports = class PricingPage extends Component {
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={styles.supermainContainer}>
           <Topbar caption='Pricing' onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
-      <ScrollView keyboardShouldPersistTaps style={styles.mainContainer}>
+      <ScrollView keyboardShouldPersistTaps = 'always' style={styles.mainContainer}>
         <List>
           <ListView
             renderRow={this.renderRow}

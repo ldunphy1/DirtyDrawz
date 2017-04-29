@@ -84,7 +84,6 @@ var styles = StyleSheet.create({
     padding:10,
     alignItems:'center',
     backgroundColor:'lightskyblue',
-    minHeight:150,
     borderRadius:3,
   }
 })

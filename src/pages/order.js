@@ -167,6 +167,8 @@ export default class Order extends Component {
       Jacket:0,
       Blouse:0,
       Goose:0,
+
+      estimated_price:0,
       info_billing_address:'',
       note:''
     }
@@ -207,6 +209,66 @@ export default class Order extends Component {
       Goose:0
        })
   }
+  onPlaceOrder(){
+    var estimated_price = 
+      + this.state.Suit * 17.95
+      + this.state.Pants * 7.95
+      + this.state.Shirt * 2.95
+      + this.state.Jacket * 12.95
+      + this.state.Blouse * 7.95
+      + this.state.Goose * 50;
+
+    const order_info = ((this.state.Cold||this.state.Warm||this.state.Hot
+      ||this.state.Low||this.state.Medium||this.state.High
+      ||this.state.FNo||this.state.FYes
+      ||this.state.ANo||this.state.AYes
+      ||this.state.SNo||this.state.SYes
+    )) 
+    ?
+    [
+    ['info_billing_address', this.state.info_billing_address],
+    ['datePickup', this.state.datePickup],
+    ['dateDropoff', this.state.dateDropoff],
+    ['wash_temperature', this.state.wash_temperature],
+    ['dry_setting', this.state.dry_setting],
+    ['fragrance_free', this.state.fragrance_free],
+    ['add_bleach', this.state.add_bleach],
+    ['sort_colors', this.state.sort_colors],
+    ['Suit', this.state.Suit.toString()],
+    ['Pants', this.state.Pants.toString()],
+    ['Shirt', this.state.Shirt.toString()],
+    ['Jacket', this.state.Jacket.toString()],
+    ['Blouse', this.state.Blouse.toString()],
+    ['Goose', this.state.Goose.toString()],
+    ['note', this.state.note.toString()],
+    ['estimated_price', estimated_price.toString()]
+    ]
+    :
+    [
+    ['info_billing_address', this.state.info_billing_address],
+    ['datePickup', this.state.datePickup],
+    ['dateDropoff', this.state.dateDropoff],
+    ['wash_temperature', '0'],
+    ['dry_setting', '0'],
+    ['fragrance_free', '0'],
+    ['add_bleach', '0'],
+    ['sort_colors', '0'],
+    ['Suit', this.state.Suit.toString()],
+    ['Pants', this.state.Pants.toString()],
+    ['Shirt', this.state.Shirt.toString()],
+    ['Jacket', this.state.Jacket.toString()],
+    ['Blouse', this.state.Blouse.toString()],
+    ['Goose', this.state.Goose.toString()],
+    ['note', this.state.note.toString()],
+    ['estimated_price', estimated_price.toString()]
+    ];
+
+    AsyncStorage.multiSet(order_info, (err) => {});
+    this.props.navigator.push({
+        id: 'orderconfirm',
+        name: 'orderconfirm'
+    });
+  }
   renderHeader(section){
     if ((this.state.Cold||this.state.Warm||this.state.Hot
       ||this.state.Low||this.state.Medium||this.state.High
@@ -239,7 +301,7 @@ export default class Order extends Component {
               }}>{section.title}</Text>
             </View>
           )
-    else
+    else{
           return(
               <View style={{flex:1,flexDirection:'row',alignItems:'center',margin:1,backgroundColor:'dodgerblue',height:35,paddingLeft:8}}>
               <Image source={require('../components/assets/cb_disabled.png')} style={{height:25,width:25}}/>
@@ -247,10 +309,11 @@ export default class Order extends Component {
                   color: '#fff',
                   fontSize: 15,
                   fontWeight:'bold',
-                  marginLeft:8,
+                  marginLeft:8
                 }}>{section.title}</Text>
               </View>
-            )
+            );
+    }
   }
   renderContent(section){
     if (section.title=='Laundry')
@@ -258,34 +321,34 @@ export default class Order extends Component {
         <View style={styles.collapiseItem}>
           <Text style={{fontSize: 15,color:'black'}}>Wash Temperature</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
-            <CheckBox label='Cold' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Cold} onPress={()=>this.setState({Cold:!this.state.Cold,Warm:false,Hot:false})}/>
-            <CheckBox label='Warm' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Warm} onPress={()=>this.setState({Cold:false,Warm:!this.state.Warm,Hot:false})}/>
-            <CheckBox label='Hot' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Hot} onPress={()=>this.setState({Cold:false,Warm:false,Hot:!this.state.Hot})}/>
+            <CheckBox label='Cold' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Cold} onPress={()=>this.setState({wash_temperature:'cold',Cold:!this.state.Cold,Warm:false,Hot:false})}/>
+            <CheckBox label='Warm' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Warm} onPress={()=>this.setState({wash_temperature:'warm',Cold:false,Warm:!this.state.Warm,Hot:false})}/>
+            <CheckBox label='Hot' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Hot} onPress={()=>this.setState({wash_temperature:'hot',Cold:false,Warm:false,Hot:!this.state.Hot})}/>
           </View>
 
           <Text style={{fontSize: 15,color:'black'}}>Dry Setting</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
-            <CheckBox label='Low' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Low} onPress={()=>this.setState({Low:!this.state.Low,Medium:false,High:false})}/>
-            <CheckBox label='Medium' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Medium} onPress={()=>this.setState({Low:false,Medium:!this.state.Medium,High:false})}/>
-            <CheckBox label='High' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.High} onPress={()=>this.setState({Low:false,Medium:false,High:!this.state.High})}/>
+            <CheckBox label='Low' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Low} onPress={()=>this.setState({dry_setting:'low',Low:!this.state.Low,Medium:false,High:false})}/>
+            <CheckBox label='Medium' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.Medium} onPress={()=>this.setState({dry_setting:'medium',Low:false,Medium:!this.state.Medium,High:false})}/>
+            <CheckBox label='High' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.High} onPress={()=>this.setState({dry_setting:'high',Low:false,Medium:false,High:!this.state.High})}/>
           </View>
 
           <Text style={{fontSize: 15,color:'black'}}>Fragrance-free?</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
-            <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.FNo} onPress={()=>this.setState({FNo:!this.state.FNo,FYes:false})}/>
-            <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.FYes} onPress={()=>this.setState({FNo:false,FYes:!this.state.FYes})}/>
+            <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.FNo} onPress={()=>this.setState({fragrance_free:'no',FNo:!this.state.FNo,FYes:false})}/>
+            <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.FYes} onPress={()=>this.setState({fragrance_free:'yes',FNo:false,FYes:!this.state.FYes})}/>
           </View>
 
           <Text style={{fontSize: 15,color:'black'}}>Add Bleach? +$1</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
-            <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.ANo} onPress={()=>this.setState({ANo:!this.state.ANo,AYes:false})}/>
-            <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.AYes} onPress={()=>this.setState({ANo:false,AYes:!this.state.AYes})}/>
+            <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.ANo} onPress={()=>this.setState({add_bleach:'no',ANo:!this.state.ANo,AYes:false})}/>
+            <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.AYes} onPress={()=>this.setState({add_bleach:'yes',ANo:false,AYes:!this.state.AYes})}/>
           </View>
 
           <Text style={{fontSize: 15,color:'black'}}>Sort Colors? +$1</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
-            <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.SNo} onPress={()=>this.setState({SNo:!this.state.SNo,SYes:false})}/>
-            <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.SYes} onPress={()=>this.setState({SNo:false,SYes:!this.state.SYes})}/>
+            <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.SNo} onPress={()=>this.setState({sort_colors:'no',SNo:!this.state.SNo,SYes:false})}/>
+            <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.SYes} onPress={()=>this.setState({sort_colors:'yes',SNo:false,SYes:!this.state.SYes})}/>
           </View>
         </View>
         )
@@ -294,15 +357,15 @@ export default class Order extends Component {
       <View style={styles.collapiseItem}>
         <Text>Tap item to add to cart. Tap the number to eliminate.</Text>
         <View style={{margin:10,flex:1,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
-          <DryCleanItem imageSrc={require('../components/assets/Suit.png')} times={this.state.Suit} onPress={()=>this.setState({Suit:this.state.Suit+1})} onPress2={()=>this.setState({Suit:this.state.Suit-1})} name='Suit' price='14.99'/>
-          <DryCleanItem imageSrc={require('../components/assets/Pants.png')} times={this.state.Pants} onPress={()=>this.setState({Pants:this.state.Pants+1})} onPress2={()=>this.setState({Pants:this.state.Pants-1})} name='Pants' price='15.99'/>
-          <DryCleanItem imageSrc={require('../components/assets/Shirt.png')} times={this.state.Shirt} onPress={()=>this.setState({Shirt:this.state.Shirt+1})} onPress2={()=>this.setState({Shirt:this.state.Shirt-1})} name='Shirt' price='13.99'/>
+          <DryCleanItem imageSrc={require('../components/assets/Suit.png')} times={this.state.Suit} onPress={()=>this.setState({Suit:this.state.Suit+1})} onPress2={()=>this.setState({Suit:this.state.Suit-1})} name='Suit' price='17.95'/>
+          <DryCleanItem imageSrc={require('../components/assets/Pants.png')} times={this.state.Pants} onPress={()=>this.setState({Pants:this.state.Pants+1})} onPress2={()=>this.setState({Pants:this.state.Pants-1})} name='Pants' price='7.95'/>
+          <DryCleanItem imageSrc={require('../components/assets/Shirt.png')} times={this.state.Shirt} onPress={()=>this.setState({Shirt:this.state.Shirt+1})} onPress2={()=>this.setState({Shirt:this.state.Shirt-1})} name='Shirt' price='2.95'/>
         </View>
 
         <View style={{margin:10,flex:1,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
-          <DryCleanItem imageSrc={require('../components/assets/Jacket.png')} times={this.state.Jacket} onPress={()=>this.setState({Jacket:this.state.Jacket+1})} onPress2={()=>this.setState({Jacket:this.state.Jacket-1})} name='Jacket' price='14.99'/>
-          <DryCleanItem imageSrc={require('../components/assets/Blouse.png')} times={this.state.Blouse} onPress={()=>this.setState({Blouse:this.state.Blouse+1})} onPress2={()=>this.setState({Blouse:this.state.Blouse-1})} name='Blouse' price='15.99'/>
-          <DryCleanItem imageSrc={require('../components/assets/Goose.png')} times={this.state.Goose} onPress={()=>this.setState({Goose:this.state.Goose+1})} onPress2={()=>this.setState({Goose:this.state.Goose-1})} name='Goose' price='13.99'/>
+          <DryCleanItem imageSrc={require('../components/assets/Jacket.png')} times={this.state.Jacket} onPress={()=>this.setState({Jacket:this.state.Jacket+1})} onPress2={()=>this.setState({Jacket:this.state.Jacket-1})} name='Jacket' price='12.95'/>
+          <DryCleanItem imageSrc={require('../components/assets/Blouse.png')} times={this.state.Blouse} onPress={()=>this.setState({Blouse:this.state.Blouse+1})} onPress2={()=>this.setState({Blouse:this.state.Blouse-1})} name='Blouse' price='7.95'/>
+          <DryCleanItem imageSrc={require('../components/assets/Goose.png')} times={this.state.Goose} onPress={()=>this.setState({Goose:this.state.Goose+1})} onPress2={()=>this.setState({Goose:this.state.Goose-1})} name='Goose' price='50'/>
         </View>
         <Button title='All Clear' onPress={ this.onClear.bind(this)} />
       </View>
@@ -315,81 +378,7 @@ export default class Order extends Component {
 		/>
 		)
   }
-
-  onPlaceOrder(){
-    if (this.state.Cold)
-      this.setState({wash_temperature:'cold'});
-    else if (this.state.Warm)
-      this.setState({wash_temperature:'warm'});
-    else if (this.state.Hot)
-      this.setState({wash_temperature:'hot'});
-    if (this.state.Low)
-      this.setState({dry_setting:'low'});
-    else if (this.state.Medium)
-      this.setState({dry_setting:'medium'});
-    else if (this.state.High)
-      this.setState({dry_setting:'high'});
-    if (this.state.FYes)
-      this.setState({fragrance_free:'yes'});
-    else if (this.state.FNo)
-      this.setState({fragrance_free:'no'});
-    if (this.state.AYes)
-      this.setState({add_bleach:'yes'});
-    else if (this.state.ANo)
-      this.setState({add_bleach:'no'});
-    if (this.state.SYes)
-      this.setState({sort_colors:'yes'});
-    else if (this.state.SNo)
-      this.setState({sort_colors:'no'});
-
-    AsyncStorage.setItem("info_billing_address", this.state.info_billing_address);
-    AsyncStorage.setItem("datePickup", this.state.datePickup);
-    AsyncStorage.setItem("wash_temperature", this.state.wash_temperature);
-    AsyncStorage.setItem("dry_setting", this.state.dry_setting);
-    AsyncStorage.setItem("fragrance_free", this.state.fragrance_free);
-    AsyncStorage.setItem("add_bleach", this.state.add_bleach);
-    AsyncStorage.setItem("sort_colors", this.state.sort_colors);
-    var tmp = this.state.Suit;
-    AsyncStorage.setItem("Suit", this.state.Suit.toString());
-    /*var order_info = {
-      info_billing_address:this.state.info_billing_address,
-      datePickup:this.state.datePickup,
-      dateDropoff:this.state.dateDropoff,
-      wash_temperature:this.state.wash_temperature,
-      dry_setting:this.state.dry_setting,
-      fragrance_free:this.state.fragrance_free,
-      add_bleach:this.state.add_bleach,
-      sort_colors:this.state.sort_colors,
-      Suit:this.state.Suit,
-      Pants:this.state.Pants,
-      Shirt:this.state.Shirt,
-      Jacket:this.state.Jacket,
-      Blouse:this.state.Blouse,
-      Goose:this.state.Goose,
-      note:this.state.note
-    }
-    const order_info = {};
-    order_info[info_billing_address] = this.state.info_billing_address;
-    order_info[datePickup] = this.state.datePickup;
-    order_info[dateDropoff] = this.state.dateDropoff;
-    order_info[wash_temperature] = this.state.wash_temperature;
-    order_info[dry_setting] = this.state.dry_setting;
-    order_info[fragrance_free] = this.state.fragrance_free;
-    order_info[add_bleach] = this.state.add_bleach;
-    order_info[sort_colors] = this.state.sort_colors;
-    order_info[Suit] = this.state.Suit;
-    order_info[Pants] = this.state.Pants;
-    order_info[Shirt] = this.state.Shirt;
-    order_info[Jacket] = this.state.Jacket;
-    order_info[Blouse] = this.state.Blouse;
-    order_info[Goose] = this.state.Goose;
-    order_info[note] = this.state.note;*/
-
-    this.props.navigator.push({
-        id: 'orderconfirm',
-        name: 'orderconfirm'
-    });
-  }
+  
 
   computeTime(date, plusHours){
     if (date == '')
@@ -495,9 +484,9 @@ export default class Order extends Component {
           <RegistrationItem ItemType='dropdown' pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
                   onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType='textinput' content={this.state.info_billing_address} caption='Where? '/>
-          <RegistrationItem msger = {(para)=>this.setState({note: para})} ItemType='textinput' content='' caption='Note: '/>
+          <RegistrationItem msger = {(para)=>this.setState({note: para})} ItemType='textinput' content={this.state.note} caption='Note: '/>
           <View style = { styles.buttons }>
-            <Button title='Continue' onPress={ this.onPlaceOrder.bind(this)} />
+            <Button title='Continue' onPress={this.onPlaceOrder.bind(this)} />
           </View>
           </View>
         </ScrollView>

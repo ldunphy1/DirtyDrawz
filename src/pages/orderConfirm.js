@@ -31,25 +31,14 @@ export default class OrderConfirm extends Component{
       Jacket:'',
       Blouse:'',
       Goose:'',
-      note:''
+      note:'',
+      estimated_price:'0',
+      total_order_number:0
     }
   }
-                  /*datePickup:state.datePickup,
-                dateDropoff:state.dateDropoff,
-                wash_temperature:state.wash_temperature,
-                dry_setting:state.dry_setting,
-                fragrance_free:state.fragrance_free,
-                add_bleach:state.add_bleach,
-                sort_colors:state.sort_colors,
-                Suit:state.Suit,
-                Pants:state.Pants,
-                Shirt:state.Shirt,
-                Jacket:state.Jacket,
-                Blouse:state.Blouse,
-                Goose:state.Goose,
-                note:state.note */
                 
   componentWillMount(){
+    /*
     AsyncStorage.getItem("info_billing_address").then((value) => {this.setState({info_billing_address:value});}).done();
     AsyncStorage.getItem("datePickup").then((value) => {this.setState({datePickup:value});}).done();
     AsyncStorage.getItem("wash_temperature").then((value) => {this.setState({wash_temperature:value});}).done();
@@ -59,6 +48,36 @@ export default class OrderConfirm extends Component{
     AsyncStorage.getItem("sort_colors").then((value) => {this.setState({sort_colors:value});}).done();
     AsyncStorage.getItem("order_info").then((value) => {this.setState({order_info:value});}).done();
     AsyncStorage.getItem("Suit").then((value) => {this.setState({Suit:value});}).done();
+    */
+    var tmp_dic = {}
+    AsyncStorage.multiGet([
+      'info_billing_address',
+      'datePickup',
+      'dateDropoff',
+      'wash_temperature',
+      'dry_setting',
+      'fragrance_free',
+      'add_bleach',
+      'sort_colors',
+      'Suit',
+      'Pants',
+      'Shirt',
+      'Jacket',
+      'Blouse',
+      'Goose',
+      'note',
+      'estimated_price'
+    ],(err, values) => {
+      values.map( (result, i, value) => {
+        tmp_dic[value[i][0]] = value[i][1];
+      });
+      this.setState(tmp_dic);
+    });
+    var user = this.props.firebaseApp.auth().currentUser;
+    var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid);
+    userRef.once('value', (snap)=>{
+      this.setState({total_order_number:snap.child('total_order_number').val()});
+    });
   }
   render(){
     const content = 
@@ -67,33 +86,42 @@ export default class OrderConfirm extends Component{
           <View style={styles.block}>
             <RegistrationItem ItemType='text' content={this.state.info_billing_address} caption='location: '/>
             <RegistrationItem ItemType='text' content={this.state.note} caption='note: '/>
+            <RegistrationItem ItemType='text' content={this.state.datePickup} caption='pick up time: '/>
+            <RegistrationItem ItemType='text' content={this.state.dateDropoff} caption='drop off time: '/>
           </View>
-          <View style={styles.block}>
+          { this.state.wash_temperature + this.state.dry_setting +this.state.sort_colors + this.state.fragrance_free + this.state.add_bleach != '00000'
+            &&<View style={styles.block}>
               <View>
               <Text style={{fontFamily:'Cochin',fontSize:25}}>laundry</Text>
               </View>
-              <RegistrationItem ItemType='text' content={this.state.datePickup} caption='pick up time: '/>
-              <RegistrationItem ItemType='text' content={this.state.dateDropoff} caption='drop off time: '/>
-              <RegistrationItem ItemType='text' content={this.state.wash_temperature} caption='wash temperature: '/>
-              <RegistrationItem ItemType='text' content={this.state.dry_setting} caption='dry setting: '/>
-              <RegistrationItem ItemType='text' content={this.state.sort_colors} caption='sort colors: '/>
-              <RegistrationItem ItemType='text' content={this.state.fragrance_free} caption='fragrance free: '/>
-              <RegistrationItem ItemType='text' content={this.state.add_bleach} caption='add bleach: '/>
-            </View>
-            <View style={styles.block}>
+              {(this.state.wash_temperature != '0')&&<RegistrationItem ItemType='text' content={this.state.wash_temperature} caption='wash temperature: '/>}
+              {(this.state.dry_setting != '0')&&<RegistrationItem ItemType='text' content={this.state.dry_setting} caption='dry setting: '/>}
+              {(this.state.sort_colors != '0')&&<RegistrationItem ItemType='text' content={this.state.sort_colors} caption='sort colors: '/>}
+              {(this.state.fragrance_free != '0')&&<RegistrationItem ItemType='text' content={this.state.fragrance_free} caption='fragrance free: '/>}
+              {(this.state.add_bleach != '0')&&<RegistrationItem ItemType='text' content={this.state.add_bleach} caption='add bleach: '/>}
+            </View>}
+            { this.state.Suit + this.state.Suit +this.state.Suit + this.state.Suit + this.state.Suit + this.state.Suit != '000000'
+              &&<View style={styles.block}>
                 <View>
                 <Text style={{fontFamily:'Cochin',fontSize:25}}>dry cleaning</Text>
                 </View>
-                <RegistrationItem ItemType='text' content={this.state.Suit} caption='suit number: '/>
-                <RegistrationItem ItemType='text' content={this.state.Shirt} caption='shirt number: '/>
-                <RegistrationItem ItemType='text' content={this.state.Jacket} caption='jacket number: '/>
-                <RegistrationItem ItemType='text' content={this.state.Pants} caption='pants number: '/>
-                <RegistrationItem ItemType='text' content={this.state.Blouse} caption='blouse number: '/>
-                <RegistrationItem ItemType='text' content={this.state.Goose} caption='goose number: '/>
+                {(this.state.Suit != '0')&&<RegistrationItem ItemType='text' content={this.state.Suit} caption='suit number: '/>}
+                {(this.state.Shirt != '0')&&<RegistrationItem ItemType='text' content={this.state.Shirt} caption='shirt number: '/>}
+                {(this.state.Jacket != '0')&&<RegistrationItem ItemType='text' content={this.state.Jacket} caption='jacket number: '/>}
+                {(this.state.Pants != '0')&&<RegistrationItem ItemType='text' content={this.state.Pants} caption='pants number: '/>}
+                {(this.state.Blouse != '0')&&<RegistrationItem ItemType='text' content={this.state.Blouse} caption='blouse number: '/>}
+                {(this.state.Goose != '0')&&<RegistrationItem ItemType='text' content={this.state.Goose} caption='goose number: '/>}
+                <Text style={{fontFamily:'Cochin',fontSize:20}}>estimated price for DRY CLEAN</Text>
+                <Text style={{fontFamily:'Cochin',fontSize:15}}>{this.state.estimated_price}</Text>
+            </View>}
+            <View style = {{flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+
             </View>
+            <View style = {{flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
             <View style={styles.buttons}>
                 <Button title='Back' onPress={this.goBack.bind(this)} />
                 <Button title='Place Order' onPress={this.placeOrder.bind(this)} />
+            </View>
             </View>
           </ScrollView>
         </View>
@@ -107,38 +135,30 @@ export default class OrderConfirm extends Component{
   placeOrder(){
     var user = this.props.firebaseApp.auth().currentUser;
     var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid);
-    var order_number = 0;
-    userRef.once('value', (snap)=>{
-      order_number = snap.child('total_order_number').val();
-    })
-    alert(user.id);
-    alert('hei');
-    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+order_number.toString()).set({
+    this.props.firebaseApp.database().ref('/order/'+user.uid+'/'+this.state.total_order_number).set({
         info_billing_address:this.state.info_billing_address,
         datePickup:this.state.datePickup,
         dateDropoff:this.state.dateDropoff,
         note:this.state.note    
     });
-    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+order_number.toString()+'/Laundry').set({
+    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+this.state.total_order_number.toString()+'/Laundry').set({
         wash_temperature:this.state.wash_temperature,
         dry_setting:this.state.dry_setting,
         fragrance_free:this.state.fragrance_free,
         add_bleach:this.state.add_bleach,
         sort_colors:this.state.sort_colors,
-    })
-    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+order_number.toString()+'/Dry_Cleaning').set({
+    });
+    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+this.state.total_order_number.toString()+'/Dry_Cleaning').set({
         Suit:this.state.Suit,
         Pants:this.state.Pants,
         Shirt:this.state.Shirt,
         Jacket:this.state.Jacket,
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
-    })
-    this.props.firebaseApp.database().ref('/order/'+user.uid).set({
-        total_order_number:(order_number + 1)
     });
-    this.props.navigator.push({
-      id: 'order'
-    })
+    this.props.firebaseApp.database().ref('/order/'+user.uid).set({
+        total_order_number:(this.state.total_order_number + 1)
+    });
+    //this.props.navigator.pop();
   }
 }
