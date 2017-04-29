@@ -133,32 +133,35 @@ export default class OrderConfirm extends Component{
     this.props.navigator.pop()
   }
   placeOrder(){
-    var user = this.props.firebaseApp.auth().currentUser;
-    var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid);
-    this.props.firebaseApp.database().ref('/order/'+user.uid+'/'+this.state.total_order_number).set({
+    console.log("hello")
+    var user = this.props.firebaseApp.auth().currentUser
+    var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid)
+    userRef.set({
+        total_order_number:(this.state.total_order_number + 1)
+    })
+    var order = this.state.total_order_number
+    userRef.child(order.toString()).set({
         info_billing_address:this.state.info_billing_address,
         datePickup:this.state.datePickup,
         dateDropoff:this.state.dateDropoff,
         note:this.state.note    
-    });
-    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+this.state.total_order_number.toString()+'/Laundry').set({
+    })
+    userRef.child(order.toString()).child('Laundry').set({
         wash_temperature:this.state.wash_temperature,
         dry_setting:this.state.dry_setting,
         fragrance_free:this.state.fragrance_free,
         add_bleach:this.state.add_bleach,
         sort_colors:this.state.sort_colors,
-    });
-    this.props.firebaseApp.database().ref('/order/'+user.uid+'/NO'+this.state.total_order_number.toString()+'/Dry_Cleaning').set({
+    })
+    userRef.child(order.toString()).child('DryCleaning').set({
         Suit:this.state.Suit,
         Pants:this.state.Pants,
         Shirt:this.state.Shirt,
         Jacket:this.state.Jacket,
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
-    });
-    this.props.firebaseApp.database().ref('/order/'+user.uid).set({
-        total_order_number:(this.state.total_order_number + 1)
-    });
+    })
+   
     //this.props.navigator.pop();
   }
 }
