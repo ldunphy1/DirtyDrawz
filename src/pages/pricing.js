@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component} from 'react'
 
 import {
   StyleSheet,
   View,
   ScrollView,
   ListView,
-  Navigator
+  Navigator,
+  Image,
+  Dimensions
 } from 'react-native'
 
 import {
@@ -17,24 +19,13 @@ import SideMenu from 'react-native-side-menu'
 import Menu from '../components/SideMenu/Menu'
 import Topbar from '../components/SideMenu/Topbar'
 
-const log = () => console.log('this is an example method')
-
-const list1 = [
-  {
-    title: 'Annual Package',
-    subtitle: '24 washes/academic year'
-  },
-  {
-    title: 'One-Time Order'
-  }
-]
+const window = Dimensions.get('window');
 
 module.exports = class PricingPage extends Component {
   constructor () {
     super()
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
-      dataSource: ds.cloneWithRows(list1),
       isOpen: false
     }
     this.renderRow = this.renderRow.bind(this)
@@ -80,11 +71,9 @@ module.exports = class PricingPage extends Component {
         <View style={styles.supermainContainer}>
           <Topbar caption='Pricing' onPressMenuButton={()=>this.setState({isOpen:!this.state.isOpen})}></Topbar>
       <ScrollView keyboardShouldPersistTaps = 'always' style={styles.mainContainer}>
-        <List>
-          <ListView
-            renderRow={this.renderRow}
-            dataSource={this.state.dataSource} />
-        </List>
+        <View style={{backgroundColor:'white'}}>
+       <Image source={require('../components/assets/Pricing.jpg')} style={{height:300,width:300, alignSelf:'center'}}/>
+       </View>
       </ScrollView>
         </View>
       </SideMenu>
@@ -99,6 +88,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF'
   },
   mainContainer: {
-    backgroundColor: '#ebedf1'
+    backgroundColor: 'white'
   }
 })
