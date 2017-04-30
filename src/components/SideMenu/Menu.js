@@ -81,12 +81,6 @@ export default class Menu extends Component {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ () => this.props.onItemSelected('faq')}>
-          <Text style={styles.item}>
-          FAQ
-          </Text>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={() => this.props.onItemSelected('logout')}>
           <Text style={styles.item}>
             Log Out
