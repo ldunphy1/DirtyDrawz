@@ -22,6 +22,7 @@ import Pricing from './src/pages/pricing'
 import OrderConfirm from './src/pages/orderConfirm'
 import PassRecover from './src/pages/passwordRecovery'
 import OrderHistory from './src/pages/orderHistory'
+import Thank from './src/pages/thank'
 
 
 class dirtydrawz extends Component {
@@ -61,6 +62,11 @@ class dirtydrawz extends Component {
                 <PassRecover
                   navigator={navigator}
                   firebaseApp={firebaseApp} />
+              )
+            }if(route.id === 'thank'){
+              return(
+                <Thank
+                  navigator={navigator} />
               )
             }else if(route.id === 'logout'){
               return (
@@ -117,8 +123,7 @@ class dirtydrawz extends Component {
                 <OrderConfirm
                   firebaseApp={firebaseApp}
                   navigator={navigator}
-                  type = {-1}/>
-                  
+                  type = {-1}/>                  
               )
               
             }else if(route.id === 'orderhistory'){

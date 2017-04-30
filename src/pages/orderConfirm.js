@@ -166,20 +166,20 @@ export default class OrderConfirm extends Component{
         total_order_number:(this.state.total_order_number + 1)
     })
     var order = this.state.total_order_number
-    userRef.child(order.toString()).set({
+    userRef.child(order).set({
         info_billing_address:this.state.info_billing_address,
         datePickup:this.state.datePickup,
         dateDropoff:this.state.dateDropoff,
         note:this.state.note    
     })
-    userRef.child(order.toString()).child('Laundry').set({
+    userRef.child(order).child('Laundry').set({
         wash_temperature:this.state.wash_temperature,
         dry_setting:this.state.dry_setting,
         fragrance_free:this.state.fragrance_free,
         add_bleach:this.state.add_bleach,
         sort_colors:this.state.sort_colors,
     })
-    userRef.child(order.toString()).child('DryCleaning').set({
+    userRef.child(order).child('DryCleaning').set({
         Suit:this.state.Suit,
         Pants:this.state.Pants,
         Shirt:this.state.Shirt,
@@ -187,6 +187,8 @@ export default class OrderConfirm extends Component{
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
     })
-    this.props.navigator.pop();
+    this.props.navigator.push({
+      id:'thank'
+    });
   }
 }

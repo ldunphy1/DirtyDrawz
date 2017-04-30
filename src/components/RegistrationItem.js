@@ -7,7 +7,7 @@ export default class RegistrationItem extends Component {
     this.state={
       text: "",
       color: 'red',
-      servingArea: 'Al',
+      servingArea: 'Allston',
     }
   }
 
