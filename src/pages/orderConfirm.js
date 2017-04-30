@@ -38,46 +38,73 @@ export default class OrderConfirm extends Component{
   }
                 
   componentWillMount(){
-    /*
-    AsyncStorage.getItem("info_billing_address").then((value) => {this.setState({info_billing_address:value});}).done();
-    AsyncStorage.getItem("datePickup").then((value) => {this.setState({datePickup:value});}).done();
-    AsyncStorage.getItem("wash_temperature").then((value) => {this.setState({wash_temperature:value});}).done();
-    AsyncStorage.getItem("dry_setting").then((value) => {this.setState({dry_setting:value});}).done();
-    AsyncStorage.getItem("fragrance_free").then((value) => {this.setState({fragrance_free:value});}).done();
-    AsyncStorage.getItem("add_bleach").then((value) => {this.setState({add_bleach:value});}).done();
-    AsyncStorage.getItem("sort_colors").then((value) => {this.setState({sort_colors:value});}).done();
-    AsyncStorage.getItem("order_info").then((value) => {this.setState({order_info:value});}).done();
-    AsyncStorage.getItem("Suit").then((value) => {this.setState({Suit:value});}).done();
-    */
-    var tmp_dic = {}
-    AsyncStorage.multiGet([
-      'info_billing_address',
-      'datePickup',
-      'dateDropoff',
-      'wash_temperature',
-      'dry_setting',
-      'fragrance_free',
-      'add_bleach',
-      'sort_colors',
-      'Suit',
-      'Pants',
-      'Shirt',
-      'Jacket',
-      'Blouse',
-      'Goose',
-      'note',
-      'estimated_price'
-    ],(err, values) => {
-      values.map( (result, i, value) => {
-        tmp_dic[value[i][0]] = value[i][1];
-      });
-      this.setState(tmp_dic);
-    });
     var user = this.props.firebaseApp.auth().currentUser;
     var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid);
-    userRef.once('value', (snap)=>{
-      this.setState({total_order_number:snap.child('total_order_number').val()});
-    });
+    if (this.props.type == -1){
+      var tmp_dic = {}
+      AsyncStorage.multiGet([
+        'info_billing_address',
+        'datePickup',
+        'dateDropoff',
+        'wash_temperature',
+        'dry_setting',
+        'fragrance_free',
+        'add_bleach',
+        'sort_colors',
+        'Suit',
+        'Pants',
+        'Shirt',
+        'Jacket',
+        'Blouse',
+        'Goose',
+        'note',
+        'estimated_price'
+      ],(err, values) => {
+        values.map( (result, i, value) => {
+          tmp_dic[value[i][0]] = value[i][1];
+        });
+        this.setState(tmp_dic);
+      });
+
+      userRef.once('value', (snap)=>{
+        this.setState({total_order_number:snap.child('total_order_number').val()});
+      });
+    }
+    else{
+      var tmp = 0;
+        AsyncStorage.getItem("lookforwhat").then((value) => {
+          tmp = value;
+        }).done();
+        //this.setState({total_order_number:tmp});
+        userRef.child(tmp).once('value', (snap)=>{
+          this.setState({
+            info_billing_address: snap.child('info_billing_address').val(),
+            note: snap.child('note').val(),
+            datePickup:snap.child('datePickup').val(),
+            dateDropoff:snap.child('dateDropoff').val(),
+          })
+        })
+        userRef.child(tmp + '/Laundry').once('value', (snap)=>{
+          this.setState({
+              wash_temperature:snap.child('wash_temperature').val(),
+              dry_setting:snap.child('dry_setting').val(),
+              fragrance_free:snap.child('fragrance_free').val(),
+              add_bleach:snap.child('add_bleach').val(),
+              sort_colors:snap.child('sort_colors').val() 
+          })
+        });
+        userRef.child(tmp + '/Dry_Cleaning').once('value', (snap)=>{
+          this.setState({
+              Suit:snap.child('Suit').val(),
+              Pants:snap.child('Pants').val(),
+              Shirt:snap.child('Shirt').val(),
+              Jacket:snap.child('Jacket').val(),
+              Blouse:snap.child('Blouse').val(),
+              Goose:snap.child('Goose').val()
+          })
+        });
+    }
+
   }
   render(){
     const content = 
@@ -120,7 +147,7 @@ export default class OrderConfirm extends Component{
             <View style = {{flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
             <View style={styles.buttons}>
                 <Button title='Back' onPress={this.goBack.bind(this)} />
-                <Button title='Place Order' onPress={this.placeOrder.bind(this)} />
+                {(this.props.type == -1)&&<Button title='Place Order' onPress={this.placeOrder.bind(this)} />}
             </View>
             </View>
           </ScrollView>
@@ -133,7 +160,6 @@ export default class OrderConfirm extends Component{
     this.props.navigator.pop()
   }
   placeOrder(){
-    console.log("hello")
     var user = this.props.firebaseApp.auth().currentUser
     var userRef = this.props.firebaseApp.database().ref('/order/'+user.uid)
     userRef.set({
@@ -161,7 +187,6 @@ export default class OrderConfirm extends Component{
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
     })
-   
-    //this.props.navigator.pop();
+    this.props.navigator.pop();
   }
 }
