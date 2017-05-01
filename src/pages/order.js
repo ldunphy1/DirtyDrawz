@@ -210,6 +210,12 @@ export default class Order extends Component {
        })
   }
   onPlaceOrder(){
+    if ((this.state.Cold||this.state.Warm||this.state.Hot
+      ||this.state.Low||this.state.Medium||this.state.High
+      ||this.state.FNo||this.state.FYes
+      ||this.state.ANo||this.state.AYes
+      ||this.state.SNo||this.state.SYes
+    ) ||(this.state.Suit+this.state.Pants+this.state.Shirt+this.state.Jacket+this.state.Goose+this.state.Blouse)){
     var estimated_price = 
       + this.state.Suit * 17.95
       + this.state.Pants * 7.95
@@ -268,6 +274,10 @@ export default class Order extends Component {
         id: 'orderconfirm',
         name: 'orderconfirm'
     });
+    }
+    else{
+      alert("Please include items to be laundered")
+    }
   }
   renderHeader(section){
     if ((this.state.Cold||this.state.Warm||this.state.Hot
@@ -339,13 +349,13 @@ export default class Order extends Component {
             <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.FYes} onPress={()=>this.setState({fragrance_free:'yes',FNo:false,FYes:!this.state.FYes})}/>
           </View>
 
-          <Text style={{fontSize: 15,color:'black'}}>Add Bleach? +$1</Text>
+          <Text style={{fontSize: 15,color:'black'}}>Add Bleach?</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
             <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.ANo} onPress={()=>this.setState({add_bleach:'no',ANo:!this.state.ANo,AYes:false})}/>
             <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.AYes} onPress={()=>this.setState({add_bleach:'yes',ANo:false,AYes:!this.state.AYes})}/>
           </View>
 
-          <Text style={{fontSize: 15,color:'black'}}>Sort Colors? +$1</Text>
+          <Text style={{fontSize: 15,color:'black'}}>Sort Colors?</Text>
           <View style={{margin:3,flexDirection:'row',justifyContent:'space-around'}}>
             <CheckBox label='No' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.SNo} onPress={()=>this.setState({sort_colors:'no',SNo:!this.state.SNo,SYes:false})}/>
             <CheckBox label='Yes' labelStyle={{fontSize: 15,color:'black'}} checked={this.state.SYes} onPress={()=>this.setState({sort_colors:'yes',SNo:false,SYes:!this.state.SYes})}/>

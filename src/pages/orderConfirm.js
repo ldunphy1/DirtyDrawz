@@ -139,7 +139,7 @@ export default class OrderConfirm extends Component{
                 {(this.state.Blouse != '0')&&<RegistrationItem ItemType='text' content={this.state.Blouse} caption='blouse number: '/>}
                 {(this.state.Goose != '0')&&<RegistrationItem ItemType='text' content={this.state.Goose} caption='goose number: '/>}
                 <Text style={{fontFamily:'Cochin',fontSize:20}}>estimated price for DRY CLEAN</Text>
-                <Text style={{fontFamily:'Cochin',fontSize:15}}>{this.state.estimated_price}</Text>
+                <Text style={{fontFamily:'Cochin',fontSize:15}}>${this.state.estimated_price}</Text>
             </View>}
             <View style = {{flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
 
