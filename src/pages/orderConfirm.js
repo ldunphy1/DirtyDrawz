@@ -93,7 +93,7 @@ export default class OrderConfirm extends Component{
               sort_colors:snap.child('sort_colors').val() 
           })
         });
-        userRef.child(tmp + '/Dry_Cleaning').once('value', (snap)=>{
+        userRef.child(tmp + '/DryCleaning').once('value', (snap)=>{
           this.setState({
               Suit:snap.child('Suit').val(),
               Pants:snap.child('Pants').val(),
@@ -130,7 +130,7 @@ export default class OrderConfirm extends Component{
             { this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose != '000000'
               &&<View style={styles.block}>
                 <View>
-                <Text style={{fontFamily:'Cochin',fontSize:25}}>dry cleaning</Text>
+                  <Text style={{fontFamily:'Cochin',fontSize:25}}>dry cleaning</Text>
                 </View>
                 {(this.state.Suit != '0')&&<RegistrationItem ItemType='text' content={this.state.Suit} caption='suit number: '/>}
                 {(this.state.Shirt != '0')&&<RegistrationItem ItemType='text' content={this.state.Shirt} caption='shirt number: '/>}
@@ -138,8 +138,8 @@ export default class OrderConfirm extends Component{
                 {(this.state.Pants != '0')&&<RegistrationItem ItemType='text' content={this.state.Pants} caption='pants number: '/>}
                 {(this.state.Blouse != '0')&&<RegistrationItem ItemType='text' content={this.state.Blouse} caption='blouse number: '/>}
                 {(this.state.Goose != '0')&&<RegistrationItem ItemType='text' content={this.state.Goose} caption='goose number: '/>}
-                <Text style={{fontFamily:'Cochin',fontSize:20}}>estimated price for DRY CLEAN</Text>
-                <Text style={{fontFamily:'Cochin',fontSize:15}}>${this.state.estimated_price}</Text>
+                {(this.props.type ==-1 )&&<Text style={{fontFamily:'Cochin',fontSize:20}}>estimated price for DRY CLEAN</Text>}
+                {(this.props.type ==-1 )&&<Text style={{fontFamily:'Cochin',fontSize:15}}>${this.state.estimated_price}</Text>}
             </View>}
             <View style = {{flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
 
@@ -165,21 +165,20 @@ export default class OrderConfirm extends Component{
     userRef.set({
         total_order_number:(this.state.total_order_number + 1)
     })
-    var order = this.state.total_order_number
-    userRef.child(order).set({
+    userRef.child(this.state.total_order_number).set({
         info_billing_address:this.state.info_billing_address,
         datePickup:this.state.datePickup,
         dateDropoff:this.state.dateDropoff,
         note:this.state.note    
     })
-    userRef.child(order).child('Laundry').set({
+    userRef.child(this.state.total_order_number).child('Laundry').set({
         wash_temperature:this.state.wash_temperature,
         dry_setting:this.state.dry_setting,
         fragrance_free:this.state.fragrance_free,
         add_bleach:this.state.add_bleach,
         sort_colors:this.state.sort_colors,
     })
-    userRef.child(order).child('DryCleaning').set({
+    userRef.child(this.state.total_order_number).child('DryCleaning').set({
         Suit:this.state.Suit,
         Pants:this.state.Pants,
         Shirt:this.state.Shirt,
@@ -192,7 +191,7 @@ export default class OrderConfirm extends Component{
     {
       this.props.navigator.push({
         id:'thank'
-      });
+      })
     }
     else{
       alert("Please include items to be laundered.")
