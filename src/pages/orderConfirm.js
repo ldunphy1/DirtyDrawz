@@ -127,7 +127,7 @@ export default class OrderConfirm extends Component{
               {(this.state.fragrance_free != '0')&&<RegistrationItem ItemType='text' content={this.state.fragrance_free} caption='fragrance free: '/>}
               {(this.state.add_bleach != '0')&&<RegistrationItem ItemType='text' content={this.state.add_bleach} caption='add bleach: '/>}
             </View>}
-            { this.state.Suit + this.state.Suit +this.state.Suit + this.state.Suit + this.state.Suit + this.state.Suit != '000000'
+            { this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose != '000000'
               &&<View style={styles.block}>
                 <View>
                 <Text style={{fontFamily:'Cochin',fontSize:25}}>dry cleaning</Text>
@@ -166,20 +166,20 @@ export default class OrderConfirm extends Component{
         total_order_number:(this.state.total_order_number + 1)
     })
     var order = this.state.total_order_number
-    userRef.child(order.toString()).set({
+    userRef.child(order).set({
         info_billing_address:this.state.info_billing_address,
         datePickup:this.state.datePickup,
         dateDropoff:this.state.dateDropoff,
         note:this.state.note    
     })
-    userRef.child(order.toString()).child('Laundry').set({
+    userRef.child(order).child('Laundry').set({
         wash_temperature:this.state.wash_temperature,
         dry_setting:this.state.dry_setting,
         fragrance_free:this.state.fragrance_free,
         add_bleach:this.state.add_bleach,
         sort_colors:this.state.sort_colors,
     })
-    userRef.child(order.toString()).child('DryCleaning').set({
+    userRef.child(order).child('DryCleaning').set({
         Suit:this.state.Suit,
         Pants:this.state.Pants,
         Shirt:this.state.Shirt,
@@ -187,6 +187,15 @@ export default class OrderConfirm extends Component{
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
     })
-    this.props.navigator.pop();
+    if ((this.state.wash_temperature + this.state.dry_setting +this.state.sort_colors + this.state.fragrance_free + this.state.add_bleach === '0000') 
+    && (this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose != '000000'))
+    {
+      this.props.navigator.push({
+        id:'thank'
+      });
+    }
+    else{
+      alert("Please include items to be laundered.")
+    }
   }
 }

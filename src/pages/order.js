@@ -131,7 +131,6 @@ export default class Order extends Component {
       dataSource:ds.cloneWithRows([
         'package 1','package 2','Card 1','Card 2'
       ]),
-      servingArea:'',
       minPickup:tmp1,
       minDropoff:tmp2,
       datePickup:tmp1,
@@ -180,8 +179,7 @@ export default class Order extends Component {
     var userRef = this.props.firebaseApp.database().ref('/users/'+userId)
     userRef.once('value', (snap)=>{
       this.setState({
-        info_billing_address: snap.child('address').val(),
-        servingArea: snap.child('neighborhood').val()  
+        info_billing_address: snap.child('address').val()  
       })
     })
   }
@@ -481,8 +479,6 @@ export default class Order extends Component {
                 <Text style={styles.regularText}>{this.state.dateDropoffTo}</Text>
               </View>
             </View>
-          <RegistrationItem ItemType='dropdown' pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
-                  onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType='textinput' content={this.state.info_billing_address} caption='Where? '/>
           <RegistrationItem msger = {(para)=>this.setState({note: para})} ItemType='textinput' content={this.state.note} caption='Note: '/>
           <View style = { styles.buttons }>

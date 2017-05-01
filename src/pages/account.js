@@ -30,8 +30,7 @@ export default class Account extends Component {
         'package 1', 'package 2', 'Card 1', 'Card 2'
       ]),
       isOpen: false,
-      selectedItem: 'About',
-      servingArea: '',
+      selectedItem: '',
       isEdit: 'text',
       info_first_name: '',
       info_last_name: '',
@@ -59,8 +58,7 @@ export default class Account extends Component {
         lastName: this.state.info_last_name,
         phone: this.state.info_phone,
         address: this.state.info_billing_address,
-        zipcode: this.state.info_zip,
-        neighborhood: this.state.servingArea        
+        zipcode: this.state.info_zip   
     })
     this.props.firebaseApp.database().ref('/order/'+user.uid).set({
         total_order_number: 0     
@@ -82,8 +80,7 @@ export default class Account extends Component {
         lastName: this.state.info_last_name,
         phone: this.state.info_phone,
         address: this.state.info_billing_address,
-        zipcode: this.state.info_zip,
-        neighborhood: this.state.servingArea        
+        zipcode: this.state.info_zip      
     })
     this.setState({isEdit:'text'})
   }
@@ -97,8 +94,7 @@ export default class Account extends Component {
         info_last_name: snap.child('lastName').val(),
         info_phone: snap.child('phone').val(),
         info_billing_address: snap.child('address').val(),
-        info_zip: snap.child('zipcode').val(),
-        servingArea: snap.child('neighborhood').val()  
+        info_zip: snap.child('zipcode').val()
       })
     })
   }
@@ -135,8 +131,6 @@ export default class Account extends Component {
                 <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType='textinput' content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType='textinput' content={this.state.info_billing_address} caption="Address: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType='textinput' content={this.state.info_zip} caption="Zip Code: "/>  
-                <RegistrationItem ItemType='dropdown' pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
-                  onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
           </View>
           <View style={{flexDirection:'column',alignItems:'center',padding:20}}>
           <Button title='Create Account' width={70} onPress={()=>this.createUser()} />
@@ -162,24 +156,9 @@ export default class Account extends Component {
               </View>
                 <RegistrationItem msger = {(para)=>this.setState({info_first_name: para})} ItemType={this.state.isEdit} content={this.state.info_first_name} caption="First Name: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_last_name: para})} ItemType={this.state.isEdit} content={this.state.info_last_name} caption="Last Name:"/>
-                {/*<RegistrationItem msger = {(para)=>this.on_change_email(para)} ItemType={this.state.isEdit} content={this.state.info_Email} caption="E-mail: "/>*/}
                 <RegistrationItem msger = {(para)=>this.setState({info_phone: para})} ItemType={this.state.isEdit} content={this.state.info_phone} caption="Phone Number: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_zip: para})} ItemType={this.state.isEdit} content={this.state.info_zip} caption="Zip Code: "/>
                 <RegistrationItem msger = {(para)=>this.setState({info_billing_address: para})} ItemType={this.state.isEdit} content={this.state.info_billing_address} caption="Address: "/>
-                <RegistrationItem ItemType={this.state.isEdit} pickerFlag="T" caption="City/Neighborhod: " servingArea={this.state.servingArea} content={this.state.servingArea}
-                  onSelectChange={(itemValue)=>this.setState({servingArea:itemValue})}/>
-          </View>
-          <View style={styles.block}>
-            <View>
-              <Text style={{fontFamily:'Cochin',fontSize:25}}>Payment Information</Text>
-            </View>
-            <ListView style={{flex:1}}
-              dataSource={this.state.dataSource}
-              renderRow={(rowData)=><ListItem caption={rowData}></ListItem>}
-            />
-          </View>
-          <View style={{alignItems: 'center'}}>
-            <Button title='Delete Account'  width={100} />
           </View>
       </ScrollView>
       </View>
