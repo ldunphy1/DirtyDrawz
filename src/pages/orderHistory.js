@@ -45,7 +45,7 @@ module.exports = class OrderHistory extends Component {
             for (counter = this.state.total_order_number - 1; counter > -1; counter --){
                 list.push({
                     title:'Order Number: ' + counter.toString(),
-                    ID:counter,
+                    ID:counter.toString(),
                 })
             }
             this.setState({
@@ -101,6 +101,7 @@ module.exports = class OrderHistory extends Component {
             <ScrollView keyboardShouldPersistTaps = 'always' style={styles.mainContainer}>
                 <List>
                 <ListView
+                    enableEmptySections={true}
                     renderRow={this.renderRow}
                     dataSource={this.state.dataSource} />
                 </List>
