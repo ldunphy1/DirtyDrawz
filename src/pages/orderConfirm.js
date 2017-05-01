@@ -187,8 +187,8 @@ export default class OrderConfirm extends Component{
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
     })
-    if ((this.state.wash_temperature + this.state.dry_setting +this.state.sort_colors + this.state.fragrance_free + this.state.add_bleach === '0000') 
-    && (this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose != '000000'))
+    if ((this.state.wash_temperature + this.state.dry_setting +this.state.sort_colors + this.state.fragrance_free + this.state.add_bleach !== '0000') 
+    || (this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose !== '000000'))
     {
       this.props.navigator.push({
         id:'thank'
