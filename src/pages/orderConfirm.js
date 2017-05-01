@@ -127,7 +127,7 @@ export default class OrderConfirm extends Component{
               {(this.state.fragrance_free != '0')&&<RegistrationItem ItemType='text' content={this.state.fragrance_free} caption='fragrance free: '/>}
               {(this.state.add_bleach != '0')&&<RegistrationItem ItemType='text' content={this.state.add_bleach} caption='add bleach: '/>}
             </View>}
-            { this.state.Suit + this.state.Suit +this.state.Suit + this.state.Suit + this.state.Suit + this.state.Suit != '000000'
+            { this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose != '000000'
               &&<View style={styles.block}>
                 <View>
                 <Text style={{fontFamily:'Cochin',fontSize:25}}>dry cleaning</Text>
@@ -187,8 +187,15 @@ export default class OrderConfirm extends Component{
         Blouse:this.state.Blouse,
         Goose:this.state.Goose,
     })
-    this.props.navigator.push({
-      id:'thank'
-    });
+    if ((this.state.wash_temperature + this.state.dry_setting +this.state.sort_colors + this.state.fragrance_free + this.state.add_bleach === '0000') 
+    && (this.state.Suit + this.state.Shirt +this.state.Jacket + this.state.Pants + this.state.Blouse + this.state.Goose != '000000'))
+    {
+      this.props.navigator.push({
+        id:'thank'
+      });
+    }
+    else{
+      alert("Please include items to be laundered.")
+    }
   }
 }
