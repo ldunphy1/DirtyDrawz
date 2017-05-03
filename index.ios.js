@@ -19,29 +19,29 @@ import Order from './src/pages/order'
 import styles from './src/pages/styles'
 import Faq from './src/pages/faq'
 import Pricing from './src/pages/pricing'
+import OrderConfirm from './src/pages/orderConfirm'
 import PassRecover from './src/pages/passwordRecovery'
+import OrderHistory from './src/pages/orderHistory'
+import Thank from './src/pages/thank'
 
 
 class dirtydrawz extends Component {
   constructor(props){
     super(props)
     this.state={
-      id: '',
-      name: ''
+      id: ''
     }
   }
   componentWillMount(){
     const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
       if(user != null){
         this.setState({
-          id: 'order',
-          name: 'order'
+          id: 'order'
         })
         return
       }
       this.setState({
-        id: 'login',
-        name: 'login'
+        id: 'login'
       })
       unsubscribe()
     })
@@ -52,8 +52,7 @@ class dirtydrawz extends Component {
       return(
         <Navigator
           initialRoute = {{
-            id: this.state.id, 
-            name: this.state.name}}
+            id: this.state.id}}
           configureScene = {() => {
             return Navigator.SceneConfigs.FloatFromRight
           }}
@@ -64,15 +63,18 @@ class dirtydrawz extends Component {
                   navigator={navigator}
                   firebaseApp={firebaseApp} />
               )
-            }
-            if(route.id === 'logout'){
+            }if(route.id === 'thank'){
+              return(
+                <Thank
+                  navigator={navigator} />
+              )
+            }else if(route.id === 'logout'){
               return (
                 <Login
                 navigator={navigator}
                 firebaseApp={firebaseApp} />
               )
-            }
-            if(route.id === 'login'){
+            }else if(route.id === 'login'){
               return (
                 <Login
                 navigator={navigator}
@@ -105,14 +107,39 @@ class dirtydrawz extends Component {
                   firebaseApp={firebaseApp} />
               )
             } else if(route.id === 'faq'){
+              return(
                 <Faq
                   navigator={navigator}
                 />
+              )
             } else if(route.id === 'pricing'){
+              return(
                 <Pricing
                   navigator={navigator}
                 />
-            } else{
+              )
+            } else if(route.id === 'orderconfirm'){
+              return(
+                <OrderConfirm
+                  firebaseApp={firebaseApp}
+                  navigator={navigator}
+                  type = {-1}/>                  
+              )
+              
+            }else if(route.id === 'orderhistory'){
+              return(
+                <OrderHistory
+                  firebaseApp={firebaseApp}
+                  navigator={navigator}/>
+              )
+            }else if(route.id === 'orderdetail'){
+              return(
+                <OrderConfirm
+                  firebaseApp={firebaseApp}
+                  navigator={navigator}
+                  type = {0}/>
+              )
+            }else{
               return (
                 <View style = {styles.container}>
                   <ActivityIndicator size = "large" />
